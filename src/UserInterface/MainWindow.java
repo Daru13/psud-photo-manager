@@ -45,6 +45,9 @@ public class MainWindow {
     }
 
     private void configureWindow() {
+        // Title
+        window.setTitle("Photo browser");
+
         // Sizes
         window.setMinimumSize(new Dimension(640, 480));
         window.setPreferredSize(new Dimension(800, 600));
