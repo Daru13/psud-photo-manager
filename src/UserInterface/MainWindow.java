@@ -4,8 +4,12 @@ import Events.Event;
 import Events.EventHandler;
 import Events.EventManager;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
 
 /**
  * The main component of the GUI.
@@ -91,10 +95,18 @@ public class MainWindow {
                 JFileChooser fileChooser = new JFileChooser();
                 fileChooser.showOpenDialog(window);
 
-                eventManager.emit("file:import:end");
+                try {
+                    File file = fileChooser.getSelectedFile();
+                    BufferedImage photo = ImageIO.read(file);
+
+                    eventManager.emit(new PhotoChangeEvent(photo));
+                }
+                catch (IOException exception) {
+                    System.err.println("Error: the file could not be opened as an image.");
+                    System.err.print(exception);
+                }
+
             }
-
         });
-
     }
 }

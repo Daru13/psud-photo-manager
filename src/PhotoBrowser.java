@@ -1,6 +1,8 @@
 import Events.EventManager;
 import UserInterface.MainWindow;
 
+import java.io.File;
+
 /**
  * The entry point of the photo browser application.
  *
@@ -24,7 +26,7 @@ public class PhotoBrowser {
         System.exit(0);
     }
 
-    private void importFile() {
+    private void importFile(File f) {
         // TODO
     }
 
