@@ -138,10 +138,13 @@ public class PhotoFrame extends JComponent {
     }
 
     public void setPhoto(BufferedImage photo) {
-        model.setPhoto(photo);
+        int photoWidth = photo.getWidth();
+        int photoHeight = photo.getHeight();
 
-        Dimension photoSize = new Dimension(photo.getWidth(), photo.getHeight());
-        setPreferredSize(photoSize);
+        model.setPhoto(photo);
+        view.createWorkingCanvas(photoWidth, photoHeight);
+
+        setPreferredSize(new Dimension(photoWidth, photoHeight));
 
         repaint();
         revalidate();
@@ -149,12 +152,22 @@ public class PhotoFrame extends JComponent {
 
     public void removePhoto() {
         model.removeImage();
+        view.removeWorkingCanvas();
+
         repaint();
     }
 
     public void flipPhoto() {
         model.switchPhotoIsFlipped();
         repaint();
+    }
+
+    public BufferedImage getWorkingCanvas() {
+        return view.getWorkingCanvas();
+    }
+
+    public void clearWorkingCanvas() {
+        this.view.clearWorkingCanvas();
     }
 
     public ToolID getTool() {
