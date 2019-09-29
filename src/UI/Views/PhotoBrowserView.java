@@ -19,9 +19,9 @@ public class PhotoBrowserView implements View {
     private void installToolBar(MainWindow window) {
         JComponent container = window.getToolbar().getContainer();
 
-        JLabel photoCategoryTitle = new JLabel("Categories:");
-        photoCategoryTitle.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
-        container.add(photoCategoryTitle);
+        JLabel photoCategoriesLabel = new JLabel("Categories");
+        photoCategoriesLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
+        container.add(photoCategoriesLabel);
 
         List<String> photoCategories = Arrays.asList(
                 "People",
