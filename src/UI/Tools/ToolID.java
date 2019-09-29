@@ -3,6 +3,8 @@ package UI.Tools;
 public enum ToolID {
     NONE(""),
     PEN("Pen"),
+    RECTANGLE("Rectangle"),
+    ELLIPSIS("Ellipsis"),
     TEXT("Text");
 
     private String toolName;

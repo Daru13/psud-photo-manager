@@ -52,6 +52,16 @@ public class SinglePhotoView implements View {
         penToolButton.addActionListener((e) -> eventManager.emit(new ToolChangeEvent(ToolID.PEN)));
         container.add(penToolButton);
 
+        JRadioButton rectangleToolButton = new JRadioButton("Rectangle");
+        rectangleToolButton.setOpaque(false);
+        rectangleToolButton.addActionListener((e) -> eventManager.emit(new ToolChangeEvent(ToolID.RECTANGLE)));
+        container.add(rectangleToolButton);
+
+        JRadioButton ellipsisToolButton = new JRadioButton("Ellipsis");
+        ellipsisToolButton.setOpaque(false);
+        ellipsisToolButton.addActionListener((e) -> eventManager.emit(new ToolChangeEvent(ToolID.ELLIPSIS)));
+        container.add(ellipsisToolButton);
+
         JRadioButton textToolButton = new JRadioButton("Text");
         textToolButton.setOpaque(false);
         textToolButton.addActionListener((e) -> eventManager.emit(new ToolChangeEvent(ToolID.TEXT)));
@@ -60,6 +70,8 @@ public class SinglePhotoView implements View {
         // Group the buttons together
         ButtonGroup toolButtonsGroup = new ButtonGroup();
         toolButtonsGroup.add(penToolButton);
+        toolButtonsGroup.add(rectangleToolButton);
+        toolButtonsGroup.add(ellipsisToolButton);
         toolButtonsGroup.add(textToolButton);
 
         // Set the current tool button as selected
@@ -67,6 +79,14 @@ public class SinglePhotoView implements View {
             default:
             case PEN:
                 penToolButton.setSelected(true);
+                break;
+
+            case RECTANGLE:
+                rectangleToolButton.setSelected(true);
+                break;
+
+            case ELLIPSIS:
+                ellipsisToolButton.setSelected(true);
                 break;
 
             case TEXT:

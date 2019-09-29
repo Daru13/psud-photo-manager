@@ -1,9 +1,7 @@
 package UI.Components;
 
-import UI.Tools.Pen;
-import UI.Tools.Text;
-import UI.Tools.Tool;
-import UI.Tools.ToolID;
+import UI.Tools.Rectangle;
+import UI.Tools.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -33,6 +31,8 @@ public class PhotoFrame extends JComponent {
 
     private void initTools() {
         tools.put(ToolID.PEN, new Pen(this));
+        tools.put(ToolID.RECTANGLE, new Rectangle(this));
+        tools.put(ToolID.ELLIPSIS, new Ellipsis(this));
         tools.put(ToolID.TEXT, new Text(this));
 
         setDefaultTool();
