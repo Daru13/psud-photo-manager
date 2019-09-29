@@ -4,6 +4,7 @@ import Events.EventManager;
 import UI.Components.PhotoFrame;
 import UI.Events.PhotoChangeEvent;
 import UI.MainWindow;
+import UI.ToolBar;
 
 import javax.swing.*;
 import java.awt.*;
@@ -18,6 +19,31 @@ public class SinglePhotoView implements View {
         this.eventManager = eventManager;
 
         photoFrame = new PhotoFrame();
+    }
+
+    private void installMainContent(MainWindow window) {
+        // Put the photo component in a JPanel to center it
+        JPanel photoFrameContainer = new JPanel(new GridBagLayout());
+        photoFrameContainer.setBackground(Color.DARK_GRAY);
+        photoFrameContainer.add(photoFrame);
+
+        // Add the photo container into the scroll pane
+        JScrollPane mainContainer = window.getMainContainer();
+        mainContainer.setViewportView(photoFrameContainer);
+        mainContainer.revalidate();
+    }
+
+    private void uninstallMainContent(MainWindow window) {
+        JScrollPane mainContainer = window.getMainContainer();
+        mainContainer.setViewportView(null);
+    }
+
+    private void installToolBar(MainWindow window) {
+        ToolBar toolbar = window.getToolbar();
+    }
+
+    private void uninstallToolBar(MainWindow window) {
+
     }
 
     private void installAllEventHandlers() {
@@ -37,23 +63,16 @@ public class SinglePhotoView implements View {
 
     @Override
     public void install(MainWindow window) {
-        // Put the photo component in a JPanel to center it
-        JPanel photoFrameContainer = new JPanel(new GridBagLayout());
-        photoFrameContainer.setBackground(Color.DARK_GRAY);
-        photoFrameContainer.add(photoFrame);
-
-        // Add the photo container into the scroll pane
-        JScrollPane mainContainer = window.getMainContainer();
-        mainContainer.setViewportView(photoFrameContainer);
-        mainContainer.revalidate();
+        installMainContent(window);
+        installToolBar(window);
 
         installAllEventHandlers();
     }
 
     @Override
     public void uninstall(MainWindow window) {
-        JScrollPane mainContainer = window.getMainContainer();
-        mainContainer.setViewportView(null);
+        uninstallMainContent(window);
+        uninstallToolBar(window);
 
         uninstallAllEventHandlers();
     }
