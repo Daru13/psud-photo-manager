@@ -25,7 +25,7 @@ class PhotoFrameView {
     void clearWorkingCanvas() {
         if (workingCanvas != null) {
             Graphics2D g = (Graphics2D)workingCanvas.getGraphics();
-            //g.setBackground(Color.WHITE);
+            g.setBackground(new Color(0, 0, 0, 0));
             g.clearRect(0, 0, workingCanvas.getWidth(), workingCanvas.getHeight());
         }
     }
