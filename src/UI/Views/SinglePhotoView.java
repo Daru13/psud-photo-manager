@@ -52,6 +52,9 @@ public class SinglePhotoView implements View {
 
     @Override
     public void uninstall(MainWindow window) {
+        JScrollPane mainContainer = window.getMainContainer();
+        mainContainer.setViewportView(null);
+
         uninstallAllEventHandlers();
     }
 }
