@@ -20,7 +20,6 @@ import java.io.IOException;
  * The different parts of the GUI are delegated to more specific classes, such as MenuBar.
  *
  * @see MenuBar
- * @see MainContent
  * @see ToolBar
  * @see StatusBar
  */
