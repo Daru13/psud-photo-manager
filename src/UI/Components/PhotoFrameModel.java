@@ -1,21 +1,21 @@
 package UI.Components;
 
-import javax.swing.*;
+import java.awt.*;
 import java.awt.image.BufferedImage;
 
 class PhotoFrameModel {
     private BufferedImage photo;
-    private boolean photoIsLoaded;
+    private BufferedImage photoBack;
 
+    private boolean photoIsLoaded;
     private boolean photoIsFlipped;
-    private JPanel photoBack;
 
     PhotoFrameModel() {
         photo = null;
-        photoIsLoaded = false;
+        photoBack = null;
 
+        photoIsLoaded = false;
         photoIsFlipped = false;
-        photoBack = new JPanel();
     }
 
     BufferedImage getPhoto() {
@@ -24,13 +24,16 @@ class PhotoFrameModel {
 
     void setPhoto(BufferedImage photo) {
         this.photo = photo;
+
+        this.photoBack = new BufferedImage(photo.getWidth(), photo.getHeight(), BufferedImage.TYPE_INT_RGB);
+        Graphics2D g = this.photoBack.createGraphics();
+        g.setBackground(Color.WHITE);
+        g.clearRect(0, 0, photoBack.getWidth(), photoBack.getHeight());
+
         this.photoIsLoaded = true;
     }
 
-    void removeImage() {
-        this.photo = null;
-        this.photoIsLoaded = false;
-    }
+    BufferedImage getPhotoBack() { return photoBack; }
 
     boolean isPhotoLoaded() {
         return photoIsLoaded;
@@ -43,4 +46,13 @@ class PhotoFrameModel {
     public void switchPhotoIsFlipped() {
         photoIsFlipped = !photoIsFlipped;
     }
+
+
+    void removeImage() {
+        this.photo = null;
+        this.photoIsLoaded = false;
+        this.photoBack = null;
+        this.photoIsFlipped = false;
+    }
+
 }

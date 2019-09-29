@@ -3,8 +3,9 @@ package UI.Views;
 import Events.EventManager;
 import UI.Components.PhotoFrame;
 import UI.Events.PhotoChangeEvent;
+import UI.Events.ToolChangeEvent;
 import UI.MainWindow;
-import UI.ToolBar;
+import UI.Tools.ToolID;
 
 import javax.swing.*;
 import java.awt.*;
@@ -39,11 +40,44 @@ public class SinglePhotoView implements View {
     }
 
     private void installToolBar(MainWindow window) {
-        ToolBar toolbar = window.getToolbar();
+        JComponent container = window.getToolbar().getContainer();
+
+        // Tools
+        JLabel toolsLabel = new JLabel("Tools");
+        toolsLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
+        container.add(toolsLabel);
+
+        JRadioButton penToolButton = new JRadioButton("Pen");
+        penToolButton.setOpaque(false);
+        penToolButton.addActionListener((e) -> eventManager.emit(new ToolChangeEvent(ToolID.PEN)));
+        container.add(penToolButton);
+
+        JRadioButton textToolButton = new JRadioButton("Text");
+        textToolButton.setOpaque(false);
+        penToolButton.addActionListener((e) -> eventManager.emit(new ToolChangeEvent(ToolID.TEXT)));
+        container.add(textToolButton);
+
+        // Group the buttons together
+        ButtonGroup toolButtonsGroup = new ButtonGroup();
+        toolButtonsGroup.add(penToolButton);
+        toolButtonsGroup.add(textToolButton);
+
+        // Set the current tool button as selected
+        switch (photoFrame.getTool()) {
+            default:
+            case PEN:
+                penToolButton.setSelected(true);
+                break;
+
+            case TEXT:
+                textToolButton.setSelected(true);
+                break;
+        }
     }
 
     private void uninstallToolBar(MainWindow window) {
-
+        JComponent container = window.getToolbar().getContainer();
+        container.removeAll();
     }
 
     private void installAllEventHandlers() {
