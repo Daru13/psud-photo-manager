@@ -1,4 +1,4 @@
-package UserInterface;
+package UI.Events;
 
 import Events.Event;
 
@@ -11,7 +11,7 @@ import Events.Event;
 public class ViewChangeEvent implements Event {
     public final String nextView;
 
-    ViewChangeEvent(String nextView) {
+    public ViewChangeEvent(String nextView) {
         this.nextView = nextView;
     }
 

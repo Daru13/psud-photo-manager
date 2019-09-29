@@ -1,5 +1,5 @@
 import Events.EventManager;
-import UserInterface.MainWindow;
+import UI.MainWindow;
 
 import java.io.File;
 

@@ -1,4 +1,4 @@
-package UserInterface;
+package UI.Events;
 
 import Events.Event;
 
@@ -12,7 +12,7 @@ public class CategoryFilterChangeEvent implements Event {
     public final String category;
     public final boolean isEnabled;
 
-    CategoryFilterChangeEvent(String category, boolean isEnabled) {
+    public CategoryFilterChangeEvent(String category, boolean isEnabled) {
         this.category = category;
         this.isEnabled = isEnabled;
     }

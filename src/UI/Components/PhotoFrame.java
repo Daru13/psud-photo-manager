@@ -1,4 +1,4 @@
-package UserInterface;
+package UI.Components;
 
 import javax.swing.*;
 import java.awt.*;
@@ -6,19 +6,18 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.image.BufferedImage;
 
-class PhotoDisplayComponent extends JComponent {
-    private final PhotoDisplayComponentModel model;
-    private final PhotoDisplayComponentView view;
+public class PhotoFrame extends JComponent {
+    private final PhotoFrameModel model;
+    private final PhotoFrameView view;
 
-    public PhotoDisplayComponent() {
-        model = new PhotoDisplayComponentModel();
-        view = new PhotoDisplayComponentView();
+    public PhotoFrame() {
+        model = new PhotoFrameModel();
+        view = new PhotoFrameView();
 
         configureComponent();
     }
 
     void configureComponent() {
-        setBackground(Color.red);
         configureMouseListeners();
     }
 
@@ -26,8 +25,6 @@ class PhotoDisplayComponent extends JComponent {
         addMouseListener(new MouseListener() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                System.out.println("Mouse click on photo display: " + e.getClickCount());
-
                 if (e.getClickCount() == 2) {
                     flipPhoto();
                 }
@@ -44,14 +41,10 @@ class PhotoDisplayComponent extends JComponent {
             }
 
             @Override
-            public void mouseEntered(MouseEvent mouseEvent) {
-                System.out.println("entered");
-            }
+            public void mouseEntered(MouseEvent mouseEvent) { }
 
             @Override
-            public void mouseExited(MouseEvent mouseEvent) {
-
-            }
+            public void mouseExited(MouseEvent mouseEvent) { }
         });
     }
 
@@ -60,8 +53,6 @@ class PhotoDisplayComponent extends JComponent {
 
         Dimension photoSize = new Dimension(photo.getWidth(), photo.getHeight());
         setPreferredSize(photoSize);
-
-        System.out.println(photoSize);
 
         repaint();
         revalidate();
@@ -80,6 +71,6 @@ class PhotoDisplayComponent extends JComponent {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        view.paint((Graphics2D) g, model);
+        view.paint((Graphics2D)g, model);
     }
 }

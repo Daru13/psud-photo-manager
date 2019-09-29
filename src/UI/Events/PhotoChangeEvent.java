@@ -1,4 +1,4 @@
-package UserInterface;
+package UI.Events;
 
 import Events.Event;
 
@@ -11,9 +11,9 @@ import java.awt.image.BufferedImage;
  * @see Events.EventManager
  */
 public class PhotoChangeEvent implements Event {
-    final BufferedImage photo;
+    public final BufferedImage photo;
 
-    PhotoChangeEvent(BufferedImage photo) {
+    public PhotoChangeEvent(BufferedImage photo) {
         this.photo = photo;
     }
 

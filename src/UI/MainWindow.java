@@ -1,8 +1,10 @@
-package UserInterface;
+package UI;
 
 import Events.Event;
 import Events.EventHandler;
 import Events.EventManager;
+import UI.Events.PhotoChangeEvent;
+import UI.Views.ViewManager;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -24,28 +26,30 @@ import java.io.IOException;
  */
 public class MainWindow {
 
-    private JFrame window;
-    private EventManager eventManager;
+    private final EventManager eventManager;
+    private final ViewManager viewManager;
 
+    private final JFrame window;
+    private JScrollPane mainContainer;
     private MenuBar menuBar;
-    private MainContent mainContent;
     private ToolBar toolbar;
     private StatusBar statusBar;
 
     public MainWindow(EventManager eventManager) {
         this.eventManager = eventManager;
+        this.viewManager = new ViewManager(this, eventManager);
 
         window = new JFrame();
-        configureWindow();
-
+        createMainContainer();
         createMenuBar();
-        createMainContent();
         createToolbar();
         createStatusBar();
 
-        showWindow();
-
+        configureWindow();
+        viewManager.setInitialView();
         addDefaultEventHandlers();
+
+        showWindow();
     }
 
     private void configureWindow() {
@@ -68,14 +72,30 @@ public class MainWindow {
         window.setVisible(true);
     }
 
+    public JScrollPane getMainContainer() {
+        return mainContainer;
+    }
+
+    public MenuBar getMenuBar() {
+        return menuBar;
+    }
+
+    public ToolBar getToolbar() {
+        return toolbar;
+    }
+
+    public StatusBar getStatusBar() {
+        return statusBar;
+    }
+
+    private void createMainContainer() {
+        mainContainer = new JScrollPane();
+        window.add(mainContainer, BorderLayout.CENTER);
+    }
+
     private void createMenuBar() {
         menuBar = new MenuBar(eventManager);
         window.setJMenuBar(menuBar.getContainer());
-    }
-
-    private void createMainContent() {
-        mainContent = new MainContent(eventManager);
-        window.add(mainContent.getContainer(), BorderLayout.CENTER);
     }
 
     private void createToolbar() {

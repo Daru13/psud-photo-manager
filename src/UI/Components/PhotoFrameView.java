@@ -1,11 +1,11 @@
-package UserInterface;
+package UI.Components;
 
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
-class PhotoDisplayComponentView {
+class PhotoFrameView {
 
-    public PhotoDisplayComponentView() {
+    public PhotoFrameView() {
 
     }
 
@@ -13,14 +13,14 @@ class PhotoDisplayComponentView {
         g.drawImage(photo, 0, 0, null);
     }
 
-    public void paintCanvas(Graphics2D g, PhotoDisplayComponentModel model) {
+    public void paintCanvas(Graphics2D g, PhotoFrameModel model) {
         BufferedImage photo = model.getPhoto();
 
         g.setColor(Color.WHITE);
         g.fillRect(0, 0, photo.getWidth(), photo.getHeight());
     }
 
-    public void paint(Graphics2D g, PhotoDisplayComponentModel model) {
+    public void paint(Graphics2D g, PhotoFrameModel model) {
         if (!model.isPhotoLoaded()) {
             return;
         }

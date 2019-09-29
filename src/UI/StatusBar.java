@@ -1,7 +1,9 @@
-package UserInterface;
+package UI;
 
 import Events.EventHandler;
 import Events.EventManager;
+import UI.Events.CategoryFilterChangeEvent;
+import UI.Events.ViewChangeEvent;
 
 import javax.swing.*;
 import java.awt.*;

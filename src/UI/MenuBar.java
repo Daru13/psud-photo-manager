@@ -1,6 +1,7 @@
-package UserInterface;
+package UI;
 
 import Events.EventManager;
+import UI.Events.ViewChangeEvent;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;

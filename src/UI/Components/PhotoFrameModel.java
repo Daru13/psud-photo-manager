@@ -1,16 +1,16 @@
-package UserInterface;
+package UI.Components;
 
 import javax.swing.*;
 import java.awt.image.BufferedImage;
 
-class PhotoDisplayComponentModel {
+class PhotoFrameModel {
     private BufferedImage photo;
     private boolean photoIsLoaded;
 
     private boolean photoIsFlipped;
     private JPanel photoBack;
 
-    PhotoDisplayComponentModel() {
+    PhotoFrameModel() {
         photo = null;
         photoIsLoaded = false;
 
