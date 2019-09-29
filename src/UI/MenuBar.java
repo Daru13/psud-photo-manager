@@ -2,6 +2,7 @@ package UI;
 
 import Events.EventManager;
 import UI.Events.ViewChangeEvent;
+import UI.Views.ViewID;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;
@@ -62,7 +63,7 @@ class MenuBar {
 
         JRadioButtonMenuItem viewerRadioButton = new JRadioButtonMenuItem("Photo viewer");
         viewerRadioButton.addActionListener(
-                (e) -> eventManager.emit(new ViewChangeEvent("viewer"))
+                (e) -> eventManager.emit(new ViewChangeEvent(ViewID.SinglePhoto))
         );
         viewerRadioButton.setSelected(true);
         viewerRadioButton.setMnemonic(KeyEvent.VK_W);
@@ -70,7 +71,7 @@ class MenuBar {
 
         JRadioButtonMenuItem browerRadioButton = new JRadioButtonMenuItem("Browser");
         browerRadioButton.addActionListener(
-                (e) -> eventManager.emit(new ViewChangeEvent("browser"))
+                (e) -> eventManager.emit(new ViewChangeEvent(ViewID.PhotoBrowser))
         );
         browerRadioButton.setMnemonic(KeyEvent.VK_B);
         viewMenu.add(browerRadioButton);

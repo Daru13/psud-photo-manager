@@ -1,15 +1,11 @@
 package UI.Views;
 
+import Events.EventHandler;
 import Events.EventManager;
+import UI.Events.ViewChangeEvent;
 import UI.MainWindow;
 
 import java.util.EnumMap;
-
-enum ViewID {
-    None,
-    SinglePhoto,
-    PhotoCollection
-}
 
 public class ViewManager {
 
@@ -28,15 +24,16 @@ public class ViewManager {
         currentViewID = ViewID.None;
         currentView = null;
 
+        addDefaultEventHandlers();
         initViews();
     }
 
     private void initViews() {
         views.put(ViewID.SinglePhoto, new SinglePhotoView(eventManager));
-        views.put(ViewID.PhotoCollection, new PhotoCollectionView(eventManager));
+        views.put(ViewID.PhotoBrowser, new PhotoBrowserView(eventManager));
     }
 
-    private void setView(ViewID id) {
+    private void switchToView(ViewID id) {
         if (currentViewID == id) {
             return;
         }
@@ -51,7 +48,16 @@ public class ViewManager {
         currentView.install(window);
     }
 
-    public void setInitialView() {
-        setView(ViewID.SinglePhoto);
+    public void switchToInitialView() {
+        switchToView(ViewID.SinglePhoto);
+    }
+
+    private void addDefaultEventHandlers() {
+        eventManager.addHandler("view:change", new EventHandler<ViewChangeEvent>() {
+            @Override
+            public void handleEvent(ViewChangeEvent e) {
+                switchToView(e.nextView);
+            }
+        });
     }
 }

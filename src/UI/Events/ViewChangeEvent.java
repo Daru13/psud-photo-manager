@@ -1,6 +1,7 @@
 package UI.Events;
 
 import Events.Event;
+import UI.Views.ViewID;
 
 /**
  * A custom type of event for view changes.
@@ -9,9 +10,9 @@ import Events.Event;
  * @see Events.EventManager
  */
 public class ViewChangeEvent implements Event {
-    public final String nextView;
+    public final ViewID nextView;
 
-    public ViewChangeEvent(String nextView) {
+    public ViewChangeEvent(ViewID nextView) {
         this.nextView = nextView;
     }
 

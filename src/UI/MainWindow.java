@@ -46,7 +46,7 @@ public class MainWindow {
         createStatusBar();
 
         configureWindow();
-        viewManager.setInitialView();
+        viewManager.switchToInitialView();
         addDefaultEventHandlers();
 
         showWindow();

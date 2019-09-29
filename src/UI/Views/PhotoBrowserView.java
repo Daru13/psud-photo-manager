@@ -3,11 +3,11 @@ package UI.Views;
 import Events.EventManager;
 import UI.MainWindow;
 
-public class PhotoCollectionView implements View {
+public class PhotoBrowserView implements View {
 
     private final EventManager eventManager;
 
-    public PhotoCollectionView(EventManager eventManager) {
+    public PhotoBrowserView(EventManager eventManager) {
         this.eventManager = eventManager;
     }
 
