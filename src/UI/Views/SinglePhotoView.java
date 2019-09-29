@@ -39,6 +39,7 @@ public class SinglePhotoView implements View {
     public void install(MainWindow window) {
         // Put the photo component in a JPanel to center it
         JPanel photoFrameContainer = new JPanel(new GridBagLayout());
+        photoFrameContainer.setBackground(Color.DARK_GRAY);
         photoFrameContainer.add(photoFrame);
 
         // Add the photo container into the scroll pane
