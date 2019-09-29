@@ -161,7 +161,7 @@ public class PhotoFrame extends JComponent {
         return currentToolID;
     }
 
-    void setTool(ToolID toolID) {
+    public void setTool(ToolID toolID) {
         if (currentToolID == toolID) {
             return;
         }

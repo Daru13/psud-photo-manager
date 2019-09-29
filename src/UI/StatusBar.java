@@ -3,6 +3,7 @@ package UI;
 import Events.EventHandler;
 import Events.EventManager;
 import UI.Events.CategoryFilterChangeEvent;
+import UI.Events.ToolChangeEvent;
 import UI.Events.ViewChangeEvent;
 
 import javax.swing.*;
@@ -57,6 +58,10 @@ class StatusBar {
                     }
                 }
         );
+
+        eventManager.addHandler("tool:change",
+                (ToolChangeEvent e) -> statusLabel.setText("Changed tool to " + e.toolID.getName() + ".")
+        );;
     }
 
     private void createStatusLabel() {

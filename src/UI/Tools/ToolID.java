@@ -11,7 +11,7 @@ public enum ToolID {
         this.toolName = toolName;
     }
 
-    String getName() {
+    public String getName() {
         return toolName;
     }
 }

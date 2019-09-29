@@ -54,7 +54,7 @@ public class SinglePhotoView implements View {
 
         JRadioButton textToolButton = new JRadioButton("Text");
         textToolButton.setOpaque(false);
-        penToolButton.addActionListener((e) -> eventManager.emit(new ToolChangeEvent(ToolID.TEXT)));
+        textToolButton.addActionListener((e) -> eventManager.emit(new ToolChangeEvent(ToolID.TEXT)));
         container.add(textToolButton);
 
         // Group the buttons together
@@ -82,10 +82,13 @@ public class SinglePhotoView implements View {
 
     private void installAllEventHandlers() {
         eventManager.addHandler("photo:change", this::handlePhotoChangeEvent);
+        eventManager.addHandler("tool:change", this::handleToolChangeEvent);
     }
 
     private void uninstallAllEventHandlers() {
         eventManager.removeHandler("photo:change", this::handlePhotoChangeEvent);
+        eventManager.removeHandler("tool:change", this::handleToolChangeEvent);
+
     }
 
     private void handlePhotoChangeEvent(PhotoChangeEvent event) {
@@ -93,6 +96,10 @@ public class SinglePhotoView implements View {
 
         Dimension photoSize = new Dimension(event.photo.getWidth(), event.photo.getHeight());
         photoFrame.setSize(photoFrame.getParent().getSize());
+    }
+
+    private void handleToolChangeEvent(ToolChangeEvent event) {
+        photoFrame.setTool(event.toolID);
     }
 
     @Override
