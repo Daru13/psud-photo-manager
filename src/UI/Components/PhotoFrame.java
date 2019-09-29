@@ -13,9 +13,9 @@ public class PhotoFrame extends JComponent {
     public final PhotoFrameModel model;
     public final PhotoFrameView view;
 
-    private EnumMap<ToolID, Tool> tools;
+    private EnumMap<ToolID, AbstractTool> tools;
     private ToolID currentToolID;
-    private Tool currentTool;
+    private AbstractTool currentTool;
 
     public PhotoFrame() {
         model = new PhotoFrameModel();

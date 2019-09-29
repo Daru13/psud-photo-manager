@@ -7,7 +7,7 @@ import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Pen extends Tool {
+public class Pen extends AbstractTool {
 
     private boolean penIsDown;
     private int currentPathNbPoints;
