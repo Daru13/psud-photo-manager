@@ -35,6 +35,17 @@ public abstract class AbstractGeometricShapeTool extends AbstractTool {
         drawEllipsis(event.getX(), event.getY(), true);
     }
 
+    private void configureGraphics(Graphics2D g, boolean draft) {
+        // Rendering quality
+        g.setRenderingHint(RenderingHints.KEY_RENDERING,
+                draft ? RenderingHints.VALUE_RENDER_SPEED : RenderingHints.VALUE_RENDER_QUALITY);
+
+        // Drawing style
+        ToolSettings settings = photoFrame.getToolSettings();
+        g.setColor(settings.getColor());
+        g.setStroke(new BasicStroke(settings.getThickness()));
+    }
+
     abstract protected void drawShape(Graphics2D g, int originX, int originY, int width, int height);
 
     private void drawEllipsis(int secondClickX, int secondClickY, boolean useWorkingCanvas) {
@@ -46,15 +57,12 @@ public abstract class AbstractGeometricShapeTool extends AbstractTool {
             photoFrame.clearWorkingCanvas();
         }
 
-        ToolSettings settings = photoFrame.getToolSettings();
-        g.setColor(settings.getColor());
-        g.setStroke(new BasicStroke(settings.getThickness()));
-
         int originX = Math.min(firstClickX, secondClickX);
         int originY = Math.min(firstClickY, secondClickY);
         int width = Math.max(firstClickX, secondClickX) - originX;
         int height = Math.max(firstClickY, secondClickY) - originY;
 
+        configureGraphics(g, useWorkingCanvas);
         drawShape(g, originX, originY, width, height);
         photoFrame.repaint();
     }

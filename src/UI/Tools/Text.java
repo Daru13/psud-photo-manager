@@ -55,6 +55,16 @@ public class Text extends AbstractTool {
         }
     }
 
+    private void configureGraphics(Graphics2D g, boolean draft) {
+        // Rendering quality
+        g.setRenderingHint(RenderingHints.KEY_RENDERING,
+                draft ? RenderingHints.VALUE_RENDER_SPEED : RenderingHints.VALUE_RENDER_QUALITY);
+
+        // Drawing style
+        ToolSettings settings = photoFrame.getToolSettings();
+        g.setColor(settings.getColor());
+    }
+
     private void drawString(boolean useWorkingCanvas) {
         Graphics2D g = useWorkingCanvas
                 ? (Graphics2D)photoFrame.getWorkingCanvas().getGraphics()
@@ -64,10 +74,7 @@ public class Text extends AbstractTool {
             photoFrame.clearWorkingCanvas();
         }
 
-        ToolSettings settings = photoFrame.getToolSettings();
-        g.setColor(settings.getColor());
-        //g.setStroke(new BasicStroke(settings.getThickness()));
-
+        configureGraphics(g, useWorkingCanvas);
         g.drawString(stringBuilder.toString(), firstClickX, firstClickY);
         photoFrame.repaint();
     }

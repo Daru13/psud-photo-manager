@@ -46,11 +46,18 @@ class PhotoFrameView {
         g.drawImage(workingCanvas, 0, 0, null);
     }
 
+    private void setDefaultRenderingHints(Graphics2D g) {
+        g.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        g.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+    }
 
     public void paint(Graphics2D g, PhotoFrameModel model) {
         if (!model.isPhotoLoaded()) {
             return;
         }
+
+        setDefaultRenderingHints(g);
 
         // Either draw the photo or the photo back + the working canvas at its back
         if (model.isPhotoFlipped()) {

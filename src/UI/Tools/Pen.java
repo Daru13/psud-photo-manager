@@ -30,7 +30,8 @@ public class Pen extends AbstractTool {
 
     @Override
     public void mouseReleased(MouseEvent event) {
-        drawCurrentPath();
+        drawCurrentPath(false);
+        photoFrame.clearWorkingCanvas();
 
         penIsDown = false;
         currentPathNbPoints = 0;
@@ -45,22 +46,38 @@ public class Pen extends AbstractTool {
             currentPathY.add(new Integer(event.getY()));
             currentPathNbPoints++;
 
-            drawCurrentPath();
+            drawCurrentPath(true);
         }
     }
 
-    private void drawCurrentPath() {
-        Graphics2D g = (Graphics2D)photoFrame.getPhotoBack().getGraphics();
+    private void configureGraphics(Graphics2D g, boolean draft) {
+        // Rendering quality
+        g.setRenderingHint(RenderingHints.KEY_RENDERING,
+                draft ? RenderingHints.VALUE_RENDER_SPEED : RenderingHints.VALUE_RENDER_QUALITY);
+        g.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+                draft ? RenderingHints.VALUE_ANTIALIAS_OFF : RenderingHints.VALUE_ANTIALIAS_ON);
+
+        // Drawing style
+        ToolSettings settings = photoFrame.getToolSettings();
+        g.setColor(settings.getColor());
+        g.setStroke(new BasicStroke(settings.getThickness()));
+    }
+
+    private void drawCurrentPath(boolean useWorkingCanvas) {
+        Graphics2D g = useWorkingCanvas
+                ? (Graphics2D)photoFrame.getWorkingCanvas().getGraphics()
+                : (Graphics2D)photoFrame.getPhotoBack().getGraphics();
+
+        if (useWorkingCanvas) {
+            photoFrame.clearWorkingCanvas();
+        }
 
         // Integer list int array conversion using Java 8 streams
         // Source: https://stackoverflow.com/a/39403890
         int[] xCoordinates = currentPathX.stream().mapToInt(Integer::intValue).toArray();
         int[] yCoordinates = currentPathY.stream().mapToInt(Integer::intValue).toArray();
 
-        ToolSettings settings = photoFrame.getToolSettings();
-        g.setColor(settings.getColor());
-        g.setStroke(new BasicStroke(settings.getThickness()));
-
+        configureGraphics(g, useWorkingCanvas);
         g.drawPolyline(xCoordinates, yCoordinates, currentPathNbPoints);
         photoFrame.repaint();
     }
