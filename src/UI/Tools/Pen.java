@@ -57,8 +57,9 @@ public class Pen extends AbstractTool {
         int[] xCoordinates = currentPathX.stream().mapToInt(Integer::intValue).toArray();
         int[] yCoordinates = currentPathY.stream().mapToInt(Integer::intValue).toArray();
 
-        g.setColor(Color.BLACK);
-        g.setStroke(new BasicStroke(5));
+        ToolSettings settings = photoFrame.getToolSettings();
+        g.setColor(settings.getColor());
+        g.setStroke(new BasicStroke(settings.getThickness()));
 
         g.drawPolyline(xCoordinates, yCoordinates, currentPathNbPoints);
         photoFrame.repaint();

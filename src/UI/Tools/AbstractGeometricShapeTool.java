@@ -46,7 +46,9 @@ public abstract class AbstractGeometricShapeTool extends AbstractTool {
             photoFrame.clearWorkingCanvas();
         }
 
-        g.setColor(Color.BLACK);
+        ToolSettings settings = photoFrame.getToolSettings();
+        g.setColor(settings.getColor());
+        g.setStroke(new BasicStroke(settings.getThickness()));
 
         int originX = Math.min(firstClickX, secondClickX);
         int originY = Math.min(firstClickY, secondClickY);

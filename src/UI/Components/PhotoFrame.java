@@ -14,6 +14,7 @@ public class PhotoFrame extends JComponent {
     public final PhotoFrameView view;
 
     private EnumMap<ToolID, Tool> tools;
+    private ToolSettings toolSettings;
     private ToolID currentToolID;
     private Tool currentTool;
 
@@ -22,6 +23,7 @@ public class PhotoFrame extends JComponent {
         view = new PhotoFrameView();
 
         tools = new EnumMap<>(ToolID.class);
+        toolSettings = new ToolSettings();
         currentToolID = ToolID.NONE;
         currentTool = null;
 
@@ -189,6 +191,10 @@ public class PhotoFrame extends JComponent {
 
     private void setDefaultTool() {
         setTool(ToolID.PEN);
+    }
+
+    public ToolSettings getToolSettings() {
+        return toolSettings;
     }
 
     @Override
