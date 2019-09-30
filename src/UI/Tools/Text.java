@@ -24,6 +24,37 @@ public class Text extends AbstractTool {
         firstClickY = 0;
     }
 
+    private void appendCharacter(char character) {
+        stringBuilder.append(character);
+
+        drawString(true);
+    }
+
+    private void eraseCharacter() {
+        int nbCharacters = stringBuilder.length();
+        stringBuilder.deleteCharAt(nbCharacters - 1);
+
+        drawString(true);
+    }
+
+    private void startEditing(int fromX, int fromY) {
+        if (!photoFrame.hasFocus()) {
+            photoFrame.requestFocusInWindow();
+        }
+
+        firstClickX = fromX;
+        firstClickY = fromY;
+        currentlyEditing = true;
+    }
+
+    private void stopEditing() {
+        drawString(false);
+        photoFrame.clearWorkingCanvas();
+
+        stringBuilder = new StringBuilder();
+        currentlyEditing = false;
+    }
+
     @Override
     public void mouseClicked(MouseEvent event) {
         if (event.getClickCount() != 1) {
@@ -31,27 +62,39 @@ public class Text extends AbstractTool {
         }
 
         if (currentlyEditing) {
-            drawString(false);
-
-            stringBuilder = new StringBuilder();
-            currentlyEditing = false;
+            stopEditing();
         }
         else {
-            if (!photoFrame.hasFocus()) {
-                photoFrame.requestFocusInWindow();
-            }
+            startEditing(event.getX(), event.getY());
+        }
+    }
 
-            firstClickX = event.getX();
-            firstClickY = event.getY();
-            currentlyEditing = true;
+    @Override
+    public void keyPressed(KeyEvent event) {
+        if (!currentlyEditing) {
+            return;
+        }
+
+        switch (event.getKeyCode()) {
+            case KeyEvent.VK_BACK_SPACE:
+                eraseCharacter();
+                break;
+
+            case KeyEvent.VK_ENTER:
+                stopEditing();
+                break;
         }
     }
 
     @Override
     public void keyTyped(KeyEvent event) {
-        if (currentlyEditing) {
-            stringBuilder.append(event.getKeyChar());
-            drawString(true);
+        if (!currentlyEditing) {
+            return;
+        }
+
+        char character = event.getKeyChar();
+        if (!Character.isISOControl(character)) {
+            appendCharacter(character);
         }
     }
 
@@ -63,6 +106,7 @@ public class Text extends AbstractTool {
         // Drawing style
         ToolSettings settings = photoFrame.getToolSettings();
         g.setColor(settings.getColor());
+        g.setFont(new Font(settings.getFontFamily(), Font.PLAIN, settings.getFontSize()));
     }
 
     private void drawString(boolean useWorkingCanvas) {
