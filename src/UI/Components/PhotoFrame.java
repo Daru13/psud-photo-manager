@@ -41,8 +41,11 @@ public class PhotoFrame extends JComponent {
     }
 
     void configureComponent() {
+        setFocusable(true);
+
         configureMouseListeners();
         configureMouseMotionListeners();
+        configureKeyListener();
     }
 
     void configureMouseListeners() {
