@@ -153,10 +153,13 @@ public class PhotoFrame extends JComponent {
     }
 
     public void removePhoto() {
-        model.removeImage();
+        model.removePhoto();
         view.removeWorkingCanvas();
 
+        setPreferredSize(new Dimension(0, 0));
+
         repaint();
+        revalidate();
     }
 
     public void flipPhoto() {

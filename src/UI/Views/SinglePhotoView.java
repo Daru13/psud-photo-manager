@@ -1,5 +1,6 @@
 package UI.Views;
 
+import Events.Event;
 import Events.EventManager;
 import UI.Components.PhotoFrame;
 import UI.Events.PhotoChangeEvent;
@@ -148,11 +149,13 @@ public class SinglePhotoView implements View {
 
     private void installAllEventHandlers() {
         eventManager.addHandler("photo:change", this::handlePhotoChangeEvent);
+        eventManager.addHandler("file:delete", this::handlePhotoDeleteEvent);
         eventManager.addHandler("tool:change", this::handleToolChangeEvent);
     }
 
     private void uninstallAllEventHandlers() {
         eventManager.removeHandler("photo:change", this::handlePhotoChangeEvent);
+        eventManager.removeHandler("file:delete", this::handlePhotoDeleteEvent);
         eventManager.removeHandler("tool:change", this::handleToolChangeEvent);
 
     }
@@ -162,6 +165,10 @@ public class SinglePhotoView implements View {
 
         Dimension photoSize = new Dimension(event.photo.getWidth(), event.photo.getHeight());
         photoFrame.setSize(photoFrame.getParent().getSize());
+    }
+
+    private void handlePhotoDeleteEvent(Event event) {
+        photoFrame.removePhoto();
     }
 
     private void handleToolChangeEvent(ToolChangeEvent event) {

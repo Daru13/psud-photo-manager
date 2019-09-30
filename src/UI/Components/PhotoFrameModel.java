@@ -48,10 +48,11 @@ class PhotoFrameModel {
     }
 
 
-    void removeImage() {
+    void removePhoto() {
         this.photo = null;
-        this.photoIsLoaded = false;
         this.photoBack = null;
+
+        this.photoIsLoaded = false;
         this.photoIsFlipped = false;
     }
 
