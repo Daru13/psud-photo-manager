@@ -149,15 +149,21 @@ public class Text extends AbstractTool {
         }
     }
 
-    private void configureGraphics(Graphics2D g, boolean draft) {
-        // Rendering quality
+    private void configureRenderingHints(Graphics2D g, boolean draft) {
         g.setRenderingHint(RenderingHints.KEY_RENDERING,
                 draft ? RenderingHints.VALUE_RENDER_SPEED : RenderingHints.VALUE_RENDER_QUALITY);
+    }
 
-        // Drawing style
+    private void applyToolSettings(Graphics2D g) {
         ToolSettings settings = photoFrame.getToolSettings();
+
         g.setColor(settings.getColor());
         g.setFont(new Font(settings.getFontFamily(), Font.PLAIN, settings.getFontSize()));
+    }
+
+    private void configureGraphics(Graphics2D g, boolean draft) {
+        configureRenderingHints(g, draft);
+        applyToolSettings(g);
     }
 
     private void drawString(boolean useWorkingCanvas) {
@@ -167,19 +173,21 @@ public class Text extends AbstractTool {
 
         if (useWorkingCanvas) {
             photoFrame.clearWorkingCanvas();
-            drawCaret();
         }
 
         configureGraphics(g, useWorkingCanvas);
         g.drawString(stringBuilder.toString(), firstClickX, firstClickY);
+
+        if (useWorkingCanvas) {
+            drawCaret();
+        }
+
         photoFrame.repaint();
     }
 
     private void drawCaret() {
         Graphics2D g = (Graphics2D)photoFrame.getWorkingCanvas().getGraphics();
-
-        ToolSettings settings = photoFrame.getToolSettings();
-        g.setFont(new Font(settings.getFontFamily(), Font.PLAIN, settings.getFontSize()));
+        applyToolSettings(g);
 
         String stringToCaret = stringBuilder
                 .toString()
