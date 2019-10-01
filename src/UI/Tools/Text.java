@@ -5,11 +5,14 @@ import UI.Components.PhotoFrame;
 import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.geom.Rectangle2D;
 
 public class Text extends AbstractTool {
 
-    private StringBuilder stringBuilder;
     private boolean currentlyEditing;
+    private StringBuilder stringBuilder;
+    private int stringLength;
+    private int charIndexBeforeCaret;
 
     private int firstClickX;
     private int firstClickY;
@@ -18,21 +21,49 @@ public class Text extends AbstractTool {
         super(photoFrame);
 
         stringBuilder = new StringBuilder();
+        stringLength = 0;
+        charIndexBeforeCaret = -1;
         currentlyEditing = false;
 
         firstClickX = 0;
         firstClickY = 0;
     }
 
-    private void appendCharacter(char character) {
-        stringBuilder.append(character);
+    private void insertCharacter(char character) {
+        if (charIndexBeforeCaret == stringLength) {
+            stringBuilder.append(character);
+        }
+        else {
+            stringBuilder.insert(charIndexBeforeCaret + 1, character);
+        }
+
+        stringLength++;
+        charIndexBeforeCaret++;
 
         drawString(true);
     }
 
     private void eraseCharacter() {
-        int nbCharacters = stringBuilder.length();
-        stringBuilder.deleteCharAt(nbCharacters - 1);
+        if (stringLength == 0) {
+            return;
+        }
+
+        stringBuilder.deleteCharAt(stringLength - 1);
+        stringLength--;
+        charIndexBeforeCaret--;
+
+        drawString(true);
+    }
+
+    private void moveCaret(int offset) {
+        charIndexBeforeCaret += offset;
+
+        if (charIndexBeforeCaret < -1) {
+            charIndexBeforeCaret = -1;
+        }
+        else if (charIndexBeforeCaret > stringLength - 1) {
+            charIndexBeforeCaret = stringLength - 1;
+        }
 
         drawString(true);
     }
@@ -45,6 +76,8 @@ public class Text extends AbstractTool {
         firstClickX = fromX;
         firstClickY = fromY;
         currentlyEditing = true;
+
+        drawString(true);
     }
 
     private void stopEditing() {
@@ -52,6 +85,8 @@ public class Text extends AbstractTool {
         photoFrame.clearWorkingCanvas();
 
         stringBuilder = new StringBuilder();
+        stringLength = 0;
+        charIndexBeforeCaret = -1;
         currentlyEditing = false;
     }
 
@@ -80,6 +115,22 @@ public class Text extends AbstractTool {
                 eraseCharacter();
                 break;
 
+            case KeyEvent.VK_LEFT:
+                moveCaret(-1);
+                break;
+
+            case KeyEvent.VK_RIGHT:
+                moveCaret(+1);
+                break;
+
+            case KeyEvent.VK_DOWN:
+                moveCaret(-charIndexBeforeCaret - 1);
+                break;
+
+            case KeyEvent.VK_UP:
+                moveCaret(stringLength - charIndexBeforeCaret - 1);
+                break;
+
             case KeyEvent.VK_ENTER:
                 stopEditing();
                 break;
@@ -94,7 +145,7 @@ public class Text extends AbstractTool {
 
         char character = event.getKeyChar();
         if (!Character.isISOControl(character)) {
-            appendCharacter(character);
+            insertCharacter(character);
         }
     }
 
@@ -116,10 +167,30 @@ public class Text extends AbstractTool {
 
         if (useWorkingCanvas) {
             photoFrame.clearWorkingCanvas();
+            drawCaret();
         }
 
         configureGraphics(g, useWorkingCanvas);
         g.drawString(stringBuilder.toString(), firstClickX, firstClickY);
         photoFrame.repaint();
+    }
+
+    private void drawCaret() {
+        Graphics2D g = (Graphics2D)photoFrame.getWorkingCanvas().getGraphics();
+
+        ToolSettings settings = photoFrame.getToolSettings();
+        g.setFont(new Font(settings.getFontFamily(), Font.PLAIN, settings.getFontSize()));
+
+        String stringToCaret = stringBuilder
+                .toString()
+                .substring(0, Math.min(charIndexBeforeCaret + 1, stringLength));
+
+        FontMetrics metrics = g.getFontMetrics();
+        Rectangle2D stringBounds = metrics.getStringBounds(stringToCaret, g);
+        int caretOffsetX = (int)stringBounds.getWidth();
+        int caretHeight = metrics.getHeight();
+
+        g.setColor(Color.BLACK);
+        g.fillRect(firstClickX + caretOffsetX, firstClickY - caretHeight, 1, caretHeight);
     }
 }
