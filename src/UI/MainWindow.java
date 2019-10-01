@@ -8,6 +8,7 @@ import UI.Views.ViewManager;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
+import javax.swing.filechooser.FileFilter;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
@@ -112,17 +113,53 @@ public class MainWindow {
         eventManager.addHandler("file:import:begin", new EventHandler<Event>() {
             public void handleEvent(Event e) {
                 JFileChooser fileChooser = new JFileChooser();
+                FileFilter imageFileFilter = new FileFilter() {
+                    @Override
+                    public boolean accept(File file) {
+                        if (file.isDirectory()) {
+                            return true;
+                        }
+
+                        String regex = "(.*)\\.(jpg|jpeg|png|bmp|gif)";
+                        return file.getPath().toLowerCase().matches(regex);
+                    }
+
+                    @Override
+                    public String getDescription() {
+                        return "Image files (jpg, png, bmp, gif)";
+                    }
+                };
+
+                fileChooser.setFileFilter(imageFileFilter);
                 fileChooser.showOpenDialog(window);
 
                 try {
                     File file = fileChooser.getSelectedFile();
                     BufferedImage photo = ImageIO.read(file);
 
-                    eventManager.emit(new PhotoChangeEvent(photo));
+                    if (photo != null) {
+                        eventManager.emit(new PhotoChangeEvent(photo));
+                        eventManager.emit("file:import:end");
+                    }
+                    else {
+                        System.err.println("Error: the file could not be decoded as an image.");
+                        JOptionPane.showMessageDialog(null,
+                                "Error while decoding the file as an image.",
+                                "Import failed",
+                                JOptionPane.ERROR_MESSAGE
+                        );
+                    }
                 }
                 catch (IOException exception) {
-                    System.err.println("Error: the file could not be opened as an image.");
-                    System.err.print(exception);
+                    System.err.println("Error: the file could not be read correctly.");
+                    JOptionPane.showMessageDialog(null,
+                            "Error while reading the content of the file.",
+                            "Import failed",
+                            JOptionPane.ERROR_MESSAGE
+                    );
+                }
+                catch (IllegalArgumentException exception) {
+                    // Ignore this type of exception here
                 }
 
             }
