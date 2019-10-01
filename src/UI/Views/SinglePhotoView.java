@@ -109,6 +109,24 @@ public class SinglePhotoView implements View {
         settingsLabel.setBorder(BorderFactory.createEmptyBorder(40, 0, 20, 0));
         container.add(settingsLabel);
 
+
+        // Color
+        container.add(new JLabel("Color"));
+        JButton chooseColorButton = new JButton("Select color");
+        chooseColorButton.addActionListener((e) -> {
+            Color newColor = JColorChooser.showDialog(container, "Select the main color", Color.BLACK);
+
+            if (newColor != null) {
+                photoFrame.getToolSettings().setColor(newColor);
+            }
+        });
+
+        container.add(chooseColorButton);
+
+
+        // Thickness
+        container.add(new JLabel("Line thickness"));
+
         JSlider thicknessSlider = new JSlider(JSlider.HORIZONTAL,
                 1, 20, 5);
         thicknessSlider.setMajorTickSpacing(5);
@@ -120,7 +138,6 @@ public class SinglePhotoView implements View {
             int newThickness = thicknessSlider.getValue();
             photoFrame.getToolSettings().setThickness(newThickness);
         });
-        container.add(thicknessSlider);
 
         Hashtable thicknessSliderLabels = new Hashtable();
         thicknessSliderLabels.put(1, new JLabel(Integer.toString((1))));
@@ -129,16 +146,49 @@ public class SinglePhotoView implements View {
         thicknessSlider.setLabelTable(thicknessSliderLabels);
         thicknessSlider.setPaintLabels(true);
 
+        container.add(thicknessSlider);
 
-        JButton chooseColorButton = new JButton("Select color");
-        chooseColorButton.addActionListener((e) -> {
-            Color newColor = JColorChooser.showDialog(container, "Select the main color", Color.BLACK);
 
-            if (newColor != null) {
-                photoFrame.getToolSettings().setColor(newColor);
-            }
+        // Font family
+        container.add(new JLabel("Font family"));
+
+        String[] availableFonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+        JComboBox<String> fontFamilyComboBox = new JComboBox<>(availableFonts);
+        fontFamilyComboBox.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
+        fontFamilyComboBox.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
+        fontFamilyComboBox.setOpaque(false);
+        fontFamilyComboBox.addItemListener((e) -> {
+            String newFontFamily = (String)e.getItem();
+            photoFrame.getToolSettings().setFontFamily(newFontFamily);
         });
-        container.add(chooseColorButton);
+
+        container.add(fontFamilyComboBox);
+
+
+        // Font size
+        container.add(new JLabel("Font size"));
+
+        JSlider fontSizeSlider = new JSlider(JSlider.HORIZONTAL,
+                8, 72, 16);
+        fontSizeSlider.setMinorTickSpacing(4);
+        fontSizeSlider.setPaintTicks(true);
+        fontSizeSlider.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
+        fontSizeSlider.setOpaque(false);
+        fontSizeSlider.addChangeListener((e) -> {
+            int newFontSize = fontSizeSlider.getValue();
+            photoFrame.getToolSettings().setFontSize(newFontSize);
+        });
+
+        Hashtable fontSizeSliderLabels = new Hashtable();
+        fontSizeSliderLabels.put(8, new JLabel(Integer.toString((8))));
+        fontSizeSliderLabels.put(24, new JLabel(Integer.toString((24))));
+        fontSizeSliderLabels.put(40, new JLabel(Integer.toString((40))));
+        fontSizeSliderLabels.put(56, new JLabel(Integer.toString((56))));
+        fontSizeSliderLabels.put(72, new JLabel(Integer.toString((72))));
+        fontSizeSlider.setLabelTable(fontSizeSliderLabels);
+        fontSizeSlider.setPaintLabels(true);
+
+        container.add(fontSizeSlider);
     }
 
 
