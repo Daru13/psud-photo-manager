@@ -100,7 +100,7 @@ public class MainWindow {
 
     private void createToolbar() {
         toolbar = new ToolBar(eventManager);
-        window.add(toolbar.getContainer(), BorderLayout.WEST);
+        window.add(toolbar.getToolbar(), BorderLayout.WEST);
     }
 
     private void createStatusBar() {

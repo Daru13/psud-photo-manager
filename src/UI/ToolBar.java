@@ -11,27 +11,43 @@ import java.awt.*;
  */
 public class ToolBar {
     private EventManager eventManager;
-    private JToolBar container;
+
+    private JScrollPane scrollPane;
+    private JPanel innerContainer;
 
     ToolBar(EventManager eventManager) {
         this.eventManager = eventManager;
+        scrollPane = new JScrollPane();
+        innerContainer = new JPanel();
 
-        container = new JToolBar();
-        configureContainer();
+        configureScrollPane();
+        configureInnerContainer();
     }
 
-    public JToolBar getContainer() {
-        return container;
+    public JScrollPane getToolbar() {
+        return scrollPane;
     }
 
-    private void configureContainer() {
-        container.setLayout(new BoxLayout(container, BoxLayout.PAGE_AXIS));
+    public JPanel getContainer() {
+        return innerContainer;
+    }
 
-        container.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
-        container.setBackground(new Color(0xDDDDDD));
-        container.setFloatable(false);
+    private void configureScrollPane() {
+        scrollPane.setViewportView(innerContainer);
 
-        int maxWidth = Math.max(400, container.getWidth() / 4);
-        container.setMaximumSize(new Dimension(maxWidth, Integer.MAX_VALUE));
+        scrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+
+
+    }
+
+    private void configureInnerContainer() {
+        innerContainer.setLayout(new BoxLayout(innerContainer, BoxLayout.PAGE_AXIS));
+        innerContainer.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
+        innerContainer.setBackground(new Color(0xDDDDDD));
+        //innerContainer.setAlignmentX(Component.LEFT_ALIGNMENT);
+
+        int maxWidth = Math.max(400, innerContainer.getWidth() / 4);
+        innerContainer.setMaximumSize(new Dimension(maxWidth, Integer.MAX_VALUE));
     }
 }
