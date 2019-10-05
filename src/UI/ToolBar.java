@@ -43,11 +43,11 @@ public class ToolBar {
 
     private void configureInnerContainer() {
         innerContainer.setLayout(new BoxLayout(innerContainer, BoxLayout.PAGE_AXIS));
-        innerContainer.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
+        //innerContainer.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
         innerContainer.setBackground(new Color(0xDDDDDD));
         //innerContainer.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        int maxWidth = Math.max(400, innerContainer.getWidth() / 4);
+        int maxWidth = Math.min(250, innerContainer.getWidth() / 4);
         innerContainer.setMaximumSize(new Dimension(maxWidth, Integer.MAX_VALUE));
     }
 }

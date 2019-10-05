@@ -3,14 +3,14 @@ package UI.Views;
 import Events.Event;
 import Events.EventManager;
 import UI.Components.PhotoFrame;
+import UI.Components.ToolPanel;
+import UI.Components.ToolSettingPanel;
 import UI.Events.PhotoChangeEvent;
 import UI.Events.ToolChangeEvent;
 import UI.MainWindow;
-import UI.Tools.ToolID;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.Hashtable;
 
 public class SinglePhotoView implements View {
 
@@ -47,148 +47,12 @@ public class SinglePhotoView implements View {
 
     private void installToolBarTools(MainWindow window) {
         JComponent container = window.getToolbar().getContainer();
-
-        JLabel toolsLabel = new JLabel("Tools");
-        toolsLabel.setFont(new Font(toolsLabel.getFont().getName(), Font.BOLD, 16));
-        toolsLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 15, 0));
-        container.add(toolsLabel);
-
-        JRadioButton penToolButton = new JRadioButton("Pen");
-        penToolButton.setOpaque(false);
-        penToolButton.addActionListener((e) -> eventManager.emit(new ToolChangeEvent(ToolID.PEN)));
-        container.add(penToolButton);
-
-        JRadioButton rectangleToolButton = new JRadioButton("Rectangle");
-        rectangleToolButton.setOpaque(false);
-        rectangleToolButton.addActionListener((e) -> eventManager.emit(new ToolChangeEvent(ToolID.RECTANGLE)));
-        container.add(rectangleToolButton);
-
-        JRadioButton ellipsisToolButton = new JRadioButton("Ellipsis");
-        ellipsisToolButton.setOpaque(false);
-        ellipsisToolButton.addActionListener((e) -> eventManager.emit(new ToolChangeEvent(ToolID.ELLIPSIS)));
-        container.add(ellipsisToolButton);
-
-        JRadioButton textToolButton = new JRadioButton("Text");
-        textToolButton.setOpaque(false);
-        textToolButton.addActionListener((e) -> eventManager.emit(new ToolChangeEvent(ToolID.TEXT)));
-        container.add(textToolButton);
-
-        // Group the buttons together
-        ButtonGroup toolButtonsGroup = new ButtonGroup();
-        toolButtonsGroup.add(penToolButton);
-        toolButtonsGroup.add(rectangleToolButton);
-        toolButtonsGroup.add(ellipsisToolButton);
-        toolButtonsGroup.add(textToolButton);
-
-        // Set the current tool button as selected
-        switch (photoFrame.getTool()) {
-            default:
-            case PEN:
-                penToolButton.setSelected(true);
-                break;
-
-            case RECTANGLE:
-                rectangleToolButton.setSelected(true);
-                break;
-
-            case ELLIPSIS:
-                ellipsisToolButton.setSelected(true);
-                break;
-
-            case TEXT:
-                textToolButton.setSelected(true);
-                break;
-        }
+        container.add(new ToolPanel(photoFrame, eventManager));
     }
 
     private void installToolBarToolSettings(MainWindow window) {
         JComponent container = window.getToolbar().getContainer();
-
-        JLabel settingsLabel = new JLabel("Settings");
-        settingsLabel.setFont(new Font(settingsLabel.getFont().getName(), Font.BOLD, 16));
-        settingsLabel.setBorder(BorderFactory.createEmptyBorder(40, 0, 20, 0));
-        container.add(settingsLabel);
-
-
-        // Color
-        container.add(new JLabel("Color"));
-        JButton chooseColorButton = new JButton("Select color");
-        chooseColorButton.addActionListener((e) -> {
-            Color newColor = JColorChooser.showDialog(container, "Select the main color", Color.BLACK);
-
-            if (newColor != null) {
-                photoFrame.getToolSettings().setColor(newColor);
-            }
-        });
-
-        container.add(chooseColorButton);
-
-
-        // Thickness
-        container.add(new JLabel("Line thickness"));
-
-        JSlider thicknessSlider = new JSlider(JSlider.HORIZONTAL,
-                1, 20, 5);
-        thicknessSlider.setMajorTickSpacing(5);
-        thicknessSlider.setMinorTickSpacing(1);
-        thicknessSlider.setPaintTicks(true);
-        thicknessSlider.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
-        thicknessSlider.setOpaque(false);
-        thicknessSlider.addChangeListener((e) -> {
-            int newThickness = thicknessSlider.getValue();
-            photoFrame.getToolSettings().setThickness(newThickness);
-        });
-
-        Hashtable thicknessSliderLabels = new Hashtable();
-        thicknessSliderLabels.put(1, new JLabel(Integer.toString((1))));
-        thicknessSliderLabels.put(10, new JLabel(Integer.toString((10))));
-        thicknessSliderLabels.put(20, new JLabel(Integer.toString((20))));
-        thicknessSlider.setLabelTable(thicknessSliderLabels);
-        thicknessSlider.setPaintLabels(true);
-
-        container.add(thicknessSlider);
-
-
-        // Font family
-        container.add(new JLabel("Font family"));
-
-        String[] availableFonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-        JComboBox<String> fontFamilyComboBox = new JComboBox<>(availableFonts);
-        fontFamilyComboBox.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
-        fontFamilyComboBox.setMaximumSize(new Dimension(Integer.MAX_VALUE, 60));
-        fontFamilyComboBox.setOpaque(false);
-        fontFamilyComboBox.addItemListener((e) -> {
-            String newFontFamily = (String)e.getItem();
-            photoFrame.getToolSettings().setFontFamily(newFontFamily);
-        });
-
-        container.add(fontFamilyComboBox);
-
-
-        // Font size
-        container.add(new JLabel("Font size"));
-
-        JSlider fontSizeSlider = new JSlider(JSlider.HORIZONTAL,
-                8, 72, 16);
-        fontSizeSlider.setMinorTickSpacing(4);
-        fontSizeSlider.setPaintTicks(true);
-        fontSizeSlider.setBorder(BorderFactory.createEmptyBorder(10, 0, 20, 0));
-        fontSizeSlider.setOpaque(false);
-        fontSizeSlider.addChangeListener((e) -> {
-            int newFontSize = fontSizeSlider.getValue();
-            photoFrame.getToolSettings().setFontSize(newFontSize);
-        });
-
-        Hashtable fontSizeSliderLabels = new Hashtable();
-        fontSizeSliderLabels.put(8, new JLabel(Integer.toString((8))));
-        fontSizeSliderLabels.put(24, new JLabel(Integer.toString((24))));
-        fontSizeSliderLabels.put(40, new JLabel(Integer.toString((40))));
-        fontSizeSliderLabels.put(56, new JLabel(Integer.toString((56))));
-        fontSizeSliderLabels.put(72, new JLabel(Integer.toString((72))));
-        fontSizeSlider.setLabelTable(fontSizeSliderLabels);
-        fontSizeSlider.setPaintLabels(true);
-
-        container.add(fontSizeSlider);
+        container.add(new ToolSettingPanel(photoFrame));
     }
 
 
