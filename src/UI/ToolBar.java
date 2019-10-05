@@ -47,7 +47,7 @@ public class ToolBar {
         innerContainer.setBackground(new Color(0xDDDDDD));
         //innerContainer.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        int maxWidth = Math.min(250, innerContainer.getWidth() / 4);
+        int maxWidth = 300;
         innerContainer.setMaximumSize(new Dimension(maxWidth, Integer.MAX_VALUE));
     }
 }

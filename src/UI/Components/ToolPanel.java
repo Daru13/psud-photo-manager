@@ -7,40 +7,66 @@ import UI.Tools.ToolID;
 import javax.swing.*;
 import java.awt.*;
 
-public class ToolPanel extends AbstractToolBarPanel {
+public class ToolPanel extends ToolBarPanel {
 
     private EventManager eventManager;
+    private JPanel toolButtonsContainer;
 
     public ToolPanel(PhotoFrame photoFrame, EventManager eventManager) {
         super(photoFrame);
+
         this.eventManager = eventManager;
+        toolButtonsContainer= new JPanel();
+
+        configure();
+        createContent();
     }
 
+    @Override
+    protected void configure() {
+        super.configure();
+
+        GridLayout layout = new GridLayout(0, 2, 10, 10);
+        toolButtonsContainer.setLayout(layout);
+        toolButtonsContainer.setBorder(BorderFactory.createEmptyBorder(0,0,0,20));
+        toolButtonsContainer.setOpaque(false);
+    }
+
+    @Override
     protected void createContent() {
+        createTitle();
+        createToolButtons();
+    }
+
+    private void createTitle() {
         JLabel toolsLabel = new JLabel("Tools");
         toolsLabel.setFont(new Font(toolsLabel.getFont().getName(), Font.BOLD, 16));
+        toolsLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         toolsLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 15, 0));
+
         add(toolsLabel);
+    }
 
-        JRadioButton penToolButton = new JRadioButton("Pen");
-        penToolButton.setOpaque(false);
+    private void createToolButtons() {
+        JToggleButton penToolButton = new JToggleButton("Pen");
+        penToolButton.setMaximumSize(new Dimension(0, 50));
         penToolButton.addActionListener((e) -> eventManager.emit(new ToolChangeEvent(ToolID.PEN)));
-        add(penToolButton);
+        toolButtonsContainer.add(penToolButton);
 
-        JRadioButton rectangleToolButton = new JRadioButton("Rectangle");
+        JToggleButton rectangleToolButton = new JToggleButton("Rectangle");
         rectangleToolButton.setOpaque(false);
         rectangleToolButton.addActionListener((e) -> eventManager.emit(new ToolChangeEvent(ToolID.RECTANGLE)));
-        add(rectangleToolButton);
+        toolButtonsContainer.add(rectangleToolButton);
 
-        JRadioButton ellipsisToolButton = new JRadioButton("Ellipsis");
+        JToggleButton ellipsisToolButton = new JToggleButton("Ellipsis");
         ellipsisToolButton.setOpaque(false);
         ellipsisToolButton.addActionListener((e) -> eventManager.emit(new ToolChangeEvent(ToolID.ELLIPSIS)));
-        add(ellipsisToolButton);
+        toolButtonsContainer.add(ellipsisToolButton);
 
-        JRadioButton textToolButton = new JRadioButton("Text");
+        JToggleButton textToolButton = new JToggleButton("Text");
         textToolButton.setOpaque(false);
         textToolButton.addActionListener((e) -> eventManager.emit(new ToolChangeEvent(ToolID.TEXT)));
-        add(textToolButton);
+        toolButtonsContainer.add(textToolButton);
 
         // Group the buttons together
         ButtonGroup toolButtonsGroup = new ButtonGroup();
@@ -68,5 +94,7 @@ public class ToolPanel extends AbstractToolBarPanel {
                 textToolButton.setSelected(true);
                 break;
         }
+
+        add(toolButtonsContainer);
     }
 }
