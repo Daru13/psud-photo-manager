@@ -7,7 +7,9 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 
-public class Text extends AbstractTool {
+public class Text extends ToolAdapter {
+
+    private PhotoFrame photoFrame;
 
     private boolean currentlyEditing;
     private StringBuilder stringBuilder;
@@ -18,7 +20,7 @@ public class Text extends AbstractTool {
     private int firstClickY;
 
     public Text(PhotoFrame photoFrame) {
-        super(photoFrame);
+        this.photoFrame = photoFrame;
 
         stringBuilder = new StringBuilder();
         stringLength = 0;

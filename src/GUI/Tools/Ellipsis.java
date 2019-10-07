@@ -4,7 +4,7 @@ import GUI.Components.PhotoFrame;
 
 import java.awt.*;
 
-public class Ellipsis extends AbstractGeometricShapeTool {
+public class Ellipsis extends GeometricShapeTool {
 
     public Ellipsis(PhotoFrame photoFrame) {
         super(photoFrame);

@@ -4,7 +4,7 @@ import GUI.Components.PhotoFrame;
 
 import java.awt.*;
 
-public class Rectangle extends AbstractGeometricShapeTool {
+public class Rectangle extends GeometricShapeTool {
 
     public Rectangle(PhotoFrame photoFrame) {
         super(photoFrame);

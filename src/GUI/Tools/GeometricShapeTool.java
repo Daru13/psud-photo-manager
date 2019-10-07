@@ -5,12 +5,16 @@ import GUI.Components.PhotoFrame;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
-public abstract class AbstractGeometricShapeTool extends AbstractTool {
+public abstract class GeometricShapeTool extends ToolAdapter {
+    private PhotoFrame photoFrame;
+
     private int firstClickX;
     private int firstClickY;
 
-    public AbstractGeometricShapeTool(PhotoFrame photoFrame) {
-        super(photoFrame);
+    public GeometricShapeTool(PhotoFrame photoFrame) {
+        super();
+
+        this.photoFrame = photoFrame;
 
         firstClickX = 0;
         firstClickY = 0;

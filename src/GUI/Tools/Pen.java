@@ -7,7 +7,9 @@ import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Pen extends AbstractTool {
+public class Pen extends ToolAdapter {
+
+    private PhotoFrame photoFrame;
 
     private boolean penIsDown;
     private int currentPathNbPoints;
@@ -15,7 +17,7 @@ public class Pen extends AbstractTool {
     private List<Integer> currentPathY;
 
     public Pen(PhotoFrame photoFrame) {
-        super(photoFrame);
+        this.photoFrame = photoFrame;
 
         penIsDown = false;
         currentPathNbPoints = 0;
