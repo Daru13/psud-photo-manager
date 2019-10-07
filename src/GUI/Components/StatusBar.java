@@ -1,8 +1,7 @@
 package GUI.Components;
 
-import Events.EventHandler;
-import Events.EventManager;
 import Events.CategoryFilterChangeEvent;
+import Events.EventManager;
 import Events.ToolChangeEvent;
 import Events.ViewChangeEvent;
 
@@ -47,18 +46,13 @@ public class StatusBar extends JPanel {
                 (ViewChangeEvent e) -> statusLabel.setText("Changed view to " + e.nextView + ".")
         );
 
-        eventManager.addHandler("filter:category:change", new EventHandler<CategoryFilterChangeEvent>() {
-                    @Override
-                    public void handleEvent(CategoryFilterChangeEvent e) {
-                        statusLabel.setText("Category " + e.category + " is now " +
-                                            (e.isEnabled ? "visible." : "hidden."));
-                    }
-                }
+        eventManager.addHandler("filter:category:change", (CategoryFilterChangeEvent e) ->
+                statusLabel.setText("Category " + e.category + " is now " + (e.isEnabled ? "visible." : "hidden."))
         );
 
         eventManager.addHandler("tool:change",
                 (ToolChangeEvent e) -> statusLabel.setText("Changed tool to " + e.toolID.getName() + ".")
-        );;
+        );
     }
 
     private void createStatusLabel() {

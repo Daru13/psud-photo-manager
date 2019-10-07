@@ -10,5 +10,5 @@ package Events;
  * @see EventManager
  */
 public interface Event {
-    public String getName();
+    String getName();
 }

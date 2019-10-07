@@ -45,8 +45,8 @@ class PhotoFrameModel {
         return this.photoIsFlipped;
     }
 
-    public void switchPhotoIsFlipped() {
-        photoIsFlipped = !photoIsFlipped;
+    void switchPhotoIsFlipped() {
+        photoIsFlipped = ! photoIsFlipped;
     }
 
 

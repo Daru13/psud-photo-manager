@@ -106,7 +106,7 @@ public class ToolSettingPanel extends ToolBarPanel {
             photoFrame.getToolSettings().setThickness(newThickness);
         });
 
-        Hashtable thicknessSliderLabels = new Hashtable();
+        Hashtable<Integer, JComponent> thicknessSliderLabels = new Hashtable<>();
         thicknessSliderLabels.put(1, new JLabel("Thin"));
         thicknessSliderLabels.put(5, new JLabel("Thick"));
         thicknessSlider.setLabelTable(thicknessSliderLabels);

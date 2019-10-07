@@ -9,8 +9,8 @@ import java.awt.image.BufferedImage;
 
 public class PhotoFrame extends JComponent {
 
-    public final PhotoFrameModel model;
-    public final PhotoFrameView view;
+    final PhotoFrameModel model;
+    final PhotoFrameView view;
 
 
     public PhotoFrame() {
@@ -21,11 +21,11 @@ public class PhotoFrame extends JComponent {
         configureEventListeners();
     }
 
-    void configureComponent() {
+    private void configureComponent() {
         setFocusable(true);
     }
 
-    void configureEventListeners() {
+    private void configureEventListeners() {
         addMouseListener(this.view);
         addMouseMotionListener(this.view);
         addKeyListener(this.view);

@@ -9,5 +9,5 @@ package Events;
  * @see EventManager
  */
 public interface EventHandler<E extends Event> {
-    public void handleEvent (E event);
+    void handleEvent (E event);
 }

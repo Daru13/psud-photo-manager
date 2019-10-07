@@ -78,10 +78,6 @@ public class PhotoBrowserGUI {
         return mainContainer;
     }
 
-    public GUI.Components.MenuBar getMenuBar() {
-        return menuBar;
-    }
-
     public ToolBar getToolbar() {
         return toolbar;
     }

@@ -18,7 +18,7 @@ public class SinglePhotoView implements View {
     private PhotoFrame photoFrame;
 
 
-    public SinglePhotoView(EventManager eventManager) {
+    SinglePhotoView(EventManager eventManager) {
         this.eventManager = eventManager;
 
         photoFrame = new PhotoFrame();
@@ -77,8 +77,6 @@ public class SinglePhotoView implements View {
 
     private void handlePhotoChangeEvent(PhotoChangeEvent event) {
         photoFrame.setPhoto(event.photo);
-
-        Dimension photoSize = new Dimension(event.photo.getWidth(), event.photo.getHeight());
         photoFrame.setSize(photoFrame.getParent().getSize());
     }
 

@@ -45,8 +45,8 @@ public class Pen extends ToolAdapter {
     @Override
     public void mouseDragged(MouseEvent event) {
         if (penIsDown) {
-            currentPathX.add(new Integer(event.getX()));
-            currentPathY.add(new Integer(event.getY()));
+            currentPathX.add(event.getX());
+            currentPathY.add(event.getY());
             currentPathNbPoints++;
 
             drawCurrentPath(true);

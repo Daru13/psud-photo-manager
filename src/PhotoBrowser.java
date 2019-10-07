@@ -13,7 +13,7 @@ public class PhotoBrowser {
     private EventManager eventManager;
     private PhotoBrowserGUI gui;
 
-    
+
     private PhotoBrowser() {
         eventManager = new EventManager();
         gui = new PhotoBrowserGUI(eventManager);

@@ -14,7 +14,7 @@ import java.util.Map;
  */
 public class EventManager {
 
-    Map<String, LinkedList<EventHandler>> eventNamesToHandlers;
+    private Map<String, LinkedList<EventHandler>> eventNamesToHandlers;
 
 
     public EventManager() {
@@ -25,18 +25,13 @@ public class EventManager {
         handle(event);
     }
 
-    public void emit(String message) {
-        emit(new Event() {
-            @Override
-            public String getName() {
-                return message;
-            }
-        });
+    public void emit(String name) {
+        emit(() -> name);
     }
 
     private <E extends Event> void handle(E event) {
         String eventName = event.getName();
-        if (!eventNamesToHandlers.containsKey(eventName)) {
+        if (! eventNamesToHandlers.containsKey(eventName)) {
             return;
         }
 
@@ -47,7 +42,7 @@ public class EventManager {
     }
 
     public <E extends Event> void addHandler(String eventName, EventHandler<E> handler) {
-        if (!eventNamesToHandlers.containsKey(eventName)) {
+        if (! eventNamesToHandlers.containsKey(eventName)) {
             eventNamesToHandlers.put(eventName, new LinkedList<>());
         }
 
@@ -57,7 +52,7 @@ public class EventManager {
     }
 
     public <E extends Event> void removeHandler(String eventName, EventHandler<E> handler) {
-        if (!eventNamesToHandlers.containsKey(eventName)) {
+        if (! eventNamesToHandlers.containsKey(eventName)) {
             return;
         }
 

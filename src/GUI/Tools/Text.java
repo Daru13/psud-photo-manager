@@ -128,7 +128,7 @@ public class Text extends ToolAdapter {
     }
 
     private void startEditing(int fromX, int fromY) {
-        if (!photoFrame.hasFocus()) {
+        if (! photoFrame.hasFocus()) {
             photoFrame.requestFocusInWindow();
         }
 
@@ -188,7 +188,7 @@ public class Text extends ToolAdapter {
 
     @Override
     public void keyPressed(KeyEvent event) {
-        if (!currentlyEditing) {
+        if (! currentlyEditing) {
             return;
         }
 
@@ -221,12 +221,12 @@ public class Text extends ToolAdapter {
 
     @Override
     public void keyTyped(KeyEvent event) {
-        if (!currentlyEditing) {
+        if (! currentlyEditing) {
             return;
         }
 
         char character = event.getKeyChar();
-        if (!Character.isISOControl(character)) {
+        if (! Character.isISOControl(character)) {
             insertCharacter(character);
         }
     }
@@ -277,7 +277,7 @@ public class Text extends ToolAdapter {
     }
 
     private void drawCaret() {
-        if (!caretIsVisible) {
+        if (! caretIsVisible) {
             return;
         }
 

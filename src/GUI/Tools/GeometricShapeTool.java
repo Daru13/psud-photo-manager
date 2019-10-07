@@ -12,7 +12,7 @@ public abstract class GeometricShapeTool extends ToolAdapter {
     private int firstClickY;
 
 
-    public GeometricShapeTool(PhotoFrame photoFrame) {
+    GeometricShapeTool(PhotoFrame photoFrame) {
         super();
 
         this.photoFrame = photoFrame;

@@ -20,7 +20,7 @@ class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener 
     private Tool currentTool;
 
 
-    public PhotoFrameView(PhotoFrame photoFrame) {
+    PhotoFrameView(PhotoFrame photoFrame) {
         this.photoFrame = photoFrame;
 
         workingCanvas = null;
@@ -43,16 +43,16 @@ class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener 
     }
 
 
-    public ToolID getTool() {
+    ToolID getTool() {
         return currentToolID;
     }
 
-    public void setTool(ToolID toolID) {
+    void setTool(ToolID toolID) {
         if (currentToolID == toolID) {
             return;
         }
 
-        if (!tools.containsKey(toolID)) {
+        if (! tools.containsKey(toolID)) {
             return;
         }
 
@@ -72,13 +72,13 @@ class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener 
         setTool(ToolID.PEN);
     }
 
-    public ToolSettings getToolSettings() {
+    ToolSettings getToolSettings() {
         return toolSettings;
     }
 
     void createWorkingCanvas(int width, int height) {
         workingCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        Graphics2D g = workingCanvas.createGraphics();
+        workingCanvas.createGraphics();
     }
 
     BufferedImage getWorkingCanvas() {
@@ -170,15 +170,15 @@ class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener 
         }
     }
 
-    public void paintPhoto(Graphics2D g, BufferedImage photo) {
+    private void paintPhoto(Graphics2D g, BufferedImage photo) {
         g.drawImage(photo, 0, 0, null);
     }
 
-    public void paintPhotoBack(Graphics2D g, BufferedImage photoBack) {
+    private void paintPhotoBack(Graphics2D g, BufferedImage photoBack) {
         g.drawImage(photoBack, 0, 0, null);
     }
 
-    public void paintWorkingCanvas(Graphics2D g) {
+    private void paintWorkingCanvas(Graphics2D g) {
         g.drawImage(workingCanvas, 0, 0, null);
     }
 
@@ -189,8 +189,8 @@ class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener 
         g.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
     }
 
-    public void paint(Graphics2D g) {
-        if (!photoFrame.model.isPhotoLoaded()) {
+    void paint(Graphics2D g) {
+        if (! photoFrame.model.isPhotoLoaded()) {
             return;
         }
 

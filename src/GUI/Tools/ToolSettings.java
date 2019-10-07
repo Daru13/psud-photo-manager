@@ -4,8 +4,8 @@ import java.awt.*;
 
 public class ToolSettings {
 
-    public Color color;
-    public int thickness;
+    private Color color;
+    private int thickness;
 
     private String fontFamily;
     private int fontSize;
