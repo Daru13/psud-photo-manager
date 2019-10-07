@@ -6,6 +6,7 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
+import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -15,6 +16,7 @@ public class Text extends ToolAdapter {
 
     private boolean currentlyEditing;
     private StringBuilder stringBuilder;
+    private LinkedList<String> stringSplitPerLine;
     private int stringLength;
     private int charIndexBeforeCaret;
 
@@ -23,12 +25,13 @@ public class Text extends ToolAdapter {
 
     private Timer caretBlinkTimer;
     private boolean caretIsVisible;
-    private final static long DELAY_BETWEEN_CARET_BLINKS = 800; // ms
+    private final static long DELAY_BETWEEN_CARET_BLINKS = 650; // ms
 
     public Text(PhotoFrame photoFrame) {
         this.photoFrame = photoFrame;
 
         stringBuilder = new StringBuilder();
+        stringSplitPerLine = new LinkedList<>();
         stringLength = 0;
         charIndexBeforeCaret = -1;
         currentlyEditing = false;
@@ -38,6 +41,49 @@ public class Text extends ToolAdapter {
 
         caretBlinkTimer = new Timer();
         caretIsVisible = true;
+    }
+
+    private void reSplitString(Graphics2D g, FontMetrics metrics) {
+        String singleLineString = stringBuilder.toString();
+
+        stringSplitPerLine.clear();
+        stringSplitPerLine.add(singleLineString);
+
+        double photoFrameWidth = photoFrame.getWidth();
+        double textWidth = metrics.getStringBounds(singleLineString, g).getWidth();
+        boolean textIsTooLarge = firstClickX + textWidth > photoFrameWidth;
+
+        while (textIsTooLarge) {
+            String stringToSplit = stringSplitPerLine.getLast();
+            String firstPart, secondPart;
+            int lastBlankIndex = stringToSplit.lastIndexOf(' ');
+
+            if (lastBlankIndex >= 0) {
+                firstPart = stringToSplit.substring(0, lastBlankIndex);
+                secondPart = stringToSplit.substring(lastBlankIndex);
+            }
+            else {
+                int splitIndex = stringToSplit.length() - 1;
+                while (splitIndex > 0) {
+                    textWidth = metrics.getStringBounds(stringToSplit.substring(0, splitIndex), g).getWidth();
+                    if (firstClickX + textWidth <= photoFrameWidth) {
+                        break;
+                    }
+
+                    splitIndex--;
+                }
+
+                firstPart = stringToSplit.substring(0, splitIndex);
+                secondPart = stringToSplit.substring(splitIndex);
+            }
+
+            stringSplitPerLine.removeLast();
+            stringSplitPerLine.add(firstPart);
+            stringSplitPerLine.add(secondPart);
+
+            textWidth = metrics.getStringBounds(secondPart, g).getWidth();
+            textIsTooLarge = firstClickX + textWidth > photoFrameWidth;
+        }
     }
 
     private void insertCharacter(char character) {
@@ -143,7 +189,7 @@ public class Text extends ToolAdapter {
         if (!currentlyEditing) {
             return;
         }
-        
+
         switch (event.getKeyCode()) {
             case KeyEvent.VK_BACK_SPACE:
                 eraseCharacter();
@@ -210,7 +256,16 @@ public class Text extends ToolAdapter {
         }
 
         configureGraphics(g, useWorkingCanvas);
-        g.drawString(stringBuilder.toString(), firstClickX, firstClickY);
+
+        FontMetrics metrics = g.getFontMetrics();
+        reSplitString(g, metrics);
+        int lineHeight = metrics.getHeight();
+        int offsetY = 0;
+
+        for (String s : stringSplitPerLine) {
+            g.drawString(s.toString(), firstClickX, firstClickY + offsetY);
+            offsetY += lineHeight;
+        }
 
         if (useWorkingCanvas) {
             drawCaret();
@@ -227,16 +282,32 @@ public class Text extends ToolAdapter {
         Graphics2D g = (Graphics2D)photoFrame.getWorkingCanvas().getGraphics();
         applyToolSettings(g);
 
-        String stringToCaret = stringBuilder
-                .toString()
-                .substring(0, Math.min(charIndexBeforeCaret + 1, stringLength));
+        int nbCharsBeforeCurrentLine = 0;
+        int caretLineIndex = 0;
+        for (String s : stringSplitPerLine) {
+            int currentLineLength = s.length();
+            if (charIndexBeforeCaret > nbCharsBeforeCurrentLine + currentLineLength) {
+                nbCharsBeforeCurrentLine += currentLineLength;
+                caretLineIndex++;
+            }
+        }
+
+        String caretLineString = stringSplitPerLine.get(caretLineIndex);
+        String stringToCaret = caretLineString.substring(
+                0, Math.min(charIndexBeforeCaret - nbCharsBeforeCurrentLine + 1, caretLineString.length())
+        );
 
         FontMetrics metrics = g.getFontMetrics();
         Rectangle2D stringBounds = metrics.getStringBounds(stringToCaret, g);
+
+        int lineHeight = metrics.getHeight();
         int caretOffsetX = (int)stringBounds.getWidth();
-        int caretHeight = metrics.getHeight();
+        int caretOffsetY = caretLineIndex * lineHeight;
+        int caretHeight = lineHeight;
 
         g.setColor(Color.BLACK);
-        g.fillRect(firstClickX + caretOffsetX, firstClickY - caretHeight, 1, caretHeight);
+        g.fillRect(firstClickX + caretOffsetX,
+                firstClickY - caretHeight + caretOffsetY,
+                1, caretHeight);
     }
 }
