@@ -1,8 +1,6 @@
 import Events.EventManager;
 import GUI.PhotoBrowserGUI;
 
-import java.io.File;
-
 /**
  * The entry point of the photo browser application.
  *
@@ -13,11 +11,11 @@ import java.io.File;
 public class PhotoBrowser {
 
     private EventManager eventManager;
-    private PhotoBrowserGUI mainWindow;
+    private PhotoBrowserGUI gui;
 
     private PhotoBrowser() {
         eventManager = new EventManager();
-        mainWindow = new PhotoBrowserGUI(eventManager);
+        gui = new PhotoBrowserGUI(eventManager);
 
         addDefaultEventHandlers();
     }
@@ -26,12 +24,7 @@ public class PhotoBrowser {
         System.exit(0);
     }
 
-    private void importFile(File f) {
-        // TODO
-    }
-
     private void addDefaultEventHandlers() {
-        // Exit the app
         eventManager.addHandler("app:exit", (e) -> exit());
     }
 
