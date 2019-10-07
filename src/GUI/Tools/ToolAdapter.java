@@ -5,6 +5,13 @@ import java.awt.event.MouseEvent;
 
 public abstract class ToolAdapter implements Tool {
 
+    // Tool selection/deselection
+    @Override
+    public void toolSelected() { }
+
+    @Override
+    public void toolDeselected() { }
+
     // Mouse events
     @Override
     public void mouseClicked(MouseEvent mouseEvent) { }

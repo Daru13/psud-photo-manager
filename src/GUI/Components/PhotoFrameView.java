@@ -55,8 +55,16 @@ class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener 
             return;
         }
 
+        if (currentToolID != ToolID.NONE) {
+            currentTool.toolDeselected();
+        }
+
         currentToolID = toolID;
         currentTool = tools.get(toolID);
+
+        if (currentToolID != ToolID.NONE) {
+            currentTool.toolSelected();
+        }
     }
 
     private void setDefaultTool() {
