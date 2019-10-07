@@ -173,13 +173,10 @@ public class Text extends ToolAdapter {
                 }
             }
         }, 0, DELAY_BETWEEN_CARET_BLINKS);
-        System.out.println("Timer started");
-
     }
 
     @Override
     public void toolDeselected() {
-        System.out.println("Timer terminated");
         caretBlinkTimer.cancel();
         caretBlinkTimer = new Timer();
     }
