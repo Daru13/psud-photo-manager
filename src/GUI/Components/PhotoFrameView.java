@@ -19,6 +19,7 @@ class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener 
     private ToolID currentToolID;
     private Tool currentTool;
 
+
     public PhotoFrameView(PhotoFrame photoFrame) {
         this.photoFrame = photoFrame;
 
@@ -78,8 +79,6 @@ class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener 
     void createWorkingCanvas(int width, int height) {
         workingCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
         Graphics2D g = workingCanvas.createGraphics();
-        //g.setBackground(Color.WHITE);
-        //g.clearRect(0, 0, photoBack.getWidth(), photoBack.getHeight());
     }
 
     BufferedImage getWorkingCanvas() {

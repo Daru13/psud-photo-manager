@@ -17,6 +17,7 @@ public class SinglePhotoView implements View {
     private final EventManager eventManager;
     private PhotoFrame photoFrame;
 
+
     public SinglePhotoView(EventManager eventManager) {
         this.eventManager = eventManager;
 

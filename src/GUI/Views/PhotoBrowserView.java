@@ -12,6 +12,7 @@ public class PhotoBrowserView implements View {
 
     private final EventManager eventManager;
 
+
     public PhotoBrowserView(EventManager eventManager) {
         this.eventManager = eventManager;
     }

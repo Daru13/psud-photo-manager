@@ -16,6 +16,7 @@ public class ViewManager {
     private ViewID currentViewID;
     private View currentView;
 
+
     public ViewManager(PhotoBrowserGUI gui, EventManager eventManager) {
         this.gui = gui;
         this.eventManager = eventManager;

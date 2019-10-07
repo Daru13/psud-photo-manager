@@ -10,6 +10,7 @@ public class Ellipsis extends GeometricShapeTool {
         super(photoFrame);
     }
 
+
     @Override
     protected void drawShape(Graphics2D g, int originX, int originY, int width, int height) {
         g.fillOval(originX, originY, width, height);

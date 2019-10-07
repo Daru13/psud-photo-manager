@@ -5,7 +5,10 @@ import java.awt.*;
 
 abstract class ToolBarPanel extends JPanel {
 
+    protected final static int TITLE_SIZE = 16;
+
     protected PhotoFrame photoFrame;
+
 
     ToolBarPanel(PhotoFrame photoFrame) {
         super();

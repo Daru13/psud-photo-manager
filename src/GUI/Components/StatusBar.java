@@ -14,9 +14,10 @@ import java.awt.*;
  * It displays informative messages about the current action or tool.
  */
 public class StatusBar extends JPanel {
-    private EventManager eventManager;
 
+    private EventManager eventManager;
     private JLabel statusLabel;
+
 
     public StatusBar(EventManager eventManager) {
         super();

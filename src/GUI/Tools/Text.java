@@ -12,20 +12,22 @@ import java.util.TimerTask;
 
 public class Text extends ToolAdapter {
 
+    private final static long DELAY_BETWEEN_CARET_BLINKS = 650; // ms
+
     private PhotoFrame photoFrame;
 
     private boolean currentlyEditing;
     private StringBuilder stringBuilder;
     private LinkedList<String> stringSplitPerLine;
     private int stringLength;
+
     private int charIndexBeforeCaret;
+    private Timer caretBlinkTimer;
+    private boolean caretIsVisible;
 
     private int firstClickX;
     private int firstClickY;
 
-    private Timer caretBlinkTimer;
-    private boolean caretIsVisible;
-    private final static long DELAY_BETWEEN_CARET_BLINKS = 650; // ms
 
     public Text(PhotoFrame photoFrame) {
         this.photoFrame = photoFrame;
@@ -33,14 +35,14 @@ public class Text extends ToolAdapter {
         stringBuilder = new StringBuilder();
         stringSplitPerLine = new LinkedList<>();
         stringLength = 0;
-        charIndexBeforeCaret = -1;
         currentlyEditing = false;
+
+        charIndexBeforeCaret = -1;
+        caretBlinkTimer = new Timer();
+        caretIsVisible = true;
 
         firstClickX = 0;
         firstClickY = 0;
-
-        caretBlinkTimer = new Timer();
-        caretIsVisible = true;
     }
 
     private void reSplitString(Graphics2D g, FontMetrics metrics) {
@@ -263,7 +265,7 @@ public class Text extends ToolAdapter {
         int offsetY = 0;
 
         for (String s : stringSplitPerLine) {
-            g.drawString(s.toString(), firstClickX, firstClickY + offsetY);
+            g.drawString(s, firstClickX, firstClickY + offsetY);
             offsetY += lineHeight;
         }
 
@@ -306,8 +308,11 @@ public class Text extends ToolAdapter {
         int caretHeight = lineHeight;
 
         g.setColor(Color.BLACK);
-        g.fillRect(firstClickX + caretOffsetX,
-                firstClickY - caretHeight + caretOffsetY,
-                1, caretHeight);
+        g.fillRect(
+            firstClickX + caretOffsetX,
+            firstClickY - caretHeight + caretOffsetY,
+            1,
+            caretHeight
+        );
     }
 }

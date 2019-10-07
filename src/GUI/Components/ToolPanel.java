@@ -12,6 +12,7 @@ public class ToolPanel extends ToolBarPanel {
     private EventManager eventManager;
     private JPanel toolButtonsContainer;
 
+
     public ToolPanel(PhotoFrame photoFrame, EventManager eventManager) {
         super(photoFrame);
 
@@ -40,7 +41,7 @@ public class ToolPanel extends ToolBarPanel {
 
     private void createTitle() {
         JLabel toolsLabel = new JLabel("Tools");
-        toolsLabel.setFont(new Font(toolsLabel.getFont().getName(), Font.BOLD, 16));
+        toolsLabel.setFont(new Font(toolsLabel.getFont().getName(), Font.BOLD, TITLE_SIZE));
         toolsLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         toolsLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 15, 0));
 

@@ -4,11 +4,13 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 class PhotoFrameModel {
+
     private BufferedImage photo;
     private BufferedImage photoBack;
 
     private boolean photoIsLoaded;
     private boolean photoIsFlipped;
+
 
     PhotoFrameModel() {
         photo = null;

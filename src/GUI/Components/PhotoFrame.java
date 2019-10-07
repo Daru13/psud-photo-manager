@@ -8,20 +8,21 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 
 public class PhotoFrame extends JComponent {
+
     public final PhotoFrameModel model;
     public final PhotoFrameView view;
+
 
     public PhotoFrame() {
         model = new PhotoFrameModel();
         view = new PhotoFrameView(this);
 
         configureComponent();
+        configureEventListeners();
     }
 
     void configureComponent() {
         setFocusable(true);
-
-        configureEventListeners();
     }
 
     void configureEventListeners() {

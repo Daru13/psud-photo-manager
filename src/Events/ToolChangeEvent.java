@@ -9,7 +9,9 @@ import GUI.Tools.ToolID;
  * @see Events.EventManager
  */
 public class ToolChangeEvent implements Event {
+
     public final ToolID toolID;
+
 
     public ToolChangeEvent(ToolID toolID) {
         this.toolID = toolID;

@@ -12,7 +12,9 @@ import java.awt.event.KeyEvent;
  * It offers menus with different options depending on the view.
  */
 public class MenuBar extends JMenuBar {
+
     private EventManager eventManager;
+
 
     public MenuBar(EventManager eventManager) {
         super();

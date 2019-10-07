@@ -10,9 +10,13 @@ import java.awt.*;
  * It offers options to control the displayed content, such as filters.
  */
 public class ToolBar extends JScrollPane {
-    private EventManager eventManager;
 
+    private final static int MAX_WIDTH = 300; // px
+    private final static Color BACKGROUND_COLOR = new Color(0xDDDDDD);
+
+    private EventManager eventManager;
     private JPanel viewport;
+
 
     public ToolBar(EventManager eventManager) {
         super();
@@ -39,11 +43,8 @@ public class ToolBar extends JScrollPane {
 
     private void configureViewport() {
         viewport.setLayout(new BoxLayout(viewport, BoxLayout.PAGE_AXIS));
-        //viewport.setBorder(BorderFactory.createEmptyBorder(20, 10, 20, 10));
-        viewport.setBackground(new Color(0xDDDDDD));
-        //viewport.setAlignmentX(Component.LEFT_ALIGNMENT);
+        viewport.setBackground(BACKGROUND_COLOR);
 
-        int maxWidth = 300;
-        viewport.setMaximumSize(new Dimension(maxWidth, Integer.MAX_VALUE));
+        viewport.setMaximumSize(new Dimension(MAX_WIDTH, Integer.MAX_VALUE));
     }
 }

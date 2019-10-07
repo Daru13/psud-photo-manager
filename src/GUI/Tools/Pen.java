@@ -16,6 +16,7 @@ public class Pen extends ToolAdapter {
     private List<Integer> currentPathX;
     private List<Integer> currentPathY;
 
+
     public Pen(PhotoFrame photoFrame) {
         this.photoFrame = photoFrame;
 

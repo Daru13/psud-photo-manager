@@ -9,7 +9,9 @@ import GUI.Views.ViewID;
  * @see Events.EventManager
  */
 public class ViewChangeEvent implements Event {
+
     public final ViewID nextView;
+
 
     public ViewChangeEvent(ViewID nextView) {
         this.nextView = nextView;

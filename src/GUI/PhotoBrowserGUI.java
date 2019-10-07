@@ -36,6 +36,7 @@ public class PhotoBrowserGUI {
     private ToolBar toolbar;
     private StatusBar statusBar;
 
+
     public PhotoBrowserGUI(EventManager eventManager) {
         this.eventManager = eventManager;
         this.viewManager = new ViewManager(this, eventManager);

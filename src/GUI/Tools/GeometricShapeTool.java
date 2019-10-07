@@ -11,6 +11,7 @@ public abstract class GeometricShapeTool extends ToolAdapter {
     private int firstClickX;
     private int firstClickY;
 
+
     public GeometricShapeTool(PhotoFrame photoFrame) {
         super();
 

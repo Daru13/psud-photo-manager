@@ -16,6 +16,7 @@ public class EventManager {
 
     Map<String, LinkedList<EventHandler>> eventNamesToHandlers;
 
+
     public EventManager() {
         eventNamesToHandlers = new LinkedHashMap<>();
     }
@@ -63,8 +64,7 @@ public class EventManager {
         LinkedList<EventHandler> handlers = eventNamesToHandlers.get(eventName);
         handlers.removeLastOccurrence(handler);
 
-        // If there is no more handler in the linked list,
-        // it can safely be removed from the map
+        // If there is no more handler in the linked list, it can safely be removed from the map
         if (handlers.isEmpty()) {
             eventNamesToHandlers.remove(eventName);
         }

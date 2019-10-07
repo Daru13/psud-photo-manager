@@ -9,6 +9,7 @@ public class ToolSettingPanel extends ToolBarPanel {
 
     private JPanel toolSettingsContainer;
 
+
     public ToolSettingPanel(PhotoFrame photoFrame) {
         super(photoFrame);
 
@@ -38,7 +39,7 @@ public class ToolSettingPanel extends ToolBarPanel {
 
     private void createTitle() {
         JLabel settingsLabel = new JLabel("Settings");
-        settingsLabel.setFont(new Font(settingsLabel.getFont().getName(), Font.BOLD, 16));
+        settingsLabel.setFont(new Font(settingsLabel.getFont().getName(), Font.BOLD, TITLE_SIZE));
         settingsLabel.setAlignmentX(JComponent.CENTER_ALIGNMENT);
         settingsLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 30, 0));
 

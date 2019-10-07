@@ -1,7 +1,5 @@
 package Events;
 
-import Events.Event;
-
 import java.awt.image.BufferedImage;
 
 /**
@@ -11,7 +9,9 @@ import java.awt.image.BufferedImage;
  * @see Events.EventManager
  */
 public class PhotoChangeEvent implements Event {
+
     public final BufferedImage photo;
+
 
     public PhotoChangeEvent(BufferedImage photo) {
         this.photo = photo;
