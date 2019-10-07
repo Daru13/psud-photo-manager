@@ -182,8 +182,8 @@ class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener 
         g.setRenderingHint(RenderingHints.KEY_FRACTIONALMETRICS, RenderingHints.VALUE_FRACTIONALMETRICS_ON);
     }
 
-    public void paint(Graphics2D g, PhotoFrameModel model) {
-        if (!model.isPhotoLoaded()) {
+    public void paint(Graphics2D g) {
+        if (!photoFrame.model.isPhotoLoaded()) {
             return;
         }
 
@@ -191,11 +191,11 @@ class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener 
 
         // Either draw the photo or the photo back + the working canvas at its back
         if (photoFrame.isPhotoFlipped()) {
-            paintPhotoBack(g, model.getPhotoBack());
+            paintPhotoBack(g, photoFrame.model.getPhotoBack());
             paintWorkingCanvas(g);
         }
         else {
-            paintPhoto(g, model.getPhoto());
+            paintPhoto(g, photoFrame.model.getPhoto());
         }
     }
 }

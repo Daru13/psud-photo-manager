@@ -93,6 +93,6 @@ public class PhotoFrame extends JComponent {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        view.paint((Graphics2D)g, model);
+        view.paint((Graphics2D)g);
     }
 }
