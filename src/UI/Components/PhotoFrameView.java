@@ -1,14 +1,70 @@
 package UI.Components;
 
-import java.awt.*;
-import java.awt.image.BufferedImage;
+import UI.Tools.Rectangle;
+import UI.Tools.*;
 
-class PhotoFrameView {
+import java.awt.*;
+import java.awt.event.*;
+import java.awt.image.BufferedImage;
+import java.util.EnumMap;
+
+class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener {
+
+    private PhotoFrame photoFrame;
 
     private BufferedImage workingCanvas;
 
-    public PhotoFrameView() {
+    private EnumMap<ToolID, Tool> tools;
+    private ToolSettings toolSettings;
+    private ToolID currentToolID;
+    private Tool currentTool;
+
+    public PhotoFrameView(PhotoFrame photoFrame) {
+        this.photoFrame = photoFrame;
+
         workingCanvas = null;
+
+        tools = new EnumMap<>(ToolID.class);
+        toolSettings = new ToolSettings();
+        currentToolID = ToolID.NONE;
+        currentTool = null;
+
+        initTools();
+    }
+
+    private void initTools() {
+        tools.put(ToolID.PEN, new Pen(this.photoFrame));
+        tools.put(ToolID.RECTANGLE, new Rectangle(this.photoFrame));
+        tools.put(ToolID.ELLIPSIS, new Ellipsis(this.photoFrame));
+        tools.put(ToolID.TEXT, new Text(this.photoFrame));
+
+        setDefaultTool();
+    }
+
+
+    public ToolID getTool() {
+        return currentToolID;
+    }
+
+    public void setTool(ToolID toolID) {
+        if (currentToolID == toolID) {
+            return;
+        }
+
+        if (!tools.containsKey(toolID)) {
+            return;
+        }
+
+        currentToolID = toolID;
+        currentTool = tools.get(toolID);
+    }
+
+    private void setDefaultTool() {
+        setTool(ToolID.PEN);
+    }
+
+    public ToolSettings getToolSettings() {
+        return toolSettings;
     }
 
     void createWorkingCanvas(int width, int height) {
@@ -32,6 +88,79 @@ class PhotoFrameView {
 
     void removeWorkingCanvas() {
         workingCanvas = null;
+    }
+
+    public void mouseClicked(MouseEvent e) {
+        if (e.getClickCount() == 2) {
+            photoFrame.flipPhoto();
+        }
+
+        if (currentToolID != ToolID.NONE && photoFrame.isPhotoFlipped()) {
+            currentTool.mouseClicked(e);
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        if (currentToolID != ToolID.NONE && photoFrame.isPhotoFlipped()) {
+            currentTool.mousePressed(e);
+        }
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        if (currentToolID != ToolID.NONE && photoFrame.isPhotoFlipped()) {
+            currentTool.mouseReleased(e);
+        }
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        if (currentToolID != ToolID.NONE && photoFrame.isPhotoFlipped()) {
+            currentTool.mouseEntered(e);
+        }
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        if (currentToolID != ToolID.NONE && photoFrame.isPhotoFlipped()) {
+            currentTool.mouseExited(e);
+        }
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        if (currentToolID != ToolID.NONE && photoFrame.isPhotoFlipped()) {
+            currentTool.mouseDragged(e);
+        }
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+        if (currentToolID != ToolID.NONE && photoFrame.isPhotoFlipped()) {
+            currentTool.mouseMoved(e);
+        }
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+        if (currentToolID != ToolID.NONE && photoFrame.isPhotoFlipped()) {
+            currentTool.keyTyped(e);
+        }
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        if (currentToolID != ToolID.NONE && photoFrame.isPhotoFlipped()) {
+            currentTool.keyPressed(e);
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        if (currentToolID != ToolID.NONE && photoFrame.isPhotoFlipped()) {
+            currentTool.keyReleased(e);
+        }
     }
 
     public void paintPhoto(Graphics2D g, BufferedImage photo) {
@@ -61,7 +190,7 @@ class PhotoFrameView {
         setDefaultRenderingHints(g);
 
         // Either draw the photo or the photo back + the working canvas at its back
-        if (model.isPhotoFlipped()) {
+        if (photoFrame.isPhotoFlipped()) {
             paintPhotoBack(g, model.getPhotoBack());
             paintWorkingCanvas(g);
         }
