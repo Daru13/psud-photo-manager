@@ -5,6 +5,10 @@ import java.awt.*;
 import java.util.Hashtable;
 import java.util.Vector;
 
+
+/**
+ * A toolbar panel to edit the settings of the tools.
+ */
 public class ToolSettingPanel extends ToolBarPanel {
 
     private JPanel toolSettingsContainer;

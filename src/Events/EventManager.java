@@ -7,10 +7,14 @@ import java.util.Map;
 
 /**
  * The custom event manager of the application.
+ *
  * Emitted events (Event) trigger handlers (EventHandler) which expect them.
  *
  * This manager allows different parts of the application to communicate through events,
  * such as two unconnected elements of the GUI, or some GUI element and the related back-end object.
+ *
+ * @see Event
+ * @see EventHandler
  */
 public class EventManager {
 

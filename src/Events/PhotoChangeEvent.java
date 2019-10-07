@@ -4,9 +4,8 @@ import java.awt.image.BufferedImage;
 
 /**
  * A custom type of event for photo changes.
- * It should be fired whenever the photo is changed.
  *
- * @see Events.EventManager
+ * @see Event
  */
 public class PhotoChangeEvent implements Event {
 

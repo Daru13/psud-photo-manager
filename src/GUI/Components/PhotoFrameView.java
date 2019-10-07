@@ -8,6 +8,15 @@ import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.util.EnumMap;
 
+
+/**
+ * The view of a photo frame.
+ *
+ * It contains a temporary canvas and handle the tools used to annotate the photo.
+ * It also handle Swing events, which and dispatched to the current tool.
+ *
+ * @see PhotoFrame
+ */
 class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener {
 
     private PhotoFrame photoFrame;

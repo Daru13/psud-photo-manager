@@ -4,6 +4,12 @@ import GUI.Components.PhotoFrame;
 
 import java.awt.*;
 
+
+/**
+ * A tool to draw an ellipsis.
+ *
+ * @see Tool
+ */
 public class Ellipsis extends GeometricShapeTool {
 
     public Ellipsis(PhotoFrame photoFrame) {

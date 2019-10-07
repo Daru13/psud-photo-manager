@@ -8,8 +8,10 @@ import Events.ViewChangeEvent;
 import javax.swing.*;
 import java.awt.*;
 
+
 /**
  * The main status bar of the GUI.
+ *
  * It displays informative messages about the current action or tool.
  */
 public class StatusBar extends JPanel {

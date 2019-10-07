@@ -3,6 +3,14 @@ package GUI.Components;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+
+/**
+ * The model of a photo frame.
+ *
+ * It contains the state of the photo, including the front and back images.
+ *
+ * @see PhotoFrame
+ */
 class PhotoFrameModel {
 
     private BufferedImage photo;

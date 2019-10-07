@@ -2,6 +2,12 @@ package GUI.Tools;
 
 import java.awt.*;
 
+
+/**
+ * Settings of the tools.
+ *
+ * These settings are used by the tools to adapt their drawing styles.
+ */
 public class ToolSettings {
 
     private Color color;

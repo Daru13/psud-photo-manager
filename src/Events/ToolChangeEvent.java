@@ -4,9 +4,8 @@ import GUI.Tools.ToolID;
 
 /**
  * A custom type of event for tool changes.
- * It should be fired whenever the tool is changed.
  *
- * @see Events.EventManager
+ * @see Event
  */
 public class ToolChangeEvent implements Event {
 

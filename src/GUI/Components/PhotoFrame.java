@@ -7,6 +7,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
+
+/**
+ * A photo frame to display a single photo.
+ *
+ * The photo can be flipped and annotated on its back using various tools.
+ */
 public class PhotoFrame extends JComponent {
 
     final PhotoFrameModel model;

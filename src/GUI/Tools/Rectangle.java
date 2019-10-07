@@ -4,6 +4,12 @@ import GUI.Components.PhotoFrame;
 
 import java.awt.*;
 
+
+/**
+ * A tool to draw an rectangle.
+ *
+ * @see Tool
+ */
 public class Rectangle extends GeometricShapeTool {
 
     public Rectangle(PhotoFrame photoFrame) {

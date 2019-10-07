@@ -7,6 +7,14 @@ import GUI.PhotoBrowserGUI;
 
 import java.util.EnumMap;
 
+
+/**
+ * The manager of the views.
+ *
+ * It is responsible for creating, installing and uninstalling views.
+ *
+ * @see View
+ */
 public class ViewManager {
 
     private final PhotoBrowserGUI gui;

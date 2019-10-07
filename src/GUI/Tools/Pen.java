@@ -7,6 +7,12 @@ import java.awt.event.MouseEvent;
 import java.util.LinkedList;
 import java.util.List;
 
+
+/**
+ * A tool to freely draw using a pen.
+ *
+ * @see Tool
+ */
 public class Pen extends ToolAdapter {
 
     private PhotoFrame photoFrame;

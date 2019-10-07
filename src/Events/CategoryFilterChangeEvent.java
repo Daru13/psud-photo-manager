@@ -2,9 +2,8 @@ package Events;
 
 /**
  * A custom type of event for category filter changes.
- * It should be fired whenever a category filter has been updated.
  *
- * @see Events.EventManager
+ * @see Event
  */
 public class CategoryFilterChangeEvent implements Event {
 

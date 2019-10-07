@@ -4,9 +4,7 @@ import GUI.PhotoBrowserGUI;
 /**
  * The entry point of the photo browser application.
  *
- * It is responsible for initiating the event manager and the GUI,
- * as well as for very general actions (such as closing the app).
- * More specific actions are delegated to other classes.
+ * In particular, it is responsible for initiating the event manager and the GUI.
  */
 public class PhotoBrowser {
 

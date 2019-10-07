@@ -4,9 +4,8 @@ import GUI.Views.ViewID;
 
 /**
  * A custom type of event for view changes.
- * It should be fired whenever the view is about to change.
  *
- * @see Events.EventManager
+ * @see Event
  */
 public class ViewChangeEvent implements Event {
 

@@ -19,11 +19,10 @@ import java.io.IOException;
  * The main component of the GUI.
  *
  * This is the entry point of the GUI of the application. It creates and manage the main window.
- * The different parts of the GUI are delegated to more specific classes, such as MenuBar.
+ * The different parts of the GUI are delegated to more specific classes,
+ * which can be further modified by the current view.
  *
- * @see GUI.Components.MenuBar
- * @see ToolBar
- * @see StatusBar
+ * @see GUI.Views.View
  */
 public class PhotoBrowserGUI {
 

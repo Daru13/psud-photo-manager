@@ -3,6 +3,10 @@ package GUI.Components;
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ * An abstract panel for the toolbar.
+ */
 abstract class ToolBarPanel extends JPanel {
 
     final static int TITLE_SIZE = 16;

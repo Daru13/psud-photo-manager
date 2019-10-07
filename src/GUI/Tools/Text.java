@@ -10,6 +10,18 @@ import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+
+/**
+ * A tool to draw text.
+ *
+ * A caret is displayed at the current edit position.
+ * Moreover, the text is automatically split into several lines
+ * when it reaches the right edge of the photo frame.
+ *
+ * Certain keys have special actions (see keyPressed method).
+ *
+ * @see Tool
+ */
 public class Text extends ToolAdapter {
 
     private final static long DELAY_BETWEEN_CARET_BLINKS = 650; // ms

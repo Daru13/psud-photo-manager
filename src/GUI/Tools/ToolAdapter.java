@@ -3,6 +3,12 @@ package GUI.Tools;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 
+
+/**
+ * Abstract tool adapter.
+ *
+ * It provides default implementations of the callbacks required by the Tool interface.
+ */
 public abstract class ToolAdapter implements Tool {
 
     // Tool selection/deselection

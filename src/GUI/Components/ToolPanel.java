@@ -7,6 +7,10 @@ import GUI.Tools.ToolID;
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ * A toolbar panel for displaying available tools and selecting the current one.
+ */
 public class ToolPanel extends ToolBarPanel {
 
     private EventManager eventManager;

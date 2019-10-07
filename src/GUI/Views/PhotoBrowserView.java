@@ -8,6 +8,12 @@ import javax.swing.*;
 import java.util.Arrays;
 import java.util.List;
 
+
+/**
+ * View displaying a collection of photos.
+ *
+ * @see View
+ */
 public class PhotoBrowserView implements View {
 
     private final EventManager eventManager;

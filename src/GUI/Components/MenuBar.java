@@ -7,8 +7,10 @@ import GUI.Views.ViewID;
 import javax.swing.*;
 import java.awt.event.KeyEvent;
 
+
 /**
  * The main menu bar of the GUI.
+ *
  * It offers menus with different options depending on the view.
  */
 public class MenuBar extends JMenuBar {

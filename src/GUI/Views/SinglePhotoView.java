@@ -12,6 +12,12 @@ import GUI.PhotoBrowserGUI;
 import javax.swing.*;
 import java.awt.*;
 
+
+/**
+ * View displaying a single photo.
+ *
+ * @see View
+ */
 public class SinglePhotoView implements View {
 
     private final EventManager eventManager;

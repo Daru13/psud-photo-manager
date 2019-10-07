@@ -5,9 +5,11 @@ import Events.EventManager;
 import javax.swing.*;
 import java.awt.*;
 
+
 /**
  * The main toolbar of the GUI.
- * It offers options to control the displayed content, such as filters.
+ *
+ * It offers options to control and modify the displayed content, such as tools and filters.
  */
 public class ToolBar extends JScrollPane {
 

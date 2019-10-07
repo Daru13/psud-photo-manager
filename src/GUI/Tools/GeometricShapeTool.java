@@ -5,6 +5,16 @@ import GUI.Components.PhotoFrame;
 import java.awt.*;
 import java.awt.event.MouseEvent;
 
+
+/**
+ * An abstract tool for drawing geometric shapes.
+ *
+ * It provides support for detecting the position of a first click,
+ * waiting for the user to move the mouse to define a bounding box,
+ * and detecting the position of a second click (release).
+ *
+ * @see Tool
+ */
 public abstract class GeometricShapeTool extends ToolAdapter {
     private PhotoFrame photoFrame;
 
