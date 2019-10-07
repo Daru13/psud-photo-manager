@@ -1,4 +1,4 @@
-package UI;
+package UI.Components;
 
 import Events.EventManager;
 import UI.Events.ViewChangeEvent;
@@ -11,17 +11,13 @@ import java.awt.event.KeyEvent;
  * The main menu bar of the GUI.
  * It offers menus with different options depending on the view.
  */
-class MenuBar {
+public class MenuBar extends JMenuBar {
     private EventManager eventManager;
-    private JMenuBar container;
 
-    JMenuBar getContainer() {
-        return container;
-    }
+    public MenuBar(EventManager eventManager) {
+        super();
 
-    MenuBar(EventManager eventManager) {
         this.eventManager = eventManager;
-        container = new JMenuBar();
 
         createFileMenu();
         createViewMenu();
@@ -30,7 +26,7 @@ class MenuBar {
     private void createFileMenu() {
         JMenu fileMenu = new JMenu("File");
         fileMenu.setMnemonic(KeyEvent.VK_F);
-        container.add(fileMenu);
+        add(fileMenu);
 
         JMenuItem importItem = new JMenuItem("Import");
         importItem.addActionListener(
@@ -59,7 +55,7 @@ class MenuBar {
     private void createViewMenu() {
         JMenu viewMenu = new JMenu("View");
         viewMenu.setMnemonic(KeyEvent.VK_V);
-        container.add(viewMenu);
+        add(viewMenu);
 
         JRadioButtonMenuItem viewerRadioButton = new JRadioButtonMenuItem("Photo viewer");
         viewerRadioButton.addActionListener(

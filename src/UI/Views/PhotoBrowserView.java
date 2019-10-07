@@ -2,7 +2,7 @@ package UI.Views;
 
 import Events.EventManager;
 import UI.Events.CategoryFilterChangeEvent;
-import UI.MainWindow;
+import UI.PhotoBrowserGUI;
 
 import javax.swing.*;
 import java.util.Arrays;
@@ -16,7 +16,7 @@ public class PhotoBrowserView implements View {
         this.eventManager = eventManager;
     }
 
-    private void installToolBar(MainWindow window) {
+    private void installToolBar(PhotoBrowserGUI window) {
         JComponent container = window.getToolbar().getContainer();
 
         JLabel photoCategoriesLabel = new JLabel("Categories");
@@ -45,18 +45,18 @@ public class PhotoBrowserView implements View {
         }
     }
 
-    private void uninstallToolBar(MainWindow window) {
+    private void uninstallToolBar(PhotoBrowserGUI window) {
         JComponent container = window.getToolbar().getContainer();
         container.removeAll();
     }
 
     @Override
-    public void install(MainWindow window) {
-        installToolBar(window);
+    public void install(PhotoBrowserGUI gui) {
+        installToolBar(gui);
     }
 
     @Override
-    public void uninstall(MainWindow window) {
-        uninstallToolBar(window);
+    public void uninstall(PhotoBrowserGUI gui) {
+        uninstallToolBar(gui);
     }
 }

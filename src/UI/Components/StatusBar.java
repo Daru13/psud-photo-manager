@@ -1,4 +1,4 @@
-package UI;
+package UI.Components;
 
 import Events.EventHandler;
 import Events.EventManager;
@@ -13,20 +13,16 @@ import java.awt.*;
  * The main status bar of the GUI.
  * It displays informative messages about the current action or tool.
  */
-class StatusBar {
+public class StatusBar extends JPanel {
     private EventManager eventManager;
-    private JPanel container;
 
     private JLabel statusLabel;
 
-    JPanel getContainer() {
-        return container;
-    }
+    public StatusBar(EventManager eventManager) {
+        super();
 
-    StatusBar(EventManager eventManager) {
         this.eventManager = eventManager;
 
-        container = new JPanel();
         configureContainer();
 
         createStatusLabel();
@@ -34,7 +30,7 @@ class StatusBar {
     }
 
     private void configureContainer() {
-        container.setBackground(new Color(0xCCCCCC));
+        setBackground(new Color(0xCCCCCC));
     }
 
     private void addStatusUpdateEventHandler() {
@@ -66,6 +62,6 @@ class StatusBar {
 
     private void createStatusLabel() {
         statusLabel = new JLabel(" ");
-        container.add(statusLabel);
+        add(statusLabel);
     }
 }

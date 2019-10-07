@@ -1,8 +1,8 @@
 package UI.Views;
 
-import UI.MainWindow;
+import UI.PhotoBrowserGUI;
 
 public interface View {
-    void install(MainWindow window);
-    void uninstall(MainWindow window);
+    void install(PhotoBrowserGUI gui);
+    void uninstall(PhotoBrowserGUI gui);
 }

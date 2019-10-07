@@ -3,21 +3,21 @@ package UI.Views;
 import Events.EventHandler;
 import Events.EventManager;
 import UI.Events.ViewChangeEvent;
-import UI.MainWindow;
+import UI.PhotoBrowserGUI;
 
 import java.util.EnumMap;
 
 public class ViewManager {
 
-    private final MainWindow window;
+    private final PhotoBrowserGUI gui;
     private final EventManager eventManager;
 
     private final EnumMap<ViewID, View> views;
     private ViewID currentViewID;
     private View currentView;
 
-    public ViewManager(MainWindow window, EventManager eventManager) {
-        this.window = window;
+    public ViewManager(PhotoBrowserGUI gui, EventManager eventManager) {
+        this.gui = gui;
         this.eventManager = eventManager;
 
         views = new EnumMap<>(ViewID.class);
@@ -39,13 +39,13 @@ public class ViewManager {
         }
 
         if (currentViewID != ViewID.None) {
-            currentView.uninstall(window);
+            currentView.uninstall(gui);
         }
 
         currentView = views.get(id);
         currentViewID = id;
 
-        currentView.install(window);
+        currentView.install(gui);
     }
 
     public void switchToInitialView() {

@@ -7,7 +7,7 @@ import UI.Components.ToolPanel;
 import UI.Components.ToolSettingPanel;
 import UI.Events.PhotoChangeEvent;
 import UI.Events.ToolChangeEvent;
-import UI.MainWindow;
+import UI.PhotoBrowserGUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,41 +23,41 @@ public class SinglePhotoView implements View {
         photoFrame = new PhotoFrame();
     }
 
-    private void installMainContent(MainWindow window) {
+    private void installMainContent(PhotoBrowserGUI gui) {
         // Put the photo component in a JPanel to center it
         JPanel photoFrameContainer = new JPanel(new GridBagLayout());
         photoFrameContainer.setBackground(Color.DARK_GRAY);
         photoFrameContainer.add(photoFrame);
 
         // Add the photo container into the scroll pane
-        JScrollPane mainContainer = window.getMainContainer();
+        JScrollPane mainContainer = gui.getMainContainer();
         mainContainer.setViewportView(photoFrameContainer);
         mainContainer.revalidate();
     }
 
-    private void uninstallMainContent(MainWindow window) {
-        JScrollPane mainContainer = window.getMainContainer();
+    private void uninstallMainContent(PhotoBrowserGUI gui) {
+        JScrollPane mainContainer = gui.getMainContainer();
         mainContainer.setViewportView(null);
     }
 
-    private void installToolBar(MainWindow window) {
-        installToolBarTools(window);
-        installToolBarToolSettings(window);
+    private void installToolBar(PhotoBrowserGUI gui) {
+        installToolBarTools(gui);
+        installToolBarToolSettings(gui);
     }
 
-    private void installToolBarTools(MainWindow window) {
-        JComponent container = window.getToolbar().getContainer();
+    private void installToolBarTools(PhotoBrowserGUI gui) {
+        JComponent container = gui.getToolbar().getContainer();
         container.add(new ToolPanel(photoFrame, eventManager));
     }
 
-    private void installToolBarToolSettings(MainWindow window) {
-        JComponent container = window.getToolbar().getContainer();
+    private void installToolBarToolSettings(PhotoBrowserGUI gui) {
+        JComponent container = gui.getToolbar().getContainer();
         container.add(new ToolSettingPanel(photoFrame));
     }
 
 
-    private void uninstallToolBar(MainWindow window) {
-        JComponent container = window.getToolbar().getContainer();
+    private void uninstallToolBar(PhotoBrowserGUI gui) {
+        JComponent container = gui.getToolbar().getContainer();
         container.removeAll();
     }
 
@@ -90,17 +90,17 @@ public class SinglePhotoView implements View {
     }
 
     @Override
-    public void install(MainWindow window) {
-        installMainContent(window);
-        installToolBar(window);
+    public void install(PhotoBrowserGUI gui) {
+        installMainContent(gui);
+        installToolBar(gui);
 
         installAllEventHandlers();
     }
 
     @Override
-    public void uninstall(MainWindow window) {
-        uninstallMainContent(window);
-        uninstallToolBar(window);
+    public void uninstall(PhotoBrowserGUI gui) {
+        uninstallMainContent(gui);
+        uninstallToolBar(gui);
 
         uninstallAllEventHandlers();
     }

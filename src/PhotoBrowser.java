@@ -1,5 +1,5 @@
 import Events.EventManager;
-import UI.MainWindow;
+import UI.PhotoBrowserGUI;
 
 import java.io.File;
 
@@ -13,11 +13,11 @@ import java.io.File;
 public class PhotoBrowser {
 
     private EventManager eventManager;
-    private MainWindow mainWindow;
+    private PhotoBrowserGUI mainWindow;
 
     private PhotoBrowser() {
         eventManager = new EventManager();
-        mainWindow = new MainWindow(eventManager);
+        mainWindow = new PhotoBrowserGUI(eventManager);
 
         addDefaultEventHandlers();
     }
