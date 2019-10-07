@@ -2,9 +2,9 @@ package UI.Components;
 
 import Events.EventHandler;
 import Events.EventManager;
-import UI.Events.CategoryFilterChangeEvent;
-import UI.Events.ToolChangeEvent;
-import UI.Events.ViewChangeEvent;
+import Events.CategoryFilterChangeEvent;
+import Events.ToolChangeEvent;
+import Events.ViewChangeEvent;
 
 import javax.swing.*;
 import java.awt.*;

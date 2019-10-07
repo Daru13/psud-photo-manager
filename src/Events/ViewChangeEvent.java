@@ -1,6 +1,5 @@
-package UI.Events;
+package Events;
 
-import Events.Event;
 import UI.Views.ViewID;
 
 /**

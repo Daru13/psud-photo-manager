@@ -5,8 +5,8 @@ import Events.EventManager;
 import UI.Components.PhotoFrame;
 import UI.Components.ToolPanel;
 import UI.Components.ToolSettingPanel;
-import UI.Events.PhotoChangeEvent;
-import UI.Events.ToolChangeEvent;
+import Events.PhotoChangeEvent;
+import Events.ToolChangeEvent;
 import UI.PhotoBrowserGUI;
 
 import javax.swing.*;

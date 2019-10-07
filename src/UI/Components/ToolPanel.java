@@ -1,7 +1,7 @@
 package UI.Components;
 
 import Events.EventManager;
-import UI.Events.ToolChangeEvent;
+import Events.ToolChangeEvent;
 import UI.Tools.ToolID;
 
 import javax.swing.*;

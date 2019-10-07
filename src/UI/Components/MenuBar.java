@@ -1,7 +1,7 @@
 package UI.Components;
 
 import Events.EventManager;
-import UI.Events.ViewChangeEvent;
+import Events.ViewChangeEvent;
 import UI.Views.ViewID;
 
 import javax.swing.*;

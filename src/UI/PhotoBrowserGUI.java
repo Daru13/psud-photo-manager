@@ -4,7 +4,7 @@ import Events.EventManager;
 import UI.Components.MenuBar;
 import UI.Components.StatusBar;
 import UI.Components.ToolBar;
-import UI.Events.PhotoChangeEvent;
+import Events.PhotoChangeEvent;
 import UI.Views.ViewManager;
 
 import javax.imageio.ImageIO;
