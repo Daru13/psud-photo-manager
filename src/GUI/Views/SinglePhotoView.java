@@ -1,13 +1,13 @@
-package UI.Views;
+package GUI.Views;
 
 import Events.Event;
 import Events.EventManager;
-import UI.Components.PhotoFrame;
-import UI.Components.ToolPanel;
-import UI.Components.ToolSettingPanel;
+import GUI.Components.PhotoFrame;
+import GUI.Components.ToolPanel;
+import GUI.Components.ToolSettingPanel;
 import Events.PhotoChangeEvent;
 import Events.ToolChangeEvent;
-import UI.PhotoBrowserGUI;
+import GUI.PhotoBrowserGUI;
 
 import javax.swing.*;
 import java.awt.*;

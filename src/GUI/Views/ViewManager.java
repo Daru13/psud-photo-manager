@@ -1,9 +1,9 @@
-package UI.Views;
+package GUI.Views;
 
 import Events.EventHandler;
 import Events.EventManager;
 import Events.ViewChangeEvent;
-import UI.PhotoBrowserGUI;
+import GUI.PhotoBrowserGUI;
 
 import java.util.EnumMap;
 

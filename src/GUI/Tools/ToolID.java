@@ -1,4 +1,4 @@
-package UI.Tools;
+package GUI.Tools;
 
 public enum ToolID {
     NONE(""),

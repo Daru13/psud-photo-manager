@@ -1,4 +1,4 @@
-package UI.Components;
+package GUI.Components;
 
 import Events.EventHandler;
 import Events.EventManager;

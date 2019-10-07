@@ -1,6 +1,6 @@
-package UI.Views;
+package GUI.Views;
 
-import UI.PhotoBrowserGUI;
+import GUI.PhotoBrowserGUI;
 
 public interface View {
     void install(PhotoBrowserGUI gui);

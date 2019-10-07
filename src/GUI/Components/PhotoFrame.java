@@ -1,7 +1,7 @@
-package UI.Components;
+package GUI.Components;
 
-import UI.Tools.ToolID;
-import UI.Tools.ToolSettings;
+import GUI.Tools.ToolID;
+import GUI.Tools.ToolSettings;
 
 import javax.swing.*;
 import java.awt.*;

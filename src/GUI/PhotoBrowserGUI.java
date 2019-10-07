@@ -1,11 +1,11 @@
-package UI;
+package GUI;
 
 import Events.EventManager;
-import UI.Components.MenuBar;
-import UI.Components.StatusBar;
-import UI.Components.ToolBar;
+import GUI.Components.MenuBar;
+import GUI.Components.StatusBar;
+import GUI.Components.ToolBar;
 import Events.PhotoChangeEvent;
-import UI.Views.ViewManager;
+import GUI.Views.ViewManager;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -21,7 +21,7 @@ import java.io.IOException;
  * This is the entry point of the GUI of the application. It creates and manage the main window.
  * The different parts of the GUI are delegated to more specific classes, such as MenuBar.
  *
- * @see UI.Components.MenuBar
+ * @see GUI.Components.MenuBar
  * @see ToolBar
  * @see StatusBar
  */
@@ -32,7 +32,7 @@ public class PhotoBrowserGUI {
 
     private final JFrame window;
     private JScrollPane mainContainer;
-    private UI.Components.MenuBar menuBar;
+    private GUI.Components.MenuBar menuBar;
     private ToolBar toolbar;
     private StatusBar statusBar;
 
@@ -77,7 +77,7 @@ public class PhotoBrowserGUI {
         return mainContainer;
     }
 
-    public UI.Components.MenuBar getMenuBar() {
+    public GUI.Components.MenuBar getMenuBar() {
         return menuBar;
     }
 

@@ -1,8 +1,8 @@
-package UI.Components;
+package GUI.Components;
 
 import Events.EventManager;
 import Events.ToolChangeEvent;
-import UI.Tools.ToolID;
+import GUI.Tools.ToolID;
 
 import javax.swing.*;
 import java.awt.*;

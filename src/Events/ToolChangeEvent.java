@@ -1,7 +1,6 @@
 package Events;
 
-import Events.Event;
-import UI.Tools.ToolID;
+import GUI.Tools.ToolID;
 
 /**
  * A custom type of event for tool changes.

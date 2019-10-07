@@ -1,4 +1,4 @@
-package UI.Views;
+package GUI.Views;
 
 public enum ViewID {
     None,

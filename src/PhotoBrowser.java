@@ -1,5 +1,5 @@
 import Events.EventManager;
-import UI.PhotoBrowserGUI;
+import GUI.PhotoBrowserGUI;
 
 import java.io.File;
 

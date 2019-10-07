@@ -1,8 +1,8 @@
-package UI.Components;
+package GUI.Components;
 
 import Events.EventManager;
 import Events.ViewChangeEvent;
-import UI.Views.ViewID;
+import GUI.Views.ViewID;
 
 import javax.swing.*;
 import java.awt.event.KeyEvent;

@@ -1,6 +1,6 @@
-package UI.Tools;
+package GUI.Tools;
 
-import UI.Components.PhotoFrame;
+import GUI.Components.PhotoFrame;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;

@@ -1,7 +1,7 @@
-package UI.Components;
+package GUI.Components;
 
-import UI.Tools.Rectangle;
-import UI.Tools.*;
+import GUI.Tools.Rectangle;
+import GUI.Tools.*;
 
 import java.awt.*;
 import java.awt.event.*;

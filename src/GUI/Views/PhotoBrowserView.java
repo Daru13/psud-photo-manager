@@ -1,8 +1,8 @@
-package UI.Views;
+package GUI.Views;
 
 import Events.EventManager;
 import Events.CategoryFilterChangeEvent;
-import UI.PhotoBrowserGUI;
+import GUI.PhotoBrowserGUI;
 
 import javax.swing.*;
 import java.util.Arrays;
