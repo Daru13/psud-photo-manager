@@ -6,6 +6,8 @@ import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class Text extends ToolAdapter {
 
@@ -19,6 +21,10 @@ public class Text extends ToolAdapter {
     private int firstClickX;
     private int firstClickY;
 
+    private Timer caretBlinkTimer;
+    private boolean caretIsVisible;
+    private final static long DELAY_BETWEEN_CARET_BLINKS = 800; // ms
+
     public Text(PhotoFrame photoFrame) {
         this.photoFrame = photoFrame;
 
@@ -29,6 +35,9 @@ public class Text extends ToolAdapter {
 
         firstClickX = 0;
         firstClickY = 0;
+
+        caretBlinkTimer = new Timer();
+        caretIsVisible = true;
     }
 
     private void insertCharacter(char character) {
@@ -78,6 +87,7 @@ public class Text extends ToolAdapter {
         firstClickX = fromX;
         firstClickY = fromY;
         currentlyEditing = true;
+        caretIsVisible = true;
 
         drawString(true);
     }
@@ -90,6 +100,28 @@ public class Text extends ToolAdapter {
         stringLength = 0;
         charIndexBeforeCaret = -1;
         currentlyEditing = false;
+    }
+
+    @Override
+    public void toolSelected() {
+        caretBlinkTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (currentlyEditing) {
+                    caretIsVisible = !caretIsVisible;
+                    drawString(true);
+                }
+            }
+        }, 0, DELAY_BETWEEN_CARET_BLINKS);
+        System.out.println("Timer started");
+
+    }
+
+    @Override
+    public void toolDeselected() {
+        System.out.println("Timer terminated");
+        caretBlinkTimer.cancel();
+        caretBlinkTimer = new Timer();
     }
 
     @Override
@@ -111,7 +143,7 @@ public class Text extends ToolAdapter {
         if (!currentlyEditing) {
             return;
         }
-
+        
         switch (event.getKeyCode()) {
             case KeyEvent.VK_BACK_SPACE:
                 eraseCharacter();
@@ -188,6 +220,10 @@ public class Text extends ToolAdapter {
     }
 
     private void drawCaret() {
+        if (!caretIsVisible) {
+            return;
+        }
+
         Graphics2D g = (Graphics2D)photoFrame.getWorkingCanvas().getGraphics();
         applyToolSettings(g);
 
