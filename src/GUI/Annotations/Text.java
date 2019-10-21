@@ -1,32 +1,24 @@
-package GUI.Tools;
+package GUI.Annotations;
 
 import GUI.Components.PhotoFrame;
+import GUI.Tools.ToolSettings;
 
 import java.awt.*;
-import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-
-/**
- * A tool to draw text.
- *
- * A caret is displayed at the current edit position.
- * Moreover, the text is automatically split into several lines
- * when it reaches the right edge of the photo frame.
- *
- * Certain keys have special actions (see keyPressed method).
- *
- * @see Tool
- */
-public class Text extends ToolAdapter {
+public class Text implements Annotation {
 
     private final static long DELAY_BETWEEN_CARET_BLINKS = 650; // ms
 
-    private PhotoFrame photoFrame;
+    private final PhotoFrame photoFrame;
+
+    private Point topLeft;
+    private Color color;
+    private String fontFamily;
+    private int fontSize;
 
     private boolean currentlyEditing;
     private StringBuilder stringBuilder;
@@ -37,12 +29,16 @@ public class Text extends ToolAdapter {
     private Timer caretBlinkTimer;
     private boolean caretIsVisible;
 
-    private int firstClickX;
-    private int firstClickY;
 
-
-    public Text(PhotoFrame photoFrame) {
+    public Text(Point topLeft, PhotoFrame photoFrame) {
         this.photoFrame = photoFrame;
+
+        this.topLeft = topLeft;
+
+        ToolSettings settings = photoFrame.getToolSettings();
+        color = settings.getColor();
+        fontFamily = settings.getFontFamily();
+        fontSize = settings.getFontSize();
 
         stringBuilder = new StringBuilder();
         stringSplitPerLine = new LinkedList<>();
@@ -52,9 +48,27 @@ public class Text extends ToolAdapter {
         charIndexBeforeCaret = -1;
         caretBlinkTimer = new Timer();
         caretIsVisible = true;
+    }
 
-        firstClickX = 0;
-        firstClickY = 0;
+    public boolean isEditable() {
+        return this.currentlyEditing;
+    }
+
+    private void startCaretTimer() {
+        caretBlinkTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                if (currentlyEditing) {
+                    caretIsVisible = !caretIsVisible;
+                    photoFrame.repaint();
+                }
+            }
+        }, 0, DELAY_BETWEEN_CARET_BLINKS);
+    }
+
+    private void stopCaretTimer() {
+        caretBlinkTimer.cancel();
+        caretBlinkTimer = new Timer();
     }
 
     private void reSplitString(Graphics2D g, FontMetrics metrics) {
@@ -65,7 +79,7 @@ public class Text extends ToolAdapter {
 
         double photoFrameWidth = photoFrame.getWidth();
         double textWidth = metrics.getStringBounds(singleLineString, g).getWidth();
-        boolean textIsTooLarge = firstClickX + textWidth > photoFrameWidth;
+        boolean textIsTooLarge = topLeft.x + textWidth > photoFrameWidth;
 
         while (textIsTooLarge) {
             String stringToSplit = stringSplitPerLine.getLast();
@@ -80,7 +94,7 @@ public class Text extends ToolAdapter {
                 int splitIndex = stringToSplit.length() - 1;
                 while (splitIndex > 0) {
                     textWidth = metrics.getStringBounds(stringToSplit.substring(0, splitIndex), g).getWidth();
-                    if (firstClickX + textWidth <= photoFrameWidth) {
+                    if (topLeft.x + textWidth <= photoFrameWidth) {
                         break;
                     }
 
@@ -96,11 +110,11 @@ public class Text extends ToolAdapter {
             stringSplitPerLine.add(secondPart);
 
             textWidth = metrics.getStringBounds(secondPart, g).getWidth();
-            textIsTooLarge = firstClickX + textWidth > photoFrameWidth;
+            textIsTooLarge = topLeft.x + textWidth > photoFrameWidth;
         }
     }
 
-    private void insertCharacter(char character) {
+    public void insertCharacter(char character) {
         if (charIndexBeforeCaret == stringLength) {
             stringBuilder.append(character);
         }
@@ -111,10 +125,10 @@ public class Text extends ToolAdapter {
         stringLength++;
         charIndexBeforeCaret++;
 
-        drawString(true);
+        photoFrame.repaint();
     }
 
-    private void eraseCharacter() {
+    public void eraseCharacter() {
         if (stringLength == 0) {
             return;
         }
@@ -123,10 +137,10 @@ public class Text extends ToolAdapter {
         stringLength--;
         charIndexBeforeCaret--;
 
-        drawString(true);
+        photoFrame.repaint();
     }
 
-    private void moveCaret(int offset) {
+    void moveCaret(int offset) {
         charIndexBeforeCaret += offset;
 
         if (charIndexBeforeCaret < -1) {
@@ -136,162 +150,77 @@ public class Text extends ToolAdapter {
             charIndexBeforeCaret = stringLength - 1;
         }
 
-        drawString(true);
+        photoFrame.repaint();
     }
 
-    private void startEditing(int fromX, int fromY) {
+    public void moveCaretLeft() {
+        moveCaret(-1);
+    }
+
+    public void moveCaretRight() {
+        moveCaret(+1);
+    }
+
+    public void moveCaretBeforeFirstCharacter() {
+        moveCaret(-charIndexBeforeCaret - 1);
+    }
+
+    public void moveCaretAfterLastCharacter() {
+        moveCaret(stringLength - charIndexBeforeCaret - 1);
+    }
+
+    public void startEditing() {
+        if (currentlyEditing) {
+            return;
+        }
+
         if (! photoFrame.hasFocus()) {
             photoFrame.requestFocusInWindow();
         }
 
-        firstClickX = fromX;
-        firstClickY = fromY;
         currentlyEditing = true;
-        caretIsVisible = true;
+        startCaretTimer();
+        photoFrame.repaint();
 
-        drawString(true);
     }
 
-    private void stopEditing() {
-        drawString(false);
-        photoFrame.clearWorkingCanvas();
+    public void stopEditing() {
+        if (! currentlyEditing) {
+            return;
+        }
 
-        stringBuilder = new StringBuilder();
-        stringLength = 0;
         charIndexBeforeCaret = -1;
         currentlyEditing = false;
-    }
-
-    @Override
-    public void toolSelected() {
-        caretBlinkTimer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                if (currentlyEditing) {
-                    caretIsVisible = !caretIsVisible;
-                    drawString(true);
-                }
-            }
-        }, 0, DELAY_BETWEEN_CARET_BLINKS);
-    }
-
-    @Override
-    public void toolDeselected() {
-        caretBlinkTimer.cancel();
-        caretBlinkTimer = new Timer();
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent event) {
-        if (event.getClickCount() != 1) {
-            return;
-        }
-
-        if (currentlyEditing) {
-            stopEditing();
-        }
-        else {
-            startEditing(event.getX(), event.getY());
-        }
-    }
-
-    @Override
-    public void keyPressed(KeyEvent event) {
-        if (! currentlyEditing) {
-            return;
-        }
-
-        switch (event.getKeyCode()) {
-            case KeyEvent.VK_BACK_SPACE:
-                eraseCharacter();
-                break;
-
-            case KeyEvent.VK_LEFT:
-                moveCaret(-1);
-                break;
-
-            case KeyEvent.VK_RIGHT:
-                moveCaret(+1);
-                break;
-
-            case KeyEvent.VK_DOWN:
-                moveCaret(-charIndexBeforeCaret - 1);
-                break;
-
-            case KeyEvent.VK_UP:
-                moveCaret(stringLength - charIndexBeforeCaret - 1);
-                break;
-
-            case KeyEvent.VK_ENTER:
-                stopEditing();
-                break;
-        }
-    }
-
-    @Override
-    public void keyTyped(KeyEvent event) {
-        if (! currentlyEditing) {
-            return;
-        }
-
-        char character = event.getKeyChar();
-        if (! Character.isISOControl(character)) {
-            insertCharacter(character);
-        }
-    }
-
-    private void configureRenderingHints(Graphics2D g, boolean draft) {
-        g.setRenderingHint(RenderingHints.KEY_RENDERING,
-                draft ? RenderingHints.VALUE_RENDER_SPEED : RenderingHints.VALUE_RENDER_QUALITY);
-    }
-
-    private void applyToolSettings(Graphics2D g) {
-        ToolSettings settings = photoFrame.getToolSettings();
-
-        g.setColor(settings.getColor());
-        g.setFont(new Font(settings.getFontFamily(), Font.PLAIN, settings.getFontSize()));
+        stopCaretTimer();
+        photoFrame.repaint();
     }
 
     private void configureGraphics(Graphics2D g, boolean draft) {
-        configureRenderingHints(g, draft);
-        applyToolSettings(g);
+        // Rendering quality
+        g.setRenderingHint(RenderingHints.KEY_RENDERING,
+                draft ? RenderingHints.VALUE_RENDER_SPEED : RenderingHints.VALUE_RENDER_QUALITY);
+
+        // Drawing style
+        g.setColor(color);
+        g.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
     }
 
-    private void drawString(boolean useWorkingCanvas) {
-        Graphics2D g = useWorkingCanvas
-                ? (Graphics2D)photoFrame.getWorkingCanvas().getGraphics()
-                : (Graphics2D)photoFrame.getPhotoBack().getGraphics();
-
-        if (useWorkingCanvas) {
-            photoFrame.clearWorkingCanvas();
-        }
-
-        configureGraphics(g, useWorkingCanvas);
-
+    private void drawString(Graphics2D g) {
         FontMetrics metrics = g.getFontMetrics();
         reSplitString(g, metrics);
         int lineHeight = metrics.getHeight();
         int offsetY = 0;
 
         for (String s : stringSplitPerLine) {
-            g.drawString(s, firstClickX, firstClickY + offsetY);
+            g.drawString(s, topLeft.x, topLeft.y + offsetY);
             offsetY += lineHeight;
         }
-
-        if (useWorkingCanvas) {
-            drawCaret();
-        }
-
-        photoFrame.repaint();
     }
 
-    private void drawCaret() {
-        if (! caretIsVisible) {
+    private void drawCaret(Graphics2D g) {
+        if (! (caretIsVisible && currentlyEditing)) {
             return;
         }
-
-        Graphics2D g = (Graphics2D)photoFrame.getWorkingCanvas().getGraphics();
-        applyToolSettings(g);
 
         int nbCharsBeforeCurrentLine = 0;
         int caretLineIndex = 0;
@@ -318,10 +247,17 @@ public class Text extends ToolAdapter {
 
         g.setColor(Color.BLACK);
         g.fillRect(
-            firstClickX + caretOffsetX,
-            firstClickY - caretHeight + caretOffsetY,
-            1,
-            caretHeight
+                topLeft.x + caretOffsetX,
+                topLeft.y - caretHeight + caretOffsetY,
+                1,
+                caretHeight
         );
+    }
+
+    @Override
+    public void draw(Graphics2D g) {
+        configureGraphics(g, false);
+        drawString(g);
+        drawCaret(g);
     }
 }

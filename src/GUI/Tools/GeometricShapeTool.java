@@ -1,5 +1,6 @@
 package GUI.Tools;
 
+import GUI.Annotations.GeometricShapeAnnotation;
 import GUI.Components.PhotoFrame;
 
 import java.awt.*;
@@ -15,44 +16,38 @@ import java.awt.event.MouseEvent;
  *
  * @see Tool
  */
-public abstract class GeometricShapeTool extends ToolAdapter {
-    private PhotoFrame photoFrame;
-
-    private int firstClickX;
-    private int firstClickY;
+public abstract class GeometricShapeTool<A extends GeometricShapeAnnotation> extends ToolAdapter {
+    PhotoFrame photoFrame;
+    private GeometricShapeAnnotation annotation;
 
 
     GeometricShapeTool(PhotoFrame photoFrame) {
         super();
 
         this.photoFrame = photoFrame;
-
-        firstClickX = 0;
-        firstClickY = 0;
+        this.annotation = null;
     }
+
+    abstract A createAnnotation(Point origin);
 
     @Override
     public void mousePressed(MouseEvent event) {
-        firstClickX = event.getX();
-        firstClickY = event.getY();
+        Point origin = new Point(event.getX(), event.getY());
+        annotation = createAnnotation(origin);
+
+        photoFrame.addAnnotation(annotation);
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent event) {
+        if (annotation != null) {
+            Point corner = new Point(event.getX(), event.getY());
+            annotation.setBoundingBoxSize(corner);
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent event) {
-        firstClickX = 0;
-        firstClickY = 0;
+        annotation = null;
     }
-    
-    private void configureGraphics(Graphics2D g, boolean draft) {
-        // Rendering quality
-        g.setRenderingHint(RenderingHints.KEY_RENDERING,
-                draft ? RenderingHints.VALUE_RENDER_SPEED : RenderingHints.VALUE_RENDER_QUALITY);
-
-        // Drawing style
-        ToolSettings settings = photoFrame.getToolSettings();
-        g.setColor(settings.getColor());
-        g.setStroke(new BasicStroke(settings.getThickness()));
-    }
-
-    abstract protected void drawShape(Graphics2D g, int originX, int originY, int width, int height);
 }

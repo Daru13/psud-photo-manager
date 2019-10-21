@@ -1,31 +1,34 @@
 package GUI.Components;
 
-import java.awt.*;
+import GUI.Annotations.Annotation;
+
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
+import java.util.List;
 
 
 /**
  * The model of a photo frame.
  *
- * It contains the state of the photo, including the front and back images.
+ * It contains the photo and its annotations.
  *
  * @see PhotoFrame
  */
 class PhotoFrameModel {
 
     private BufferedImage photo;
-    private BufferedImage photoBack;
-
     private boolean photoIsLoaded;
-    private boolean photoIsFlipped;
+
+    private List<Annotation> annotations;
+    private boolean annotable;
 
 
     PhotoFrameModel() {
         photo = null;
-        photoBack = null;
-
         photoIsLoaded = false;
-        photoIsFlipped = false;
+
+        annotations = new LinkedList<>();
+        annotable = false;
     }
 
     BufferedImage getPhoto() {
@@ -34,36 +37,39 @@ class PhotoFrameModel {
 
     void setPhoto(BufferedImage photo) {
         this.photo = photo;
-
-        this.photoBack = new BufferedImage(photo.getWidth(), photo.getHeight(), BufferedImage.TYPE_INT_RGB);
-        Graphics2D g = this.photoBack.createGraphics();
-        g.setBackground(Color.WHITE);
-        g.clearRect(0, 0, photoBack.getWidth(), photoBack.getHeight());
-
         this.photoIsLoaded = true;
+
+        this.annotations.clear();
     }
 
-    BufferedImage getPhotoBack() { return photoBack; }
+    void removePhoto() {
+        this.photo = null;
+        this.photoIsLoaded = false;
+
+        this.annotations.clear();
+    }
 
     boolean isPhotoLoaded() {
         return photoIsLoaded;
     }
 
-    boolean isPhotoFlipped() {
-        return this.photoIsFlipped;
+    public List<Annotation> getAnnotations() {
+        return annotations;
     }
 
-    void switchPhotoIsFlipped() {
-        photoIsFlipped = ! photoIsFlipped;
+    void addAnnotation(Annotation annotation) {
+        this.annotations.add(annotation);
     }
 
-
-    void removePhoto() {
-        this.photo = null;
-        this.photoBack = null;
-
-        this.photoIsLoaded = false;
-        this.photoIsFlipped = false;
+    void removeAnnotation(Annotation annotation) {
+        this.annotations.remove(annotation);
     }
 
+    boolean isAnnotable() {
+        return this.annotable;
+    }
+
+    void setAnnotable(boolean annotable) {
+        this.annotable = annotable;
+    }
 }

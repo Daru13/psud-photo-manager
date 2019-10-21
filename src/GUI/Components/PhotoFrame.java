@@ -1,11 +1,13 @@
 package GUI.Components;
 
+import GUI.Annotations.Annotation;
 import GUI.Tools.ToolID;
 import GUI.Tools.ToolSettings;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.List;
 
 
 /**
@@ -38,11 +40,7 @@ public class PhotoFrame extends JComponent {
     }
 
     public BufferedImage getPhoto() {
-        return this.model.getPhoto();
-    }
-
-    public BufferedImage getPhotoBack() {
-        return this.model.getPhotoBack();
+        return model.getPhoto();
     }
 
     public void setPhoto(BufferedImage photo) {
@@ -68,13 +66,31 @@ public class PhotoFrame extends JComponent {
         revalidate();
     }
 
-    public void flipPhoto() {
-        model.switchPhotoIsFlipped();
-        repaint();
+    public List<Annotation> getAnnotations() {
+        return model.getAnnotations();
     }
 
-    public boolean isPhotoFlipped() {
-        return model.isPhotoFlipped();
+    public void addAnnotation(Annotation annotation) {
+        model.addAnnotation(annotation);
+
+        repaint();
+        revalidate();
+    }
+
+    public void removeAnnotation(Annotation annotation) {
+        model.removeAnnotation(annotation);
+
+        repaint();
+        revalidate();
+    }
+
+    boolean isAnnotable() {
+        return model.isAnnotable();
+    }
+
+    void switchAnnotableState() {
+        model.setAnnotable(! model.isAnnotable());
+        System.out.println("Photo is editable = " + model.isAnnotable());
     }
 
     public BufferedImage getWorkingCanvas() {

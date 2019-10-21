@@ -1,12 +1,14 @@
 package GUI.Components;
 
-import GUI.Tools.Rectangle;
+import GUI.Annotations.Annotation;
+import GUI.Tools.RectangleTool;
 import GUI.Tools.*;
 
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.image.BufferedImage;
 import java.util.EnumMap;
+import java.util.List;
 
 
 /**
@@ -43,10 +45,10 @@ class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener 
     }
 
     private void initTools() {
-        tools.put(ToolID.PEN, new Pen(this.photoFrame));
-        tools.put(ToolID.RECTANGLE, new Rectangle(this.photoFrame));
-        tools.put(ToolID.ELLIPSIS, new Ellipsis(this.photoFrame));
-        tools.put(ToolID.TEXT, new Text(this.photoFrame));
+        tools.put(ToolID.PEN, new PenTool(this.photoFrame));
+        tools.put(ToolID.RECTANGLE, new RectangleTool(this.photoFrame));
+        tools.put(ToolID.ELLIPSIS, new EllipsisTool(this.photoFrame));
+        tools.put(ToolID.TEXT, new TextTool(this.photoFrame));
 
         setDefaultTool();
     }
@@ -108,83 +110,86 @@ class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener 
 
     public void mouseClicked(MouseEvent e) {
         if (e.getClickCount() == 2) {
-            photoFrame.flipPhoto();
+            photoFrame.switchAnnotableState();
         }
 
-        if (currentToolID != ToolID.NONE && photoFrame.isPhotoFlipped()) {
+        if (currentToolID != ToolID.NONE && photoFrame.isAnnotable()) {
             currentTool.mouseClicked(e);
         }
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-        if (currentToolID != ToolID.NONE && photoFrame.isPhotoFlipped()) {
+        if (currentToolID != ToolID.NONE && photoFrame.isAnnotable()) {
             currentTool.mousePressed(e);
         }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        if (currentToolID != ToolID.NONE && photoFrame.isPhotoFlipped()) {
+        if (currentToolID != ToolID.NONE && photoFrame.isAnnotable()) {
             currentTool.mouseReleased(e);
         }
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        if (currentToolID != ToolID.NONE && photoFrame.isPhotoFlipped()) {
+        if (currentToolID != ToolID.NONE && photoFrame.isAnnotable()) {
             currentTool.mouseEntered(e);
         }
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        if (currentToolID != ToolID.NONE && photoFrame.isPhotoFlipped()) {
+        if (currentToolID != ToolID.NONE && photoFrame.isAnnotable()) {
             currentTool.mouseExited(e);
         }
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-        if (currentToolID != ToolID.NONE && photoFrame.isPhotoFlipped()) {
+        if (currentToolID != ToolID.NONE && photoFrame.isAnnotable()) {
             currentTool.mouseDragged(e);
         }
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
-        if (currentToolID != ToolID.NONE && photoFrame.isPhotoFlipped()) {
+        if (currentToolID != ToolID.NONE && photoFrame.isAnnotable()) {
             currentTool.mouseMoved(e);
         }
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-        if (currentToolID != ToolID.NONE && photoFrame.isPhotoFlipped()) {
+        if (currentToolID != ToolID.NONE && photoFrame.isAnnotable()) {
             currentTool.keyTyped(e);
         }
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        if (currentToolID != ToolID.NONE && photoFrame.isPhotoFlipped()) {
+        if (currentToolID != ToolID.NONE && photoFrame.isAnnotable()) {
             currentTool.keyPressed(e);
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
-        if (currentToolID != ToolID.NONE && photoFrame.isPhotoFlipped()) {
+        if (currentToolID != ToolID.NONE && photoFrame.isAnnotable()) {
             currentTool.keyReleased(e);
         }
     }
 
-    private void paintPhoto(Graphics2D g, BufferedImage photo) {
-        g.drawImage(photo, 0, 0, null);
+    private void paintPhoto(Graphics2D g) {
+        g.drawImage(photoFrame.model.getPhoto(), 0, 0, null);
     }
 
-    private void paintPhotoBack(Graphics2D g, BufferedImage photoBack) {
-        g.drawImage(photoBack, 0, 0, null);
+    private void paintAnnotations(Graphics2D g) {
+        List<Annotation> annotations = photoFrame.model.getAnnotations();
+        for (Annotation a : annotations) {
+            a.draw(g);
+        }
     }
 
     private void paintWorkingCanvas(Graphics2D g) {
@@ -205,13 +210,8 @@ class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener 
 
         setDefaultRenderingHints(g);
 
-        // Either draw the photo or the photo back + the working canvas at its back
-        if (photoFrame.isPhotoFlipped()) {
-            paintPhotoBack(g, photoFrame.model.getPhotoBack());
-            paintWorkingCanvas(g);
-        }
-        else {
-            paintPhoto(g, photoFrame.model.getPhoto());
-        }
+        //paintWorkingCanvas(g);
+        paintPhoto(g);
+        paintAnnotations(g);
     }
 }
