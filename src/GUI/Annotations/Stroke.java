@@ -2,6 +2,7 @@ package GUI.Annotations;
 
 import GUI.Components.PhotoFrame;
 import GUI.Tools.ToolSettings;
+import fr.lri.swingstates.canvas.CPolyLine;
 
 import java.awt.*;
 import java.util.LinkedList;
@@ -11,6 +12,7 @@ public class Stroke implements Annotation {
 
     private PhotoFrame photoFrame;
 
+    private CPolyLine shape;
     private List<Point> points;
     private int nbPoints;
     private Color color;
@@ -20,6 +22,7 @@ public class Stroke implements Annotation {
     public Stroke(PhotoFrame photoFrame, Point origin) {
         this.photoFrame = photoFrame;
 
+        shape = new CPolyLine().moveTo(origin);
         points = new LinkedList<>();
         nbPoints = 0;
 
@@ -31,6 +34,7 @@ public class Stroke implements Annotation {
     }
 
     public void addStep(Point point) {
+        shape.lineTo(point);
         points.add(point);
         nbPoints++;
 
@@ -49,7 +53,7 @@ public class Stroke implements Annotation {
         g.setStroke(new BasicStroke(thickness));
     }
 
-    @Override
+    //@Override
     public void draw(Graphics2D g) {
         configureGraphics(g, false);
 
@@ -63,5 +67,10 @@ public class Stroke implements Annotation {
         }
 
         g.drawPolyline(pointsX, pointsY, nbPoints);
+    }
+
+    @Override
+    public CPolyLine getCanvasShape() {
+        return shape;
     }
 }

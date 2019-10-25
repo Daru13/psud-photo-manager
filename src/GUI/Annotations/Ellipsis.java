@@ -1,18 +1,19 @@
 package GUI.Annotations;
 
 import GUI.Components.PhotoFrame;
+import fr.lri.swingstates.canvas.CEllipse;
+import fr.lri.swingstates.canvas.CRectangularShape;
 
 import java.awt.*;
 
-public class Ellipsis extends GeometricShapeAnnotation {
+public class Ellipsis extends RectangularShapeAnnotation {
 
     public Ellipsis(PhotoFrame photoFrame, Point origin) {
         super(photoFrame, origin);
     }
 
     @Override
-    public void draw(Graphics2D g) {
-        configureGraphics(g, false);
-        g.fillOval(boundingBox.x, boundingBox.y, boundingBox.width, boundingBox.height);
+    CRectangularShape createShape() {
+        return new CEllipse();
     }
 }

@@ -1,6 +1,6 @@
 package GUI.Tools;
 
-import GUI.Annotations.GeometricShapeAnnotation;
+import GUI.Annotations.RectangularShapeAnnotation;
 import GUI.Components.PhotoFrame;
 
 import java.awt.*;
@@ -16,12 +16,12 @@ import java.awt.event.MouseEvent;
  *
  * @see Tool
  */
-public abstract class GeometricShapeTool<A extends GeometricShapeAnnotation> extends ToolAdapter {
+public abstract class RectangularShapeTool<A extends RectangularShapeAnnotation> extends ToolAdapter {
     PhotoFrame photoFrame;
-    private GeometricShapeAnnotation annotation;
+    private RectangularShapeAnnotation annotation;
 
 
-    GeometricShapeTool(PhotoFrame photoFrame) {
+    RectangularShapeTool(PhotoFrame photoFrame) {
         super();
 
         this.photoFrame = photoFrame;
@@ -42,7 +42,7 @@ public abstract class GeometricShapeTool<A extends GeometricShapeAnnotation> ext
     public void mouseDragged(MouseEvent event) {
         if (annotation != null) {
             Point corner = new Point(event.getX(), event.getY());
-            annotation.setBoundingBoxSize(corner);
+            annotation.setOppositeCorner(corner);
         }
     }
 

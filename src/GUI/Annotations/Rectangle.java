@@ -1,18 +1,21 @@
 package GUI.Annotations;
 
 import GUI.Components.PhotoFrame;
+import fr.lri.swingstates.canvas.CRectangle;
+import fr.lri.swingstates.canvas.CRectangularShape;
 
 import java.awt.*;
 
-public class Rectangle extends GeometricShapeAnnotation {
+public class Rectangle extends RectangularShapeAnnotation {
 
-    public Rectangle(PhotoFrame photoFrame, Point origin) {
-        super(photoFrame, origin);
+    CRectangle shape;
+
+    public Rectangle(PhotoFrame photoFrame, Point corner) {
+        super(photoFrame, corner);
     }
 
     @Override
-    public void draw(Graphics2D g) {
-        configureGraphics(g, false);
-        g.fillRect(boundingBox.x, boundingBox.y, boundingBox.width, boundingBox.height);
+    CRectangularShape createShape() {
+        return new CRectangle();
     }
 }

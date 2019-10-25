@@ -2,19 +2,44 @@ package GUI.Annotations;
 
 import GUI.Components.PhotoFrame;
 import GUI.Tools.ToolSettings;
+import fr.lri.swingstates.canvas.CRectangle;
+import fr.lri.swingstates.canvas.CShape;
 
+import javax.swing.*;
+import java.awt.Rectangle;
 import java.awt.*;
 import java.awt.geom.Rectangle2D;
 import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Text implements Annotation {
+class CMultiLineText extends CRectangle {
+
+    private Text annotation;
+
+    CMultiLineText(Text annotation) {
+        this.annotation = annotation;
+    }
+
+    @Override
+    public void paint(Graphics g) {
+        updateSize((Graphics2D) g);
+        annotation.draw((Graphics2D) g);
+    }
+
+    void updateSize(Graphics2D g) {
+        Rectangle boundingBox = annotation.computeBoundingBox(g);
+        setBoundingBox(boundingBox.x, boundingBox.y, boundingBox.width, boundingBox.height);
+    }
+}
+
+public class Text extends JComponent implements Annotation {
 
     private final static long DELAY_BETWEEN_CARET_BLINKS = 650; // ms
 
     private final PhotoFrame photoFrame;
 
+    private CMultiLineText shape;
     private Point topLeft;
     private Color color;
     private String fontFamily;
@@ -32,8 +57,9 @@ public class Text implements Annotation {
 
     public Text(Point topLeft, PhotoFrame photoFrame) {
         this.photoFrame = photoFrame;
-
         this.topLeft = topLeft;
+
+        shape = new CMultiLineText(this);
 
         ToolSettings settings = photoFrame.getToolSettings();
         color = settings.getColor();
@@ -48,6 +74,11 @@ public class Text implements Annotation {
         charIndexBeforeCaret = -1;
         caretBlinkTimer = new Timer();
         caretIsVisible = true;
+    }
+
+    @Override
+    public CShape getCanvasShape() {
+        return shape;
     }
 
     public boolean isEditable() {
@@ -205,9 +236,25 @@ public class Text implements Annotation {
         g.setFont(new Font(fontFamily, Font.PLAIN, fontSize));
     }
 
+    Rectangle computeBoundingBox(Graphics2D g) {
+        FontMetrics metrics = g.getFontMetrics();
+        int lineHeight = metrics.getHeight();
+
+        int width = 1;
+        for (String s : stringSplitPerLine) {
+            Rectangle2D stringBounds = metrics.getStringBounds(s, g);
+            int lineWidth = (int) stringBounds.getWidth();
+
+            if (lineWidth > width) {
+                width = lineWidth;
+            }
+        }
+
+        return new Rectangle(topLeft.x, topLeft.y, width, lineHeight * stringSplitPerLine.size());
+    }
+
     private void drawString(Graphics2D g) {
         FontMetrics metrics = g.getFontMetrics();
-        reSplitString(g, metrics);
         int lineHeight = metrics.getHeight();
         int offsetY = 0;
 
@@ -254,10 +301,20 @@ public class Text implements Annotation {
         );
     }
 
-    @Override
+    //@Override
     public void draw(Graphics2D g) {
         configureGraphics(g, false);
+
+        FontMetrics metrics = g.getFontMetrics();
+        reSplitString(g, metrics);
+
         drawString(g);
         drawCaret(g);
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        draw((Graphics2D) g);
     }
 }

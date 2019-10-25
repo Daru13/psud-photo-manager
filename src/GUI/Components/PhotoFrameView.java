@@ -1,14 +1,13 @@
 package GUI.Components;
 
-import GUI.Annotations.Annotation;
 import GUI.Tools.RectangleTool;
 import GUI.Tools.*;
+import fr.lri.swingstates.canvas.CShape;
+import fr.lri.swingstates.canvas.Canvas;
 
 import java.awt.*;
 import java.awt.event.*;
-import java.awt.image.BufferedImage;
 import java.util.EnumMap;
-import java.util.List;
 
 
 /**
@@ -23,7 +22,7 @@ class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener 
 
     private PhotoFrame photoFrame;
 
-    private BufferedImage workingCanvas;
+    private Canvas annotationCanvas;
 
     private EnumMap<ToolID, Tool> tools;
     private ToolSettings toolSettings;
@@ -34,7 +33,9 @@ class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener 
     PhotoFrameView(PhotoFrame photoFrame) {
         this.photoFrame = photoFrame;
 
-        workingCanvas = null;
+        annotationCanvas = new Canvas();
+        annotationCanvas.setOpaque(false);
+        annotationCanvas.setBackground(new Color(0, 0, 0, 0));
 
         tools = new EnumMap<>(ToolID.class);
         toolSettings = new ToolSettings();
@@ -42,6 +43,22 @@ class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener 
         currentTool = null;
 
         initTools();
+    }
+
+    void addAnnotationShape(CShape shape) {
+        annotationCanvas.addShape(shape);
+    }
+
+    void removeAnnotationShape(CShape shape) {
+        annotationCanvas.removeShape(shape);
+    }
+
+    void clearAnnotationCanvas() {
+        annotationCanvas.removeAllShapes();
+    }
+
+    void setAnnotationCanvasSize(Dimension size) {
+        annotationCanvas.setSize(size);
     }
 
     private void initTools() {
@@ -52,7 +69,6 @@ class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener 
 
         setDefaultTool();
     }
-
 
     ToolID getTool() {
         return currentToolID;
@@ -87,27 +103,7 @@ class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener 
         return toolSettings;
     }
 
-    void createWorkingCanvas(int width, int height) {
-        workingCanvas = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
-        workingCanvas.createGraphics();
-    }
-
-    BufferedImage getWorkingCanvas() {
-        return workingCanvas;
-    }
-
-    void clearWorkingCanvas() {
-        if (workingCanvas != null) {
-            Graphics2D g = (Graphics2D)workingCanvas.getGraphics();
-            g.setBackground(new Color(0, 0, 0, 0));
-            g.clearRect(0, 0, workingCanvas.getWidth(), workingCanvas.getHeight());
-        }
-    }
-
-    void removeWorkingCanvas() {
-        workingCanvas = null;
-    }
-
+    @Override
     public void mouseClicked(MouseEvent e) {
         if (e.getClickCount() == 2) {
             photoFrame.switchAnnotableState();
@@ -186,14 +182,7 @@ class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener 
     }
 
     private void paintAnnotations(Graphics2D g) {
-        List<Annotation> annotations = photoFrame.model.getAnnotations();
-        for (Annotation a : annotations) {
-            a.draw(g);
-        }
-    }
-
-    private void paintWorkingCanvas(Graphics2D g) {
-        g.drawImage(workingCanvas, 0, 0, null);
+        annotationCanvas.paintComponent(g);
     }
 
     private void setDefaultRenderingHints(Graphics2D g) {
@@ -209,8 +198,6 @@ class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener 
         }
 
         setDefaultRenderingHints(g);
-
-        //paintWorkingCanvas(g);
         paintPhoto(g);
         paintAnnotations(g);
     }

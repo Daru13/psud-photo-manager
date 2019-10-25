@@ -11,7 +11,7 @@ import java.awt.*;
  *
  * @see Tool
  */
-public class EllipsisTool extends GeometricShapeTool<Ellipsis> {
+public class EllipsisTool extends RectangularShapeTool<Ellipsis> {
 
     public EllipsisTool(PhotoFrame photoFrame) {
         super(photoFrame);

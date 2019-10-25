@@ -19,8 +19,8 @@ class PhotoFrameModel {
     private BufferedImage photo;
     private boolean photoIsLoaded;
 
-    private List<Annotation> annotations;
     private boolean annotable;
+    private List<Annotation> annotations;
 
 
     PhotoFrameModel() {
@@ -38,23 +38,15 @@ class PhotoFrameModel {
     void setPhoto(BufferedImage photo) {
         this.photo = photo;
         this.photoIsLoaded = true;
-
-        this.annotations.clear();
     }
 
     void removePhoto() {
         this.photo = null;
         this.photoIsLoaded = false;
-
-        this.annotations.clear();
     }
 
     boolean isPhotoLoaded() {
         return photoIsLoaded;
-    }
-
-    public List<Annotation> getAnnotations() {
-        return annotations;
     }
 
     void addAnnotation(Annotation annotation) {

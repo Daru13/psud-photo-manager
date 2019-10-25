@@ -1,5 +1,6 @@
 package GUI.Tools;
 
+import GUI.Annotations.Rectangle;
 import GUI.Components.PhotoFrame;
 
 import java.awt.*;
@@ -10,7 +11,7 @@ import java.awt.*;
  *
  * @see Tool
  */
-public class RectangleTool extends GeometricShapeTool<GUI.Annotations.Rectangle> {
+public class RectangleTool extends RectangularShapeTool<Rectangle> {
 
     public RectangleTool(PhotoFrame photoFrame) {
         super(photoFrame);

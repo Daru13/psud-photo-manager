@@ -7,7 +7,6 @@ import GUI.Tools.ToolSettings;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
-import java.util.List;
 
 
 /**
@@ -27,6 +26,9 @@ public class PhotoFrame extends JComponent {
 
         configureComponent();
         configureEventListeners();
+
+        //addAnnotation(new CRectangle(0,0,100,100).setFillPaint(Color.BLACK));
+        //addAnnotation(new CText.newText(10, 20, "AAAAAA BBBB\nCCCCC"));
     }
 
     private void configureComponent() {
@@ -44,34 +46,30 @@ public class PhotoFrame extends JComponent {
     }
 
     public void setPhoto(BufferedImage photo) {
-        int photoWidth = photo.getWidth();
-        int photoHeight = photo.getHeight();
+        Dimension photoDimensions = new Dimension(photo.getWidth(), photo.getHeight());
 
         model.setPhoto(photo);
-        view.createWorkingCanvas(photoWidth, photoHeight);
-
-        setPreferredSize(new Dimension(photoWidth, photoHeight));
+        view.setAnnotationCanvasSize(photoDimensions);
+        setPreferredSize(photoDimensions);
 
         repaint();
         revalidate();
     }
 
     public void removePhoto() {
-        model.removePhoto();
-        view.removeWorkingCanvas();
+        Dimension zeroDimensions = new Dimension(0, 0);
 
-        setPreferredSize(new Dimension(0, 0));
+        model.removePhoto();
+        view.setAnnotationCanvasSize(zeroDimensions);
+        setPreferredSize(zeroDimensions);
 
         repaint();
         revalidate();
     }
 
-    public List<Annotation> getAnnotations() {
-        return model.getAnnotations();
-    }
-
     public void addAnnotation(Annotation annotation) {
         model.addAnnotation(annotation);
+        view.addAnnotationShape(annotation.getCanvasShape());
 
         repaint();
         revalidate();
@@ -79,6 +77,7 @@ public class PhotoFrame extends JComponent {
 
     public void removeAnnotation(Annotation annotation) {
         model.removeAnnotation(annotation);
+        view.removeAnnotationShape(annotation.getCanvasShape());
 
         repaint();
         revalidate();
@@ -91,14 +90,6 @@ public class PhotoFrame extends JComponent {
     void switchAnnotableState() {
         model.setAnnotable(! model.isAnnotable());
         System.out.println("Photo is editable = " + model.isAnnotable());
-    }
-
-    public BufferedImage getWorkingCanvas() {
-        return view.getWorkingCanvas();
-    }
-
-    public void clearWorkingCanvas() {
-        this.view.clearWorkingCanvas();
     }
 
     public ToolID getTool() {

@@ -1,7 +1,7 @@
 package GUI.Annotations;
 
-import java.awt.*;
+import fr.lri.swingstates.canvas.CShape;
 
 public interface Annotation {
-    void draw(Graphics2D g);
+    CShape getCanvasShape();
 }
