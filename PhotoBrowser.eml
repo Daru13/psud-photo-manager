@@ -2,4 +2,7 @@
 <component inheritJdk="true">
 	<exclude-output/>
 	<contentEntry url="file://$MODULE_DIR$"/>
+	<lib name="swingstates-1.0.0.jar" scope="COMPILE">
+		<relative-module-cls project-related="jar://$PROJECT_DIR$/lib/swingstates-1.0.0.jar!/"/>
+	</lib>
 </component>
