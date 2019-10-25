@@ -1,9 +1,6 @@
 package GUI.Components;
 
-import GUI.Tools.RectangleTool;
 import GUI.Tools.*;
-import fr.lri.swingstates.canvas.CShape;
-import fr.lri.swingstates.canvas.Canvas;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -22,8 +19,6 @@ class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener 
 
     private PhotoFrame photoFrame;
 
-    private Canvas annotationCanvas;
-
     private EnumMap<ToolID, Tool> tools;
     private ToolSettings toolSettings;
     private ToolID currentToolID;
@@ -33,32 +28,12 @@ class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener 
     PhotoFrameView(PhotoFrame photoFrame) {
         this.photoFrame = photoFrame;
 
-        annotationCanvas = new Canvas();
-        annotationCanvas.setOpaque(false);
-        annotationCanvas.setBackground(new Color(0, 0, 0, 0));
-
         tools = new EnumMap<>(ToolID.class);
         toolSettings = new ToolSettings();
         currentToolID = ToolID.NONE;
         currentTool = null;
 
         initTools();
-    }
-
-    void addAnnotationShape(CShape shape) {
-        annotationCanvas.addShape(shape);
-    }
-
-    void removeAnnotationShape(CShape shape) {
-        annotationCanvas.removeShape(shape);
-    }
-
-    void clearAnnotationCanvas() {
-        annotationCanvas.removeAllShapes();
-    }
-
-    void setAnnotationCanvasSize(Dimension size) {
-        annotationCanvas.setSize(size);
     }
 
     private void initTools() {
@@ -182,7 +157,7 @@ class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener 
     }
 
     private void paintAnnotations(Graphics2D g) {
-        annotationCanvas.paintComponent(g);
+        photoFrame.model.getAnnotationCanvas().paintComponent(g);
     }
 
     private void setDefaultRenderingHints(Graphics2D g) {

@@ -3,8 +3,6 @@ package GUI.Tools;
 import GUI.Annotations.Rectangle;
 import GUI.Components.PhotoFrame;
 
-import java.awt.*;
-
 
 /**
  * A tool to draw an rectangle.
@@ -18,8 +16,8 @@ public class RectangleTool extends RectangularShapeTool<Rectangle> {
     }
 
     @Override
-    GUI.Annotations.Rectangle createAnnotation(Point origin) {
-        return new GUI.Annotations.Rectangle(photoFrame, origin);
+    GUI.Annotations.Rectangle createAnnotation() {
+        return new GUI.Annotations.Rectangle(photoFrame, firstCorner);
     }
 
 }

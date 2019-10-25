@@ -1,8 +1,8 @@
 package GUI.Components;
 
-import GUI.Annotations.Annotation;
 import GUI.Tools.ToolID;
 import GUI.Tools.ToolSettings;
+import fr.lri.swingstates.canvas.CShape;
 
 import javax.swing.*;
 import java.awt.*;
@@ -49,7 +49,6 @@ public class PhotoFrame extends JComponent {
         Dimension photoDimensions = new Dimension(photo.getWidth(), photo.getHeight());
 
         model.setPhoto(photo);
-        view.setAnnotationCanvasSize(photoDimensions);
         setPreferredSize(photoDimensions);
 
         repaint();
@@ -60,24 +59,21 @@ public class PhotoFrame extends JComponent {
         Dimension zeroDimensions = new Dimension(0, 0);
 
         model.removePhoto();
-        view.setAnnotationCanvasSize(zeroDimensions);
         setPreferredSize(zeroDimensions);
 
         repaint();
         revalidate();
     }
 
-    public void addAnnotation(Annotation annotation) {
+    public void addAnnotation(CShape annotation) {
         model.addAnnotation(annotation);
-        view.addAnnotationShape(annotation.getCanvasShape());
 
         repaint();
         revalidate();
     }
 
-    public void removeAnnotation(Annotation annotation) {
+    public void removeAnnotation(CShape annotation) {
         model.removeAnnotation(annotation);
-        view.removeAnnotationShape(annotation.getCanvasShape());
 
         repaint();
         revalidate();

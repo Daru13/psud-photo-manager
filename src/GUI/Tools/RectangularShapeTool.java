@@ -1,7 +1,7 @@
 package GUI.Tools;
 
-import GUI.Annotations.RectangularShapeAnnotation;
 import GUI.Components.PhotoFrame;
+import fr.lri.swingstates.canvas.CRectangularShape;
 
 import java.awt.*;
 import java.awt.event.MouseEvent;
@@ -16,24 +16,26 @@ import java.awt.event.MouseEvent;
  *
  * @see Tool
  */
-public abstract class RectangularShapeTool<A extends RectangularShapeAnnotation> extends ToolAdapter {
+public abstract class RectangularShapeTool<A extends CRectangularShape> extends ToolAdapter {
     PhotoFrame photoFrame;
-    private RectangularShapeAnnotation annotation;
 
+    private CRectangularShape annotation;
+    Point firstCorner;
 
     RectangularShapeTool(PhotoFrame photoFrame) {
         super();
 
         this.photoFrame = photoFrame;
         this.annotation = null;
+        this.firstCorner = null;
     }
 
-    abstract A createAnnotation(Point origin);
+    abstract A createAnnotation();
 
     @Override
     public void mousePressed(MouseEvent event) {
-        Point origin = new Point(event.getX(), event.getY());
-        annotation = createAnnotation(origin);
+        firstCorner = new Point(event.getX(), event.getY());
+        annotation = createAnnotation();
 
         photoFrame.addAnnotation(annotation);
     }
@@ -42,12 +44,20 @@ public abstract class RectangularShapeTool<A extends RectangularShapeAnnotation>
     public void mouseDragged(MouseEvent event) {
         if (annotation != null) {
             Point corner = new Point(event.getX(), event.getY());
-            annotation.setOppositeCorner(corner);
+
+            int width = Math.abs(corner.x - firstCorner.x);
+            int height = Math.abs(corner.y - firstCorner.y);
+            int x = Math.min(firstCorner.x, corner.x);
+            int y = Math.min(firstCorner.y, corner.y);
+
+            annotation.setBoundingBox(x, y, width, height);
+            photoFrame.repaint();
         }
     }
 
     @Override
     public void mouseReleased(MouseEvent event) {
         annotation = null;
+        firstCorner = null;
     }
 }

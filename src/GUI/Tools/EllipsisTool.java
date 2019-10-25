@@ -3,8 +3,6 @@ package GUI.Tools;
 import GUI.Annotations.Ellipsis;
 import GUI.Components.PhotoFrame;
 
-import java.awt.*;
-
 
 /**
  * A tool to draw an ellipsis.
@@ -18,8 +16,8 @@ public class EllipsisTool extends RectangularShapeTool<Ellipsis> {
     }
 
     @Override
-    Ellipsis createAnnotation(Point origin) {
-        return new Ellipsis(photoFrame, origin);
+    Ellipsis createAnnotation() {
+        return new Ellipsis(photoFrame, firstCorner);
     }
 
 }
