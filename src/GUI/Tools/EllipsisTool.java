@@ -16,7 +16,7 @@ public class EllipsisTool extends RectangularShapeTool<Ellipsis> {
     }
 
     @Override
-    Ellipsis createAnnotation() {
+    GUI.Annotations.Ellipsis createAnnotation() {
         return new Ellipsis(photoFrame, firstCorner);
     }
 

@@ -1,6 +1,8 @@
 package GUI.Components;
 
 import GUI.Tools.*;
+import fr.lri.swingstates.canvas.Canvas;
+import fr.lri.swingstates.debug.StateMachineVisualization;
 
 import java.awt.*;
 import java.awt.event.*;
@@ -15,7 +17,7 @@ import java.util.EnumMap;
  *
  * @see PhotoFrame
  */
-class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener {
+class PhotoFrameView extends MouseAdapter {
 
     private PhotoFrame photoFrame;
 
@@ -42,6 +44,11 @@ class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener 
         tools.put(ToolID.ELLIPSIS, new EllipsisTool(this.photoFrame));
         tools.put(ToolID.TEXT, new TextTool(this.photoFrame));
 
+        Canvas annotationCanvas = photoFrame.model.getAnnotationCanvas();
+        for (Tool t : tools.values()) {
+            annotationCanvas.attachSM(t, true);
+        }
+
         setDefaultTool();
     }
 
@@ -58,15 +65,16 @@ class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener 
             return;
         }
 
+
         if (currentToolID != ToolID.NONE) {
-            currentTool.toolDeselected();
+            currentTool.deselect();
         }
 
         currentToolID = toolID;
         currentTool = tools.get(toolID);
 
         if (currentToolID != ToolID.NONE) {
-            currentTool.toolSelected();
+            currentTool.select();
         }
     }
 
@@ -82,73 +90,6 @@ class PhotoFrameView implements MouseListener, MouseMotionListener, KeyListener 
     public void mouseClicked(MouseEvent e) {
         if (e.getClickCount() == 2) {
             photoFrame.switchAnnotableState();
-        }
-
-        if (currentToolID != ToolID.NONE && photoFrame.isAnnotable()) {
-            currentTool.mouseClicked(e);
-        }
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-        if (currentToolID != ToolID.NONE && photoFrame.isAnnotable()) {
-            currentTool.mousePressed(e);
-        }
-    }
-
-    @Override
-    public void mouseReleased(MouseEvent e) {
-        if (currentToolID != ToolID.NONE && photoFrame.isAnnotable()) {
-            currentTool.mouseReleased(e);
-        }
-    }
-
-    @Override
-    public void mouseEntered(MouseEvent e) {
-        if (currentToolID != ToolID.NONE && photoFrame.isAnnotable()) {
-            currentTool.mouseEntered(e);
-        }
-    }
-
-    @Override
-    public void mouseExited(MouseEvent e) {
-        if (currentToolID != ToolID.NONE && photoFrame.isAnnotable()) {
-            currentTool.mouseExited(e);
-        }
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent e) {
-        if (currentToolID != ToolID.NONE && photoFrame.isAnnotable()) {
-            currentTool.mouseDragged(e);
-        }
-    }
-
-    @Override
-    public void mouseMoved(MouseEvent e) {
-        if (currentToolID != ToolID.NONE && photoFrame.isAnnotable()) {
-            currentTool.mouseMoved(e);
-        }
-    }
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-        if (currentToolID != ToolID.NONE && photoFrame.isAnnotable()) {
-            currentTool.keyTyped(e);
-        }
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-        if (currentToolID != ToolID.NONE && photoFrame.isAnnotable()) {
-            currentTool.keyPressed(e);
-        }
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        if (currentToolID != ToolID.NONE && photoFrame.isAnnotable()) {
-            currentTool.keyReleased(e);
         }
     }
 

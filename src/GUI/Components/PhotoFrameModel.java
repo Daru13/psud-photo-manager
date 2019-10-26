@@ -3,6 +3,7 @@ package GUI.Components;
 import fr.lri.swingstates.canvas.CShape;
 import fr.lri.swingstates.canvas.Canvas;
 
+import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 
@@ -31,7 +32,7 @@ class PhotoFrameModel {
         annotationCanvas.setOpaque(false);
         annotationCanvas.setBackground(new Color(0, 0, 0, 0));
 
-        annotable = false;
+        annotable = true;
     }
 
     BufferedImage getPhoto() {
@@ -49,6 +50,8 @@ class PhotoFrameModel {
     void removePhoto() {
         this.photo = null;
         this.photoIsLoaded = false;
+
+        annotationCanvas.removeAllShapes();
     }
 
     boolean isPhotoLoaded() {

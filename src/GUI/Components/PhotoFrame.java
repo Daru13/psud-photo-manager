@@ -25,20 +25,12 @@ public class PhotoFrame extends JComponent {
         view = new PhotoFrameView(this);
 
         configureComponent();
-        configureEventListeners();
-
-        //addAnnotation(new CRectangle(0,0,100,100).setFillPaint(Color.BLACK));
-        //addAnnotation(new CText.newText(10, 20, "AAAAAA BBBB\nCCCCC"));
+        add(model.getAnnotationCanvas());
+        //addMouseListener(this.view);
     }
 
     private void configureComponent() {
         setFocusable(true);
-    }
-
-    private void configureEventListeners() {
-        addMouseListener(this.view);
-        addMouseMotionListener(this.view);
-        addKeyListener(this.view);
     }
 
     public BufferedImage getPhoto() {

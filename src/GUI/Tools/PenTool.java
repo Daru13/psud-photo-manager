@@ -1,9 +1,13 @@
 package GUI.Tools;
 
 import GUI.Components.PhotoFrame;
+import fr.lri.swingstates.sm.State;
+import fr.lri.swingstates.sm.Transition;
+import fr.lri.swingstates.sm.transitions.Drag;
+import fr.lri.swingstates.sm.transitions.Press;
+import fr.lri.swingstates.sm.transitions.Release;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
 
 
 /**
@@ -11,37 +15,39 @@ import java.awt.event.MouseEvent;
  *
  * @see Tool
  */
-public class PenTool extends ToolAdapter {
-
-    private PhotoFrame photoFrame;
+public class PenTool extends Tool {
     private GUI.Annotations.Stroke annotation;
-    private boolean penIsDown;
-
 
     public PenTool(PhotoFrame photoFrame) {
-        this.photoFrame = photoFrame;
+        super(photoFrame);
         annotation = null;
-        penIsDown = false;
     }
 
-    @Override
-    public void mousePressed(MouseEvent event) {
-        Point origin = new Point(event.getX(), event.getY());
-        annotation = new GUI.Annotations.Stroke(photoFrame, origin);
+    public final State waiting = new State() {
+        Transition startDrawing = new Press(BUTTON1, "drawing") {
+            @Override
+            public void action() {
+                Point origin = getMouseEvent().getPoint();
+                annotation = new GUI.Annotations.Stroke(photoFrame, origin);
+                photoFrame.addAnnotation(annotation);
+            }
+        };
+    };
 
-        photoFrame.addAnnotation(annotation);
-    }
+    public final State drawing = new State() {
+        Transition draw = new Drag(BUTTON1, "drawing") {
+            @Override
+            public void action() {
+                Point mousePosition = getMouseEvent().getPoint();
+                annotation.addStep(mousePosition);
+            }
+        };
 
-    @Override
-    public void mouseReleased(MouseEvent event) {
-        penIsDown = false;
-    }
-
-    @Override
-    public void mouseDragged(MouseEvent event) {
-        if (annotation != null) {
-            Point mousePosition = new Point(event.getX(), event.getY());
-            annotation.addStep(mousePosition);
-        }
-    }
+        Transition stopDrawing = new Release(BUTTON1, "waiting") {
+            @Override
+            public void action() {
+                annotation = null;
+            }
+        };
+    };
 }

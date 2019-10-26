@@ -2,10 +2,13 @@ package GUI.Tools;
 
 import GUI.Annotations.Text;
 import GUI.Components.PhotoFrame;
+import fr.lri.swingstates.sm.State;
+import fr.lri.swingstates.sm.Transition;
+import fr.lri.swingstates.sm.transitions.Click;
+import fr.lri.swingstates.sm.transitions.KeyPress;
+import fr.lri.swingstates.sm.transitions.KeyType;
 
-import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.awt.event.MouseEvent;
 
 
 /**
@@ -19,90 +22,86 @@ import java.awt.event.MouseEvent;
  *
  * @see Tool
  */
-public class TextTool extends ToolAdapter {
-
-    private PhotoFrame photoFrame;
+public class TextTool extends Tool {
     private Text annotation;
 
-
     public TextTool(PhotoFrame photoFrame) {
-        this.photoFrame = photoFrame;
+        super(photoFrame);
         this.annotation = null;
     }
 
-    private boolean hasEditableAnnotation() {
-        return annotation != null && annotation.isEditable();
-    }
+    public final State waiting = new State() {
+        Transition startEditing = new Click(BUTTON1, "editing") {
+            @Override
+            public void action() {
+                annotation = new Text(getMouseEvent().getPoint(), photoFrame);
+                photoFrame.addAnnotation(annotation);
 
-    @Override
-    public void toolSelected() {
+                annotation.startEditing();
+            }
+        };
+    };
 
-    }
+    public final State editing = new State() {
+        Transition typeKey = new KeyType("editing") {
+            @Override
+            public void action() {
+                char character = getChar();
+                if (! Character.isISOControl(character)) {
+                    annotation.insertCharacter(character);
+                }
+            }
+        };
 
-    @Override
-    public void toolDeselected() {
+        // Pressing Enter must be detected early since it stops the edition of the text
+        Transition pressEnter = new KeyPress("waiting") {
+            @Override
+            public boolean guard() {
+                return getKeyCode() == KeyEvent.VK_ENTER;
+            }
 
-    }
-
-    @Override
-    public void mouseClicked(MouseEvent event) {
-        if (event.getClickCount() != 1) {
-            return;
-        }
-
-        if (hasEditableAnnotation()) {
-            annotation.stopEditing();
-        }
-        else {
-            annotation = new Text(new Point(event.getX(), event.getY()), photoFrame);
-            photoFrame.addAnnotation(annotation);
-
-            annotation.startEditing();
-        }
-    }
-
-    @Override
-    public void keyPressed(KeyEvent event) {
-        if (! hasEditableAnnotation()) {
-            return;
-        }
-
-        switch (event.getKeyCode()) {
-            case KeyEvent.VK_BACK_SPACE:
-                annotation.eraseCharacter();
-                break;
-
-            case KeyEvent.VK_LEFT:
-                annotation.moveCaretLeft();
-                break;
-
-            case KeyEvent.VK_RIGHT:
-                annotation.moveCaretRight();
-                break;
-
-            case KeyEvent.VK_DOWN:
-                annotation.moveCaretBeforeFirstCharacter();
-                break;
-
-            case KeyEvent.VK_UP:
-                annotation.moveCaretAfterLastCharacter();
-                break;
-
-            case KeyEvent.VK_ENTER:
+            @Override
+            public void action() {
                 annotation.stopEditing();
-                break;
-        }
-    }
+            }
+        };
 
-    @Override
-    public void keyTyped(KeyEvent event) {
-        if (! hasEditableAnnotation()) {
-            return;
-        }
+        Transition pressKey = new KeyPress("editing") {
+            @Override
+            public void action() {
+                switch (getKeyCode()) {
+                    case KeyEvent.VK_BACK_SPACE:
+                        annotation.eraseCharacter();
+                        break;
 
-        char character = event.getKeyChar();
-        if (! Character.isISOControl(character)) {
-            annotation.insertCharacter(character);
-        }
-    }
+                    case KeyEvent.VK_LEFT:
+                        annotation.moveCaretLeft();
+                        break;
+
+                    case KeyEvent.VK_RIGHT:
+                        annotation.moveCaretRight();
+                        break;
+
+                    case KeyEvent.VK_DOWN:
+                        annotation.moveCaretBeforeFirstCharacter();
+                        break;
+
+                    case KeyEvent.VK_UP:
+                        annotation.moveCaretAfterLastCharacter();
+                        break;
+                }
+            }
+        };
+
+        // Do nothing if the click happened on the text
+        // Transition clickInside = new ClickOnShape(BUTTON1, "editing") { };
+
+        // Stop editing if the click happened outside the ext
+        Transition clickOutside = new Click("waiting") {
+            @Override
+            public void action() {
+                annotation.stopEditing();
+            }
+        };
+    };
 }
