@@ -1,11 +1,11 @@
 package GUI.Components;
 
+import GUI.Annotations.Annotation;
 import fr.lri.swingstates.canvas.CShape;
-import fr.lri.swingstates.canvas.Canvas;
 
-import javax.swing.*;
-import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.LinkedList;
+import java.util.List;
 
 
 /**
@@ -21,17 +21,13 @@ class PhotoFrameModel {
     private boolean photoIsLoaded;
 
     private boolean annotable;
-    private Canvas annotationCanvas;
-
+    private List<Annotation<? extends CShape>> annotations;
 
     PhotoFrameModel() {
         photo = null;
         photoIsLoaded = false;
 
-        annotationCanvas = new Canvas();
-        annotationCanvas.setOpaque(false);
-        annotationCanvas.setBackground(new Color(0, 0, 0, 0));
-
+        annotations = new LinkedList<>();
         annotable = true;
     }
 
@@ -42,32 +38,27 @@ class PhotoFrameModel {
     void setPhoto(BufferedImage photo) {
         this.photo = photo;
         this.photoIsLoaded = true;
-
-        Dimension photoDimensions = new Dimension(photo.getWidth(), photo.getHeight());
-        annotationCanvas.setSize(photoDimensions);
     }
 
     void removePhoto() {
         this.photo = null;
         this.photoIsLoaded = false;
-
-        annotationCanvas.removeAllShapes();
     }
 
     boolean isPhotoLoaded() {
         return photoIsLoaded;
     }
 
-    Canvas getAnnotationCanvas() {
-        return annotationCanvas;
+    List<Annotation<? extends CShape>> getAnnotations() {
+        return annotations;
     }
 
-    void addAnnotation(CShape annotation) {
-        this.annotationCanvas.addShape(annotation);
+    <S extends CShape> void addAnnotation(Annotation<S> annotation) {
+        this.annotations.add(annotation);
     }
 
-    void removeAnnotation(CShape annotation) {
-        this.annotationCanvas.removeShape(annotation);
+    <S extends CShape> void removeAnnotation(Annotation<S> annotation) {
+        this.annotations.remove(annotation);
     }
 
     boolean isAnnotable() {

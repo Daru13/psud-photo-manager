@@ -6,7 +6,7 @@ import fr.lri.swingstates.canvas.CRectangle;
 
 import java.awt.*;
 
-public class Rectangle extends CRectangle {
+public class Rectangle extends CRectangle implements Annotation<CRectangle> {
 
     private PhotoFrame photoFrame;
 
@@ -42,5 +42,10 @@ public class Rectangle extends CRectangle {
 
     public void setColor(Color color) {
         setFillPaint(color);
+    }
+
+    @Override
+    public CRectangle getCanvasShape() {
+        return this;
     }
 }

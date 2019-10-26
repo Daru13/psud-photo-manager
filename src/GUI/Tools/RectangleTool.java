@@ -2,6 +2,7 @@ package GUI.Tools;
 
 import GUI.Annotations.Rectangle;
 import GUI.Components.PhotoFrame;
+import fr.lri.swingstates.canvas.CRectangle;
 
 
 /**
@@ -9,7 +10,7 @@ import GUI.Components.PhotoFrame;
  *
  * @see Tool
  */
-public class RectangleTool extends RectangularShapeTool<Rectangle> {
+public class RectangleTool extends RectangularShapeTool<CRectangle, Rectangle> {
 
     public RectangleTool(PhotoFrame photoFrame) {
         super(photoFrame);

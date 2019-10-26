@@ -1,5 +1,6 @@
 package GUI.Tools;
 
+import GUI.Annotations.Annotation;
 import GUI.Components.PhotoFrame;
 import fr.lri.swingstates.canvas.CRectangularShape;
 import fr.lri.swingstates.sm.State;
@@ -20,8 +21,8 @@ import java.awt.*;
  *
  * @see Tool
  */
-public abstract class RectangularShapeTool<A extends CRectangularShape> extends Tool {
-    private CRectangularShape annotation;
+public abstract class RectangularShapeTool<S extends CRectangularShape, A extends Annotation<S>> extends Tool {
+    private A annotation;
     Point firstCorner;
 
     RectangularShapeTool(PhotoFrame photoFrame) {
@@ -54,7 +55,7 @@ public abstract class RectangularShapeTool<A extends CRectangularShape> extends 
                 int x = Math.min(firstCorner.x, corner.x);
                 int y = Math.min(firstCorner.y, corner.y);
 
-                annotation.setBoundingBox(x, y, width, height);
+                annotation.getCanvasShape().setBoundingBox(x, y, width, height);
                 photoFrame.repaint();
             }
         };

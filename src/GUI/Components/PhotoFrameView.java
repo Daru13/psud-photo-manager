@@ -1,12 +1,12 @@
 package GUI.Components;
 
-import GUI.Tools.*;
+import fr.lri.swingstates.canvas.CShape;
 import fr.lri.swingstates.canvas.Canvas;
-import fr.lri.swingstates.debug.StateMachineVisualization;
 
 import java.awt.*;
-import java.awt.event.*;
-import java.util.EnumMap;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.image.BufferedImage;
 
 
 /**
@@ -20,70 +20,54 @@ import java.util.EnumMap;
 class PhotoFrameView extends MouseAdapter {
 
     private PhotoFrame photoFrame;
-
-    private EnumMap<ToolID, Tool> tools;
-    private ToolSettings toolSettings;
-    private ToolID currentToolID;
-    private Tool currentTool;
-
+    private Canvas annotationCanvas;
 
     PhotoFrameView(PhotoFrame photoFrame) {
         this.photoFrame = photoFrame;
+        annotationCanvas = new Canvas();
 
-        tools = new EnumMap<>(ToolID.class);
-        toolSettings = new ToolSettings();
-        currentToolID = ToolID.NONE;
-        currentTool = null;
-
-        initTools();
+        initAnnotationCanvas();
     }
 
-    private void initTools() {
-        tools.put(ToolID.PEN, new PenTool(this.photoFrame));
-        tools.put(ToolID.RECTANGLE, new RectangleTool(this.photoFrame));
-        tools.put(ToolID.ELLIPSIS, new EllipsisTool(this.photoFrame));
-        tools.put(ToolID.TEXT, new TextTool(this.photoFrame));
+    private void initAnnotationCanvas() {
+        annotationCanvas.setOpaque(false);
+        annotationCanvas.setBackground(new Color(0, 0, 0, 0));
 
-        Canvas annotationCanvas = photoFrame.model.getAnnotationCanvas();
-        for (Tool t : tools.values()) {
-            annotationCanvas.attachSM(t, true);
-        }
-
-        setDefaultTool();
+        photoFrame.add(annotationCanvas);
     }
 
-    ToolID getTool() {
-        return currentToolID;
+    Canvas getAnnotationCanvas() {
+        return annotationCanvas;
     }
 
-    void setTool(ToolID toolID) {
-        if (currentToolID == toolID) {
-            return;
-        }
-
-        if (! tools.containsKey(toolID)) {
-            return;
-        }
-
-
-        if (currentToolID != ToolID.NONE) {
-            currentTool.deselect();
-        }
-
-        currentToolID = toolID;
-        currentTool = tools.get(toolID);
-
-        if (currentToolID != ToolID.NONE) {
-            currentTool.select();
-        }
+    void addAnnotationShape(CShape shape) {
+        annotationCanvas.addShape(shape);
     }
 
-    private void setDefaultTool() {
-        setTool(ToolID.PEN);
+    void removeAnnotationShape(CShape shape) {
+        annotationCanvas.removeShape(shape);
     }
 
-    ToolSettings getToolSettings() {
-        return toolSettings;
+    void updateSize() {
+        Dimension newSize;
+
+        if (photoFrame.model.isPhotoLoaded()) {
+            BufferedImage photo = photoFrame.model.getPhoto();
+            newSize = new Dimension(photo.getWidth(), photo.getHeight());
+
+            annotationCanvas.setSize(newSize);
+            annotationCanvas.setVisible(true);
+
+            photoFrame.setPreferredSize(newSize);
+        }
+        else {
+            newSize = new Dimension(0, 0);
+
+            annotationCanvas.setSize(newSize);
+            annotationCanvas.setVisible(false);
+
+            photoFrame.setPreferredSize(newSize);
+        }
     }
 
     @Override
@@ -98,7 +82,7 @@ class PhotoFrameView extends MouseAdapter {
     }
 
     private void paintAnnotations(Graphics2D g) {
-        photoFrame.model.getAnnotationCanvas().paintComponent(g);
+        annotationCanvas.paintComponent(g);
     }
 
     private void setDefaultRenderingHints(Graphics2D g) {

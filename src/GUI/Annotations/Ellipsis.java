@@ -6,8 +6,7 @@ import fr.lri.swingstates.canvas.CEllipse;
 
 import java.awt.*;
 
-public class Ellipsis extends CEllipse {
-
+public class Ellipsis extends CEllipse implements Annotation<CEllipse> {
     private PhotoFrame photoFrame;
 
     private Point firstCorner;
@@ -42,5 +41,10 @@ public class Ellipsis extends CEllipse {
 
     public void setColor(Color color) {
         setFillPaint(color);
+    }
+
+    @Override
+    public CEllipse getCanvasShape() {
+        return this;
     }
 }

@@ -81,7 +81,7 @@ public class ToolPanel extends ToolBarPanel {
         toolButtonsGroup.add(textToolButton);
 
         // Set the current tool button as selected
-        switch (photoFrame.getTool()) {
+        switch (photoFrame.getCurrentToolID()) {
             default:
             case PEN:
                 penToolButton.setSelected(true);

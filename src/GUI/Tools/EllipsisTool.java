@@ -2,6 +2,7 @@ package GUI.Tools;
 
 import GUI.Annotations.Ellipsis;
 import GUI.Components.PhotoFrame;
+import fr.lri.swingstates.canvas.CEllipse;
 
 
 /**
@@ -9,7 +10,7 @@ import GUI.Components.PhotoFrame;
  *
  * @see Tool
  */
-public class EllipsisTool extends RectangularShapeTool<Ellipsis> {
+public class EllipsisTool extends RectangularShapeTool<CEllipse, Ellipsis> {
 
     public EllipsisTool(PhotoFrame photoFrame) {
         super(photoFrame);

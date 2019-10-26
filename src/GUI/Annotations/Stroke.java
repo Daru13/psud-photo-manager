@@ -6,7 +6,7 @@ import fr.lri.swingstates.canvas.CPolyLine;
 
 import java.awt.*;
 
-public class Stroke extends CPolyLine {
+public class Stroke extends CPolyLine implements Annotation<CPolyLine> {
 
     private PhotoFrame photoFrame;
 
@@ -46,5 +46,10 @@ public class Stroke extends CPolyLine {
 
     public void setThickness(int thickness) {
         setStroke(new BasicStroke(thickness));
+    }
+
+    @Override
+    public CPolyLine getCanvasShape() {
+        return this;
     }
 }

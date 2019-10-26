@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-public class Text extends CRectangle {
+public class Text extends CRectangle implements Annotation<CRectangle> {
 
     private final static long DELAY_BETWEEN_CARET_BLINKS = 650; // ms
 
@@ -72,6 +72,11 @@ public class Text extends CRectangle {
 
     public boolean isEditable() {
         return this.currentlyEditing;
+    }
+
+    @Override
+    public CRectangle getCanvasShape() {
+        return this;
     }
 
     private void startCaretTimer() {

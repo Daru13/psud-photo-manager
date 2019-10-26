@@ -1,6 +1,8 @@
 package GUI.Components;
 
+import GUI.Annotations.Annotation;
 import GUI.Tools.ToolID;
+import GUI.Tools.ToolManager;
 import GUI.Tools.ToolSettings;
 import fr.lri.swingstates.canvas.CShape;
 
@@ -18,14 +20,14 @@ public class PhotoFrame extends JComponent {
 
     final PhotoFrameModel model;
     final PhotoFrameView view;
-
+    private final ToolManager toolManager;
 
     public PhotoFrame() {
         model = new PhotoFrameModel();
         view = new PhotoFrameView(this);
+        toolManager = new ToolManager(this, view.getAnnotationCanvas());
 
         configureComponent();
-        add(model.getAnnotationCanvas());
         //addMouseListener(this.view);
     }
 
@@ -38,34 +40,32 @@ public class PhotoFrame extends JComponent {
     }
 
     public void setPhoto(BufferedImage photo) {
-        Dimension photoDimensions = new Dimension(photo.getWidth(), photo.getHeight());
-
         model.setPhoto(photo);
-        setPreferredSize(photoDimensions);
+        view.updateSize();
 
         repaint();
         revalidate();
     }
 
     public void removePhoto() {
-        Dimension zeroDimensions = new Dimension(0, 0);
-
         model.removePhoto();
-        setPreferredSize(zeroDimensions);
+        view.updateSize();
 
         repaint();
         revalidate();
     }
 
-    public void addAnnotation(CShape annotation) {
+    public <S extends CShape> void addAnnotation(Annotation<S> annotation) {
         model.addAnnotation(annotation);
+        view.addAnnotationShape(annotation.getCanvasShape());
 
         repaint();
         revalidate();
     }
 
-    public void removeAnnotation(CShape annotation) {
+    public <S extends CShape> void removeAnnotation(Annotation<S> annotation) {
         model.removeAnnotation(annotation);
+        view.removeAnnotationShape(annotation.getCanvasShape());
 
         repaint();
         revalidate();
@@ -80,16 +80,16 @@ public class PhotoFrame extends JComponent {
         System.out.println("Photo is editable = " + model.isAnnotable());
     }
 
-    public ToolID getTool() {
-        return view.getTool();
+    public ToolID getCurrentToolID() {
+        return toolManager.getCurrentToolID();
     }
 
     public void setTool(ToolID toolID) {
-        view.setTool(toolID);
+        toolManager.setTool(toolID);
     }
 
     public ToolSettings getToolSettings() {
-        return view.getToolSettings();
+        return toolManager.getToolSettings();
     }
 
     @Override
