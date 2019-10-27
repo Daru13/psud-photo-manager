@@ -8,13 +8,9 @@ import fr.lri.swingstates.canvas.transitions.ClickOnShape;
 import fr.lri.swingstates.canvas.transitions.DragOnShape;
 import fr.lri.swingstates.canvas.transitions.DragOnTag;
 import fr.lri.swingstates.canvas.transitions.PressOnShape;
-import fr.lri.swingstates.debug.StateMachineVisualization;
 import fr.lri.swingstates.sm.State;
 import fr.lri.swingstates.sm.Transition;
-import fr.lri.swingstates.sm.transitions.Click;
-import fr.lri.swingstates.sm.transitions.KeyPress;
-import fr.lri.swingstates.sm.transitions.KeyRelease;
-import fr.lri.swingstates.sm.transitions.Release;
+import fr.lri.swingstates.sm.transitions.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
@@ -171,10 +167,20 @@ public class SelectionTool extends Tool {
             }
         };
 
-        Transition pressOnShape = new PressOnShape(BUTTON1, "dragWithShiftUp") {
+        Transition pressOnShape = new PressOnShape(BUTTON1, "shiftUp") {
             @Override
             public void action() {
                 lastMousePosDuringDrag = getMouseEvent().getPoint();
+            }
+        };
+
+        Transition dragOnSelectedShape = new DragOnTag(SELECTED_TAG, BUTTON1, "dragWithShiftUp") { };
+
+        Transition dragOnShape = new DragOnShape(BUTTON1, "dragWithShiftUp") {
+            @Override
+            public void action() {
+                deselectAllAnnotations();
+                selectAnnotation(getShape());
             }
         };
     };
@@ -201,12 +207,14 @@ public class SelectionTool extends Tool {
             }
         };
 
-        Transition pressOnShape = new PressOnShape(BUTTON1, "dragWithShiftDown") {
+        Transition pressOnShape = new PressOnShape(BUTTON1, "shiftDown") {
             @Override
             public void action() {
                 lastMousePosDuringDrag = getMouseEvent().getPoint();
             }
         };
+
+        Transition dragOnShape = new DragOnShape(BUTTON1, "dragWithShiftDown") { };
     };
 
     public final State dragWithShiftUp = new State() {
@@ -219,20 +227,9 @@ public class SelectionTool extends Tool {
 
         Transition clickRelease = new Release("shiftUp") { };
 
-        Transition dragOnSelectedShape = new DragOnTag(SELECTED_TAG, BUTTON1, "dragWithShiftUp") {
+        Transition drag = new Drag(BUTTON1, "dragWithShiftUp") {
             @Override
             public void action() {
-                Point mousePosition = getMouseEvent().getPoint();
-                translateSelectedAnnotations(mousePosition);
-            }
-        };
-
-        Transition dragOnShape = new DragOnShape(BUTTON1, "dragWithShiftUp") {
-            @Override
-            public void action() {
-                deselectAllAnnotations();
-                selectAnnotation(getShape());
-
                 Point mousePosition = getMouseEvent().getPoint();
                 translateSelectedAnnotations(mousePosition);
             }
@@ -249,19 +246,9 @@ public class SelectionTool extends Tool {
 
         Transition clickRelease = new Release("shiftDown") { };
 
-        Transition dragOnSelectedShape = new DragOnTag(SELECTED_TAG, BUTTON1, "dragWithShiftDown") {
+        Transition drag = new Drag(BUTTON1, "dragWithShiftDown") {
             @Override
             public void action() {
-                Point mousePosition = getMouseEvent().getPoint();
-                translateSelectedAnnotations(mousePosition);
-            }
-        };
-
-        Transition dragOnShape = new DragOnShape(BUTTON1, "dragWithShiftDown") {
-            @Override
-            public void action() {
-                toggleAnnotationSelection(getShape());
-
                 Point mousePosition = getMouseEvent().getPoint();
                 translateSelectedAnnotations(mousePosition);
             }
