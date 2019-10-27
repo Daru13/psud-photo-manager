@@ -32,7 +32,7 @@ public class ToolManager {
         tools.put(ToolID.SELECTION, new SelectionTool(this.photoFrame));
         tools.put(ToolID.PEN, new PenTool(this.photoFrame));
         tools.put(ToolID.RECTANGLE, new RectangleTool(this.photoFrame));
-        tools.put(ToolID.ELLIPSIS, new EllipsisTool(this.photoFrame));
+        tools.put(ToolID.ELLIPSE, new EllipseTool(this.photoFrame));
         tools.put(ToolID.TEXT, new TextTool(this.photoFrame));
 
         for (Tool t : tools.values()) {

@@ -13,7 +13,7 @@ public enum ToolID {
     SELECTION("Selection"),
     PEN("Pen"),
     RECTANGLE("Rectangle"),
-    ELLIPSIS("Ellipsis"),
+    ELLIPSE("Ellipse"),
     TEXT("Text");
 
     private String toolName;

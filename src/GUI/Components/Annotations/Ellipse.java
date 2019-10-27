@@ -6,13 +6,13 @@ import fr.lri.swingstates.canvas.CEllipse;
 
 import java.awt.*;
 
-public class Ellipsis extends CEllipse implements Annotation<CEllipse> {
+public class Ellipse extends CEllipse implements Annotation<CEllipse> {
     private PhotoFrame photoFrame;
 
     private Point firstCorner;
     Color color;
 
-    public Ellipsis(PhotoFrame photoFrame, Point corner) {
+    public Ellipse(PhotoFrame photoFrame, Point corner) {
         super();
 
         this.photoFrame = photoFrame;

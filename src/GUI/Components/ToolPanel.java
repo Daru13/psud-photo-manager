@@ -70,7 +70,7 @@ public class ToolPanel extends ToolBarPanel {
 
         JToggleButton ellipsisToolButton = new JToggleButton("Ellipsis");
         ellipsisToolButton.setOpaque(false);
-        ellipsisToolButton.addActionListener((e) -> eventManager.emit(new ToolChangeEvent(ToolID.ELLIPSIS)));
+        ellipsisToolButton.addActionListener((e) -> eventManager.emit(new ToolChangeEvent(ToolID.ELLIPSE)));
         toolButtonsContainer.add(ellipsisToolButton);
 
         JToggleButton textToolButton = new JToggleButton("Text");
@@ -101,7 +101,7 @@ public class ToolPanel extends ToolBarPanel {
                 rectangleToolButton.setSelected(true);
                 break;
 
-            case ELLIPSIS:
+            case ELLIPSE:
                 ellipsisToolButton.setSelected(true);
                 break;
 
