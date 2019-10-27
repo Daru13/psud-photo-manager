@@ -47,7 +47,7 @@ class SelectedTag extends CExtensionalTag {
 
         // Re-apply the style of the annotation to replace the style imposed the tag
         // by the (possibly new) style of the annotation
-        ((Annotation<? extends CShape>) shape).applyStyle();
+        ((Annotation<? extends CShape>) shape).applyStyleToCanvasShape();
     }
 };
 
