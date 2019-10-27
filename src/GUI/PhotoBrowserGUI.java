@@ -35,6 +35,9 @@ public class PhotoBrowserGUI {
     private ToolBar toolbar;
     private StatusBar statusBar;
 
+    private boolean displayToolbar;
+    private boolean displayStatusBar;
+
 
     public PhotoBrowserGUI(EventManager eventManager) {
         this.eventManager = eventManager;
@@ -45,6 +48,9 @@ public class PhotoBrowserGUI {
         createMenuBar();
         createToolbar();
         createStatusBar();
+
+        displayToolbar = true;
+        displayStatusBar = true;
 
         configureWindow();
         viewManager.switchToInitialView();
@@ -95,12 +101,52 @@ public class PhotoBrowserGUI {
 
     private void createToolbar() {
         toolbar = new ToolBar(eventManager);
-        window.add(toolbar, BorderLayout.WEST);
+        updateToolbarDisplay();
     }
 
     private void createStatusBar() {
         statusBar = new StatusBar(eventManager);
-        window.add(statusBar, BorderLayout.SOUTH);
+        updateStatusBarDisplay();
+    }
+
+    public boolean isToolbarDisplayed() {
+        return displayToolbar;
+    }
+
+    public boolean isStatusBarDisplayed() {
+        return displayStatusBar;
+    }
+
+    public void setToolbarDisplay(boolean displayToolbar) {
+        this.displayToolbar = displayToolbar;
+        updateToolbarDisplay();
+    }
+
+    public void setStatusBarDisplay(boolean displayStatusBar) {
+        this.displayStatusBar = displayStatusBar;
+        updateStatusBarDisplay();
+    }
+
+    private void updateToolbarDisplay() {
+        if (displayToolbar && toolbar.getParent() == null) {
+            window.add(toolbar, BorderLayout.WEST);
+        }
+        else {
+            window.remove(toolbar);
+        }
+
+        window.revalidate();
+    }
+
+    private void updateStatusBarDisplay() {
+        if (displayStatusBar && statusBar.getParent() == null) {
+            window.add(statusBar, BorderLayout.SOUTH);
+        }
+        else {
+            window.remove(statusBar);
+        }
+
+        window.revalidate();
     }
 
     private void openImportFileChooser() {
