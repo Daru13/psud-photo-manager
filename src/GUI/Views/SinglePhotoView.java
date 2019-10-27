@@ -50,6 +50,8 @@ public class SinglePhotoView implements View {
     private void installToolBar() {
         installToolBarTools();
         installToolBarToolSettings();
+
+        gui.setToolbarDisplay(photoFrame.isAnnotable());
     }
 
     private void installToolBarTools() {
@@ -64,18 +66,23 @@ public class SinglePhotoView implements View {
 
 
     private void uninstallToolBar() {
+        gui.setToolbarDisplay(true);
+
         JComponent container = gui.getToolbar().getContainer();
         container.removeAll();
+
     }
 
     private void installAllEventHandlers() {
         eventManager.addHandler("photo:change", this::handlePhotoChangeEvent);
+        eventManager.addHandler("photo:annotable:change", this::handleAnnotableStateChangeEvent);
         eventManager.addHandler("file:delete", this::handlePhotoDeleteEvent);
         eventManager.addHandler("tool:change", this::handleToolChangeEvent);
     }
 
     private void uninstallAllEventHandlers() {
         eventManager.removeHandler("photo:change", this::handlePhotoChangeEvent);
+        eventManager.removeHandler("photo:annotable:change", this::handleAnnotableStateChangeEvent);
         eventManager.removeHandler("file:delete", this::handlePhotoDeleteEvent);
         eventManager.removeHandler("tool:change", this::handleToolChangeEvent);
 
@@ -92,6 +99,11 @@ public class SinglePhotoView implements View {
 
     private void handleToolChangeEvent(ToolChangeEvent event) {
         photoFrame.setTool(event.toolID);
+    }
+
+    private void handleAnnotableStateChangeEvent(AnnotableStateChangeEvent event) {
+        gui.setToolbarDisplay(event.isAnnotable);
+        System.out.println("is annotable = " + event.isAnnotable);
     }
 
     @Override
