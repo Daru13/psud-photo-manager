@@ -30,6 +30,13 @@ public class TextTool extends Tool {
         this.annotation = null;
     }
 
+    @Override
+    public void deselect() {
+        if (annotation != null) {
+            annotation.stopEditing();
+        }
+    }
+
     public final State waiting = new State() {
         Transition startEditing = new Click(BUTTON1, "editing") {
             @Override
