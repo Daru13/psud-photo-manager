@@ -1,5 +1,7 @@
 package GUI.Components;
 
+import Events.AnnotableStateChangeEvent;
+import Events.EventManager;
 import GUI.Components.Annotations.Annotation;
 import GUI.Components.Tools.SelectionTool;
 import GUI.Components.Tools.ToolID;
@@ -21,11 +23,15 @@ import java.util.stream.Collectors;
  */
 public class PhotoFrame extends JComponent {
 
+    private EventManager eventManager;
+
     final PhotoFrameModel model;
     final PhotoFrameView view;
     private final ToolManager toolManager;
 
-    public PhotoFrame() {
+    public PhotoFrame(EventManager eventManager) {
+        this.eventManager = eventManager;
+
         model = new PhotoFrameModel();
         view = new PhotoFrameView(this);
         toolManager = new ToolManager(this, view.getAnnotationCanvas());
@@ -88,6 +94,8 @@ public class PhotoFrame extends JComponent {
     public void toggleAnnotable() {
         model.toggleAnnotable();
         toolManager.toggleEnabled();
+
+        eventManager.emit(new AnnotableStateChangeEvent(model.isAnnotable()));
 
         repaint();
         revalidate();

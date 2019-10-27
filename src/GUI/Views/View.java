@@ -1,8 +1,6 @@
 package GUI.Views;
 
 
-import GUI.PhotoBrowserGUI;
-
 /**
  * Interface of a view.
  *
@@ -13,6 +11,6 @@ import GUI.PhotoBrowserGUI;
  * They should be used to perform certain actions before or after the view is displayed.
  */
 public interface View {
-    void install(PhotoBrowserGUI gui);
-    void uninstall(PhotoBrowserGUI gui);
+    void install();
+    void uninstall();
 }

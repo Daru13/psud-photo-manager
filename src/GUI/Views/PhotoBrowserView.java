@@ -16,15 +16,17 @@ import java.util.List;
  */
 public class PhotoBrowserView implements View {
 
+    private final PhotoBrowserGUI gui;
     private final EventManager eventManager;
 
 
-    PhotoBrowserView(EventManager eventManager) {
+    PhotoBrowserView(PhotoBrowserGUI gui, EventManager eventManager) {
+        this.gui = gui;
         this.eventManager = eventManager;
     }
 
-    private void installToolBar(PhotoBrowserGUI window) {
-        JComponent container = window.getToolbar().getContainer();
+    private void installToolBar() {
+        JComponent container = gui.getToolbar().getContainer();
 
         JLabel photoCategoriesLabel = new JLabel("Categories");
         photoCategoriesLabel.setBorder(BorderFactory.createEmptyBorder(0, 0, 5, 0));
@@ -52,18 +54,18 @@ public class PhotoBrowserView implements View {
         }
     }
 
-    private void uninstallToolBar(PhotoBrowserGUI window) {
-        JComponent container = window.getToolbar().getContainer();
+    private void uninstallToolBar() {
+        JComponent container = gui.getToolbar().getContainer();
         container.removeAll();
     }
 
     @Override
-    public void install(PhotoBrowserGUI gui) {
-        installToolBar(gui);
+    public void install() {
+        installToolBar();
     }
 
     @Override
-    public void uninstall(PhotoBrowserGUI gui) {
-        uninstallToolBar(gui);
+    public void uninstall() {
+        uninstallToolBar();
     }
 }

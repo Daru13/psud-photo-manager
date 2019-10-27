@@ -38,8 +38,8 @@ public class ViewManager {
     }
 
     private void initViews() {
-        views.put(ViewID.SinglePhoto, new SinglePhotoView(eventManager));
-        views.put(ViewID.PhotoBrowser, new PhotoBrowserView(eventManager));
+        views.put(ViewID.SinglePhoto, new SinglePhotoView(gui, eventManager));
+        views.put(ViewID.PhotoBrowser, new PhotoBrowserView(gui, eventManager));
     }
 
     private void switchToView(ViewID id) {
@@ -48,13 +48,13 @@ public class ViewManager {
         }
 
         if (currentViewID != ViewID.None) {
-            currentView.uninstall(gui);
+            currentView.uninstall();
         }
 
         currentView = views.get(id);
         currentViewID = id;
 
-        currentView.install(gui);
+        currentView.install();
     }
 
     public void switchToInitialView() {
