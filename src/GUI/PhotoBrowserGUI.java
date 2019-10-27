@@ -59,10 +59,7 @@ public class PhotoBrowserGUI {
 
         // Sizes
         window.setMinimumSize(new Dimension(640, 480));
-        window.setPreferredSize(new Dimension(800, 600));
-
-        // Initial position
-        window.setLocationRelativeTo(null); // centred
+        window.setPreferredSize(new Dimension(1024, 680));
 
         // Default actions
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,6 +67,7 @@ public class PhotoBrowserGUI {
 
     private void showWindow() {
         window.pack();
+        window.setLocationRelativeTo(null); // Center the window
         window.setVisible(true);
     }
 
