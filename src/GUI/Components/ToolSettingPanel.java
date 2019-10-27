@@ -72,7 +72,7 @@ public class ToolSettingPanel extends ToolBarPanel {
                 photoFrame.getToolSettings().setColor(newColor);
                 photoFrame.getSelectedAnnotations().forEach(annotation -> {
                     annotation.updateStyleFromToolSettings();
-                    annotation.applyStyle();
+                    annotation.applyStyleToCanvasShape();
 
                     // Required to ensure the style still reflect that the annotation is selected
                     annotation.getCanvasShape().removeTag(SelectionTool.SELECTED_TAG);
@@ -120,7 +120,7 @@ public class ToolSettingPanel extends ToolBarPanel {
             photoFrame.getToolSettings().setThickness(newThickness);
             photoFrame.getSelectedAnnotations().forEach(annotation -> {
                 annotation.updateStyleFromToolSettings();
-                annotation.applyStyle();
+                annotation.applyStyleToCanvasShape();
 
                 // Required to ensure the style still reflect that the annotation is selected
                 annotation.getCanvasShape().removeTag(SelectionTool.SELECTED_TAG);
@@ -157,7 +157,7 @@ public class ToolSettingPanel extends ToolBarPanel {
             photoFrame.getToolSettings().setFontFamily(newFontFamily);
             photoFrame.getSelectedAnnotations().forEach(annotation -> {
                 annotation.updateStyleFromToolSettings();
-                annotation.applyStyle();
+                annotation.applyStyleToCanvasShape();
 
                 // Required to ensure the style still reflect that the annotation is selected
                 annotation.getCanvasShape().removeTag(SelectionTool.SELECTED_TAG);
@@ -178,7 +178,7 @@ public class ToolSettingPanel extends ToolBarPanel {
             photoFrame.getToolSettings().setFontSize(newFontSize);
             photoFrame.getSelectedAnnotations().forEach(annotation -> {
                 annotation.updateStyleFromToolSettings();
-                annotation.applyStyle();
+                annotation.applyStyleToCanvasShape();
 
                 // Required to ensure the style still reflect that the annotation is selected
                 annotation.getCanvasShape().removeTag(SelectionTool.SELECTED_TAG);

@@ -20,7 +20,7 @@ public class Rectangle extends CRectangle implements Annotation<CRectangle> {
         firstCorner = corner;
 
         updateStyleFromToolSettings();
-        applyStyle();
+        applyStyleToCanvasShape();
     }
 
     @Override
@@ -30,7 +30,7 @@ public class Rectangle extends CRectangle implements Annotation<CRectangle> {
     }
 
     @Override
-    public void applyStyle() {
+    public void applyStyleToCanvasShape() {
         setOutlined(false);
         setStroke(new BasicStroke(0));
 

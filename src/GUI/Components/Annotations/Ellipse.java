@@ -19,7 +19,7 @@ public class Ellipse extends CEllipse implements Annotation<CEllipse> {
         firstCorner = corner;
 
         updateStyleFromToolSettings();
-        applyStyle();
+        applyStyleToCanvasShape();
     }
 
     @Override
@@ -29,7 +29,7 @@ public class Ellipse extends CEllipse implements Annotation<CEllipse> {
     }
 
     @Override
-    public void applyStyle() {
+    public void applyStyleToCanvasShape() {
         setOutlined(false);
         setStroke(new BasicStroke(0));
 

@@ -57,7 +57,7 @@ public class Text extends CRectangle implements Annotation<CRectangle> {
         currentlyPainting = false;
 
         updateStyleFromToolSettings();
-        applyStyle();
+        applyStyleToCanvasShape();
     }
 
     @Override
@@ -74,7 +74,7 @@ public class Text extends CRectangle implements Annotation<CRectangle> {
     }
 
     @Override
-    public void applyStyle() {
+    public void applyStyleToCanvasShape() {
         setOutlined(false);
         setStroke(new BasicStroke(0));
 

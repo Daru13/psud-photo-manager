@@ -25,7 +25,7 @@ public class Stroke extends CPolyLine implements Annotation<CPolyLine> {
         addStep(origin);
 
         updateStyleFromToolSettings();
-        applyStyle();
+        applyStyleToCanvasShape();
     }
 
     @Override
@@ -36,7 +36,7 @@ public class Stroke extends CPolyLine implements Annotation<CPolyLine> {
     }
 
     @Override
-    public void applyStyle() {
+    public void applyStyleToCanvasShape() {
         setOutlined(true);
         setStroke(new BasicStroke(thickness));
         setOutlinePaint(color);
