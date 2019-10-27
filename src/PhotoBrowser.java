@@ -1,4 +1,5 @@
 import Events.EventManager;
+import GUI.PhotoBrowserGUI;
 
 /**
  * The entry point of the photo browser application.
