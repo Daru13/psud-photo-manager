@@ -17,7 +17,7 @@ public class ToolManager {
 
     public ToolManager(PhotoFrame photoFrame, Canvas annotationCanvas) {
         this.photoFrame = photoFrame;
-        enabled = true;
+        enabled = photoFrame.isAnnotable();
 
         tools = new EnumMap<>(ToolID.class);
         currentToolID = ToolID.NONE;

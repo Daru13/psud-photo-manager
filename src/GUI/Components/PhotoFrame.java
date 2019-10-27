@@ -81,7 +81,7 @@ public class PhotoFrame extends JComponent {
             .collect(Collectors.toList());
     }
 
-    boolean isAnnotable() {
+    public boolean isAnnotable() {
         return model.isAnnotable();
     }
 
