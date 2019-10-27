@@ -35,6 +35,7 @@ public class ToolManager {
 
         for (Tool t : tools.values()) {
             annotationCanvas.attachSM(t, true);
+            t.setActive(false);
         }
 
         setDefaultTool();
@@ -52,12 +53,14 @@ public class ToolManager {
 
         if (currentToolID != ToolID.NONE) {
             currentTool.deselect();
+            currentTool.setActive(false);
         }
 
         currentToolID = toolID;
         currentTool = tools.get(toolID);
 
         if (currentToolID != ToolID.NONE) {
+            currentTool.setActive(true);
             currentTool.select();
         }
     }
