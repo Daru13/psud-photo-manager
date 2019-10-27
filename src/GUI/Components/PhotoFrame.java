@@ -31,7 +31,6 @@ public class PhotoFrame extends JComponent {
         toolManager = new ToolManager(this, view.getAnnotationCanvas());
 
         configureComponent();
-        //addMouseListener(this.view);
     }
 
     private void configureComponent() {
@@ -86,9 +85,12 @@ public class PhotoFrame extends JComponent {
         return model.isAnnotable();
     }
 
-    void switchAnnotableState() {
-        model.setAnnotable(! model.isAnnotable());
-        System.out.println("Photo is editable = " + model.isAnnotable());
+    public void toggleAnnotationMode() {
+        model.toggleAnnotable();
+        toolManager.toggleEnabled();
+
+        repaint();
+        revalidate();
     }
 
     public ToolID getCurrentToolID() {

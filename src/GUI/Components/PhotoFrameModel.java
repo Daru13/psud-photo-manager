@@ -68,4 +68,8 @@ class PhotoFrameModel {
     void setAnnotable(boolean annotable) {
         this.annotable = annotable;
     }
+
+    void toggleAnnotable() {
+        annotable = !annotable;
+    }
 }

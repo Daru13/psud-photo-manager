@@ -7,6 +7,7 @@ import java.util.EnumMap;
 
 public class ToolManager {
     private PhotoFrame photoFrame;
+    private boolean enabled;
 
     private EnumMap<ToolID, Tool> tools;
     private ToolID currentToolID;
@@ -16,6 +17,7 @@ public class ToolManager {
 
     public ToolManager(PhotoFrame photoFrame, Canvas annotationCanvas) {
         this.photoFrame = photoFrame;
+        enabled = true;
 
         tools = new EnumMap<>(ToolID.class);
         currentToolID = ToolID.NONE;
@@ -41,6 +43,22 @@ public class ToolManager {
         setDefaultTool();
     }
 
+    public boolean isEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+
+        if (currentToolID != ToolID.NONE) {
+            currentTool.setActive(enabled);
+        }
+    }
+
+    public void toggleEnabled() {
+        setEnabled(!enabled);
+    }
+
     public ToolID getCurrentToolID() {
         return currentToolID;
     }
@@ -60,8 +78,8 @@ public class ToolManager {
         currentTool = tools.get(toolID);
 
         if (currentToolID != ToolID.NONE) {
-            currentTool.setActive(true);
             currentTool.select();
+            currentTool.setActive(enabled);
         }
     }
 

@@ -27,6 +27,7 @@ class PhotoFrameView extends MouseAdapter {
         annotationCanvas = new Canvas();
 
         initAnnotationCanvas();
+        initMouseListeners();
     }
 
     private void initAnnotationCanvas() {
@@ -34,6 +35,11 @@ class PhotoFrameView extends MouseAdapter {
         annotationCanvas.setBackground(new Color(0, 0, 0, 0));
 
         photoFrame.add(annotationCanvas);
+    }
+
+    private void initMouseListeners() {
+        photoFrame.addMouseListener(this);
+        annotationCanvas.addMouseListener(this);
     }
 
     Canvas getAnnotationCanvas() {
@@ -71,18 +77,14 @@ class PhotoFrameView extends MouseAdapter {
     }
 
     @Override
-    public void mouseClicked(MouseEvent e) {
-        if (e.getClickCount() == 2) {
-            photoFrame.switchAnnotableState();
+    public void mouseClicked(MouseEvent event) {
+        if (event.getClickCount() == 2) {
+            photoFrame.toggleAnnotationMode();
         }
     }
 
     private void paintPhoto(Graphics2D g) {
         g.drawImage(photoFrame.model.getPhoto(), 0, 0, null);
-    }
-
-    private void paintAnnotations(Graphics2D g) {
-        annotationCanvas.paintComponent(g);
     }
 
     private void setDefaultRenderingHints(Graphics2D g) {
@@ -99,6 +101,6 @@ class PhotoFrameView extends MouseAdapter {
 
         setDefaultRenderingHints(g);
         paintPhoto(g);
-        paintAnnotations(g);
+        annotationCanvas.setVisible(photoFrame.model.isAnnotable());
     }
 }
