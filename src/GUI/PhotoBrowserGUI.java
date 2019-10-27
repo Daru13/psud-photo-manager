@@ -128,22 +128,20 @@ public class PhotoBrowserGUI {
     }
 
     private void updateToolbarDisplay() {
-        if (displayToolbar && toolbar.getParent() == null) {
+        window.remove(toolbar);
+
+        if (displayToolbar) {
             window.add(toolbar, BorderLayout.WEST);
-        }
-        else {
-            window.remove(toolbar);
         }
 
         window.revalidate();
     }
 
     private void updateStatusBarDisplay() {
-        if (displayStatusBar && statusBar.getParent() == null) {
+        window.remove(statusBar);
+
+        if (displayStatusBar) {
             window.add(statusBar, BorderLayout.SOUTH);
-        }
-        else {
-            window.remove(statusBar);
         }
 
         window.revalidate();

@@ -1,7 +1,7 @@
 package GUI.Views;
 
-import Events.EventManager;
 import Events.CategoryFilterChangeEvent;
+import Events.EventManager;
 import GUI.PhotoBrowserGUI;
 
 import javax.swing.*;
@@ -51,6 +51,7 @@ public class PhotoBrowserView implements View {
             );
 
             container.add(categoryButton);
+            gui.setToolbarDisplay(true);
         }
     }
 

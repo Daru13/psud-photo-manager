@@ -66,11 +66,9 @@ public class SinglePhotoView implements View {
 
 
     private void uninstallToolBar() {
-        gui.setToolbarDisplay(true);
-
         JComponent container = gui.getToolbar().getContainer();
         container.removeAll();
-
+        gui.setToolbarDisplay(true);
     }
 
     private void installAllEventHandlers() {
@@ -103,7 +101,6 @@ public class SinglePhotoView implements View {
 
     private void handleAnnotableStateChangeEvent(AnnotableStateChangeEvent event) {
         gui.setToolbarDisplay(event.isAnnotable);
-        System.out.println("is annotable = " + event.isAnnotable);
     }
 
     @Override
