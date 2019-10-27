@@ -14,10 +14,8 @@ import fr.lri.swingstates.sm.transitions.*;
 
 import java.awt.*;
 import java.awt.event.KeyEvent;
-import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Map;
 
 class ShapeStyle {
     boolean outlined;
@@ -32,39 +30,24 @@ class ShapeStyle {
 }
 
 class SelectedTag extends CExtensionalTag {
-    Map<CShape, ShapeStyle> savedShapeStyles;
-
     SelectedTag() {
         super();
-        savedShapeStyles = new LinkedHashMap<>();
-    }
-
-    private void saveShapeStyle(CShape shape) {
-        savedShapeStyles.put(shape, new ShapeStyle(
-           shape.isOutlined(),
-           shape.getStroke(),
-           shape.getOutlinePaint()
-        ));
-    }
-
-    private void restoreShapeStyle(CShape shape) {
-        ShapeStyle savedStyle = savedShapeStyles.get(shape);
-        shape.setOutlined(savedStyle.outlined);
-        shape.setStroke(savedStyle.stroke);
-        shape.setOutlinePaint(savedStyle.outlinePaint);
     }
 
     public void added(CShape shape) {
-        saveShapeStyle(shape);
-
-        // Add a border to show that the shape is part of the current selection
+        // Apply a certain style to show that the shape is part of the current selection
         shape.setOutlined(true)
             .setStroke(new BasicStroke(3))
             .setOutlinePaint(Color.BLUE);
     }
 
     public void removed(CShape shape) {
-        restoreShapeStyle(shape);
+        shape.setOutlined(false)
+            .setStroke(new BasicStroke(0));
+
+        // Re-apply the style of the annotation to replace the style imposed the tag
+        // by the (possibly new) style of the annotation
+        ((Annotation<? extends CShape>) shape).applyStyle();
     }
 };
 

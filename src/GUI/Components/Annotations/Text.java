@@ -56,15 +56,8 @@ public class Text extends CRectangle implements Annotation<CRectangle> {
 
         currentlyPainting = false;
 
-        initStyle();
-    }
-
-    private void initStyle() {
         updateStyleFromToolSettings();
-
-        setOutlined(false);
-        setFilled(true);
-        setFillPaint(new Color(0, 0,0 ,0));
+        applyStyle();
     }
 
     @Override
@@ -80,18 +73,14 @@ public class Text extends CRectangle implements Annotation<CRectangle> {
         photoFrame.repaint();
     }
 
-    public void setColor(Color color) {
-        this.color = color;
-        photoFrame.repaint();
-    }
+    @Override
+    public void applyStyle() {
+        setOutlined(false);
+        setStroke(new BasicStroke(0));
 
-    public void setFontFamily(String fontFamily) {
-        this.fontFamily = fontFamily;
-        photoFrame.repaint();
-    }
+        setFilled(true);
+        setFillPaint(new Color(0, 0,0 ,0));
 
-    public void setFontSize(int fontSize) {
-        this.fontSize = fontSize;
         photoFrame.repaint();
     }
 

@@ -1,6 +1,6 @@
 package GUI.Components;
 
-import GUI.Components.Annotations.Annotation;
+import GUI.Components.Tools.SelectionTool;
 
 import javax.swing.*;
 import java.awt.*;
@@ -70,7 +70,14 @@ public class ToolSettingPanel extends ToolBarPanel {
 
             if (newColor != null) {
                 photoFrame.getToolSettings().setColor(newColor);
-                photoFrame.getSelectedAnnotations().forEach(Annotation::updateStyleFromToolSettings);
+                photoFrame.getSelectedAnnotations().forEach(annotation -> {
+                    annotation.updateStyleFromToolSettings();
+                    annotation.applyStyle();
+
+                    // Required to ensure the style still reflect that the annotation is selected
+                    annotation.getCanvasShape().removeTag(SelectionTool.SELECTED_TAG);
+                    annotation.getCanvasShape().addTag(SelectionTool.SELECTED_TAG);
+                });
                 updateColorSelector(chooseColorButton);
             }
         });
@@ -111,7 +118,14 @@ public class ToolSettingPanel extends ToolBarPanel {
         thicknessSlider.addChangeListener((e) -> {
             int newThickness = thicknessSlider.getValue() * 2;
             photoFrame.getToolSettings().setThickness(newThickness);
-            photoFrame.getSelectedAnnotations().forEach(Annotation::updateStyleFromToolSettings);
+            photoFrame.getSelectedAnnotations().forEach(annotation -> {
+                annotation.updateStyleFromToolSettings();
+                annotation.applyStyle();
+
+                // Required to ensure the style still reflect that the annotation is selected
+                annotation.getCanvasShape().removeTag(SelectionTool.SELECTED_TAG);
+                annotation.getCanvasShape().addTag(SelectionTool.SELECTED_TAG);
+            });
         });
 
         Hashtable<Integer, JComponent> thicknessSliderLabels = new Hashtable<>();
@@ -141,7 +155,14 @@ public class ToolSettingPanel extends ToolBarPanel {
         fontFamilyComboBox.addItemListener((e) -> {
             String newFontFamily = (String)e.getItem();
             photoFrame.getToolSettings().setFontFamily(newFontFamily);
-            photoFrame.getSelectedAnnotations().forEach(Annotation::updateStyleFromToolSettings);
+            photoFrame.getSelectedAnnotations().forEach(annotation -> {
+                annotation.updateStyleFromToolSettings();
+                annotation.applyStyle();
+
+                // Required to ensure the style still reflect that the annotation is selected
+                annotation.getCanvasShape().removeTag(SelectionTool.SELECTED_TAG);
+                annotation.getCanvasShape().addTag(SelectionTool.SELECTED_TAG);
+            });
         });
 
         // Font size
@@ -155,7 +176,14 @@ public class ToolSettingPanel extends ToolBarPanel {
         fontSizesComboBox.addItemListener((e) -> {
             int newFontSize = (Integer) fontSizesComboBox.getSelectedItem();
             photoFrame.getToolSettings().setFontSize(newFontSize);
-            photoFrame.getSelectedAnnotations().forEach(Annotation::updateStyleFromToolSettings);
+            photoFrame.getSelectedAnnotations().forEach(annotation -> {
+                annotation.updateStyleFromToolSettings();
+                annotation.applyStyle();
+
+                // Required to ensure the style still reflect that the annotation is selected
+                annotation.getCanvasShape().removeTag(SelectionTool.SELECTED_TAG);
+                annotation.getCanvasShape().addTag(SelectionTool.SELECTED_TAG);
+            });
         });
 
         // Grid constraints and appending

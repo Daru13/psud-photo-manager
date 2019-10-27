@@ -18,20 +18,23 @@ public class Ellipse extends CEllipse implements Annotation<CEllipse> {
         this.photoFrame = photoFrame;
         firstCorner = corner;
 
-        initStyle();
-    }
-
-    private void initStyle() {
-        // Reset default shape properties
-        setStroke(new BasicStroke(0));
-
         updateStyleFromToolSettings();
+        applyStyle();
     }
 
     @Override
     public void updateStyleFromToolSettings() {
         ToolSettings settings = photoFrame.getToolSettings();
-        setColor(settings.getColor());
+        color = settings.getColor();
+    }
+
+    @Override
+    public void applyStyle() {
+        setOutlined(false);
+        setStroke(new BasicStroke(0));
+
+        setFilled(true);
+        setFillPaint(color);
     }
 
     public void setOppositeCorner(Point corner) {
@@ -42,10 +45,6 @@ public class Ellipse extends CEllipse implements Annotation<CEllipse> {
 
         setBoundingBox(x, y, width, height);
         photoFrame.repaint();
-    }
-
-    public void setColor(Color color) {
-        setFillPaint(color);
     }
 
     @Override

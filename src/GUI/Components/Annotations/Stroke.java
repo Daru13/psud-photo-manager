@@ -23,34 +23,30 @@ public class Stroke extends CPolyLine implements Annotation<CPolyLine> {
         thickness = settings.getThickness();
 
         addStep(origin);
-        initStyle();
-    }
-
-    private void initStyle() {
-        // Reset default shape properties
-        filled = false;
 
         updateStyleFromToolSettings();
+        applyStyle();
     }
 
     @Override
     public void updateStyleFromToolSettings() {
         ToolSettings settings = photoFrame.getToolSettings();
-        setColor(settings.getColor());
-        setThickness(settings.getThickness());
+        color = settings.getColor();
+        thickness = settings.getThickness();
+    }
+
+    @Override
+    public void applyStyle() {
+        setOutlined(true);
+        setStroke(new BasicStroke(thickness));
+        setOutlinePaint(color);
+
+        setFilled(false);
     }
 
     public void addStep(Point point) {
         lineTo(point);
         photoFrame.repaint();
-    }
-
-    public void setColor(Color color) {
-        setOutlinePaint(color);
-    }
-
-    public void setThickness(int thickness) {
-        setStroke(new BasicStroke(thickness));
     }
 
     @Override
