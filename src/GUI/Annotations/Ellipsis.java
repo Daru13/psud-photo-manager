@@ -22,11 +22,16 @@ public class Ellipsis extends CEllipse implements Annotation<CEllipse> {
     }
 
     private void initStyle() {
-        ToolSettings settings = photoFrame.getToolSettings();
-        setColor(settings.getColor());
-
         // Reset default shape properties
         setStroke(new BasicStroke(0));
+
+        updateStyleFromToolSettings();
+    }
+
+    @Override
+    public void updateStyleFromToolSettings() {
+        ToolSettings settings = photoFrame.getToolSettings();
+        setColor(settings.getColor());
     }
 
     public void setOppositeCorner(Point corner) {

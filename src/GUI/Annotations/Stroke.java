@@ -27,12 +27,17 @@ public class Stroke extends CPolyLine implements Annotation<CPolyLine> {
     }
 
     private void initStyle() {
+        // Reset default shape properties
+        filled = false;
+
+        updateStyleFromToolSettings();
+    }
+
+    @Override
+    public void updateStyleFromToolSettings() {
         ToolSettings settings = photoFrame.getToolSettings();
         setColor(settings.getColor());
         setThickness(settings.getThickness());
-
-        // Reset default shape properties
-        filled = false;
     }
 
     public void addStep(Point point) {

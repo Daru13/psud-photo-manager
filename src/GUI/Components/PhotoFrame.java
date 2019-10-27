@@ -1,6 +1,7 @@
 package GUI.Components;
 
 import GUI.Annotations.Annotation;
+import GUI.Tools.SelectionTool;
 import GUI.Tools.ToolID;
 import GUI.Tools.ToolManager;
 import GUI.Tools.ToolSettings;
@@ -9,6 +10,8 @@ import fr.lri.swingstates.canvas.CShape;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
+import java.util.List;
+import java.util.stream.Collectors;
 
 
 /**
@@ -69,6 +72,14 @@ public class PhotoFrame extends JComponent {
 
         repaint();
         revalidate();
+    }
+
+    List<Annotation<? extends CShape>> getSelectedAnnotations() {
+        return model
+            .getAnnotations()
+            .stream()
+            .filter(a -> a.getCanvasShape().hasTag(SelectionTool.SELECTED_TAG))
+            .collect(Collectors.toList());
     }
 
     boolean isAnnotable() {

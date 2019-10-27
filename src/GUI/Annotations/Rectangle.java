@@ -23,11 +23,17 @@ public class Rectangle extends CRectangle implements Annotation<CRectangle> {
     }
 
     private void initStyle() {
+        // Reset default shape properties
+        setStroke(new BasicStroke(0));
+
+        updateStyleFromToolSettings();
+    }
+
+    @Override
+    public void updateStyleFromToolSettings() {
         ToolSettings settings = photoFrame.getToolSettings();
         setColor(settings.getColor());
 
-        // Reset default shape properties
-        setStroke(new BasicStroke(0));
     }
 
     public void setOppositeCorner(Point corner) {

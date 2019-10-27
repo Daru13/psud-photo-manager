@@ -27,6 +27,7 @@ public class ToolManager {
     }
 
     private void initTools(Canvas annotationCanvas) {
+        tools.put(ToolID.SELECTION, new SelectionTool(this.photoFrame));
         tools.put(ToolID.PEN, new PenTool(this.photoFrame));
         tools.put(ToolID.RECTANGLE, new RectangleTool(this.photoFrame));
         tools.put(ToolID.ELLIPSIS, new EllipsisTool(this.photoFrame));

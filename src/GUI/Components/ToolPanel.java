@@ -53,6 +53,11 @@ public class ToolPanel extends ToolBarPanel {
     }
 
     private void createToolButtons() {
+        JToggleButton selectionToolButton = new JToggleButton("Selection");
+        selectionToolButton.setOpaque(false);
+        selectionToolButton.addActionListener((e) -> eventManager.emit(new ToolChangeEvent(ToolID.SELECTION)));
+        toolButtonsContainer.add(selectionToolButton);
+
         JToggleButton penToolButton = new JToggleButton("Pen");
         penToolButton.setMaximumSize(new Dimension(0, 50));
         penToolButton.addActionListener((e) -> eventManager.emit(new ToolChangeEvent(ToolID.PEN)));
@@ -75,6 +80,7 @@ public class ToolPanel extends ToolBarPanel {
 
         // Group the buttons together
         ButtonGroup toolButtonsGroup = new ButtonGroup();
+        toolButtonsGroup.add(selectionToolButton);
         toolButtonsGroup.add(penToolButton);
         toolButtonsGroup.add(rectangleToolButton);
         toolButtonsGroup.add(ellipsisToolButton);
@@ -83,6 +89,10 @@ public class ToolPanel extends ToolBarPanel {
         // Set the current tool button as selected
         switch (photoFrame.getCurrentToolID()) {
             default:
+            case SELECTION:
+                selectionToolButton.setSelected(true);
+                break;
+
             case PEN:
                 penToolButton.setSelected(true);
                 break;

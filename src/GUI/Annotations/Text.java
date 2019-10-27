@@ -49,10 +49,16 @@ public class Text extends CRectangle implements Annotation<CRectangle> {
     }
 
     private void initStyle() {
+        updateStyleFromToolSettings();
+    }
+
+    @Override
+    public void updateStyleFromToolSettings() {
         ToolSettings settings = photoFrame.getToolSettings();
         color = settings.getColor();
         fontFamily = settings.getFontFamily();
         fontSize = settings.getFontSize();
+        photoFrame.repaint();
     }
 
     public void setColor(Color color) {

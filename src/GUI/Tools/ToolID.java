@@ -10,6 +10,7 @@ package GUI.Tools;
  */
 public enum ToolID {
     NONE(""),
+    SELECTION("Selection"),
     PEN("Pen"),
     RECTANGLE("Rectangle"),
     ELLIPSIS("Ellipsis"),

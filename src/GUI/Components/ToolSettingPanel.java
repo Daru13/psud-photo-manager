@@ -1,5 +1,7 @@
 package GUI.Components;
 
+import GUI.Annotations.Annotation;
+
 import javax.swing.*;
 import java.awt.*;
 import java.util.Hashtable;
@@ -68,6 +70,7 @@ public class ToolSettingPanel extends ToolBarPanel {
 
             if (newColor != null) {
                 photoFrame.getToolSettings().setColor(newColor);
+                photoFrame.getSelectedAnnotations().forEach(Annotation::updateStyleFromToolSettings);
                 updateColorSelector(chooseColorButton);
             }
         });
@@ -108,6 +111,7 @@ public class ToolSettingPanel extends ToolBarPanel {
         thicknessSlider.addChangeListener((e) -> {
             int newThickness = thicknessSlider.getValue() * 2;
             photoFrame.getToolSettings().setThickness(newThickness);
+            photoFrame.getSelectedAnnotations().forEach(Annotation::updateStyleFromToolSettings);
         });
 
         Hashtable<Integer, JComponent> thicknessSliderLabels = new Hashtable<>();
@@ -137,6 +141,7 @@ public class ToolSettingPanel extends ToolBarPanel {
         fontFamilyComboBox.addItemListener((e) -> {
             String newFontFamily = (String)e.getItem();
             photoFrame.getToolSettings().setFontFamily(newFontFamily);
+            photoFrame.getSelectedAnnotations().forEach(Annotation::updateStyleFromToolSettings);
         });
 
         // Font size
@@ -150,6 +155,7 @@ public class ToolSettingPanel extends ToolBarPanel {
         fontSizesComboBox.addItemListener((e) -> {
             int newFontSize = (Integer) fontSizesComboBox.getSelectedItem();
             photoFrame.getToolSettings().setFontSize(newFontSize);
+            photoFrame.getSelectedAnnotations().forEach(Annotation::updateStyleFromToolSettings);
         });
 
         // Grid constraints and appending
