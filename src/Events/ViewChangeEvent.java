@@ -1,6 +1,6 @@
 package Events;
 
-import GUI.Views.ViewID;
+import Views.ViewID;
 
 /**
  * A custom type of event for view changes.
