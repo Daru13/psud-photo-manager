@@ -17,18 +17,6 @@ import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 import java.util.List;
 
-class ShapeStyle {
-    boolean outlined;
-    Stroke stroke;
-    Paint outlinePaint;
-
-    ShapeStyle(boolean outlined, Stroke stroke, Paint outlinePaint) {
-        this.outlined = outlined;
-        this.stroke = stroke;
-        this.outlinePaint = outlinePaint;
-    }
-}
-
 class SelectedTag extends CExtensionalTag {
     SelectedTag() {
         super();
