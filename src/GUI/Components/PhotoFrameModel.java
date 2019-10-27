@@ -28,7 +28,7 @@ class PhotoFrameModel {
         photoIsLoaded = false;
 
         annotations = new LinkedList<>();
-        annotable = true;
+        annotable = false;
     }
 
     BufferedImage getPhoto() {

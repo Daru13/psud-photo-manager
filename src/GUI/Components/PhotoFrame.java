@@ -85,7 +85,7 @@ public class PhotoFrame extends JComponent {
         return model.isAnnotable();
     }
 
-    public void toggleAnnotationMode() {
+    public void toggleAnnotable() {
         model.toggleAnnotable();
         toolManager.toggleEnabled();
 

@@ -79,7 +79,7 @@ class PhotoFrameView extends MouseAdapter {
     @Override
     public void mouseClicked(MouseEvent event) {
         if (event.getClickCount() == 2) {
-            photoFrame.toggleAnnotationMode();
+            photoFrame.toggleAnnotable();
         }
     }
 
