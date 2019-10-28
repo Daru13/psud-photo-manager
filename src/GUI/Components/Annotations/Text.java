@@ -33,8 +33,6 @@ public class Text extends CRectangle implements Annotation<CRectangle> {
     private Timer caretBlinkTimer;
     private boolean caretIsVisible;
 
-    private boolean currentlyPainting;
-
     public Text(Point topLeftCorner, PhotoFrame photoFrame) {
         // Copied and adapted from CRectangularShape class
         super(topLeftCorner, 1, 1);
@@ -54,8 +52,6 @@ public class Text extends CRectangle implements Annotation<CRectangle> {
         caretBlinkTimer = new Timer();
         caretIsVisible = true;
 
-        currentlyPainting = false;
-
         updateStyleFromToolSettings();
         applyStyleToCanvasShape();
     }
@@ -67,7 +63,7 @@ public class Text extends CRectangle implements Annotation<CRectangle> {
         fontFamily = settings.getFontFamily();
         fontSize = settings.getFontSize();
 
-        lineHeightMustBeUpdated = true;
+        // lineHeightMustBeUpdated = true;
         dimensionsMustBeUpdated = true;
 
         photoFrame.repaint();
@@ -245,8 +241,6 @@ public class Text extends CRectangle implements Annotation<CRectangle> {
         FontMetrics metrics = g.getFontMetrics();
         lineHeight = metrics.getHeight();
 
-        System.out.println("Recomputed line height: " + lineHeight);
-
         lineHeightMustBeUpdated = false;
     }
 
@@ -278,8 +272,6 @@ public class Text extends CRectangle implements Annotation<CRectangle> {
 
         setWidth(dimensions.width);
         setHeight(dimensions.height);
-
-        System.out.println("recomputed dimensions: " + dimensions.width + ", " + dimensions.height);
     }
 
     private void drawString(Graphics2D g) {
