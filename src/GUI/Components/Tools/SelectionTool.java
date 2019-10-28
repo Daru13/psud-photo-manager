@@ -17,6 +17,9 @@ import java.awt.event.KeyEvent;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * The tag added to every selected shape.
+ */
 class SelectedTag extends CExtensionalTag {
     SelectedTag() {
         super();
@@ -39,6 +42,12 @@ class SelectedTag extends CExtensionalTag {
     }
 };
 
+/**
+ * A tool to select, move and edit annotations.
+ * It handles multiple selections (by pressing SHIFT key and clicking several shapes).
+ *
+ * @see Tool
+ */
 public class SelectionTool extends Tool {
     public final static CExtensionalTag SELECTED_TAG = new SelectedTag();
 
@@ -55,7 +64,6 @@ public class SelectionTool extends Tool {
     private void selectAnnotation(Annotation<? extends CShape> annotation) {
         selectedAnnotations.add(annotation);
         annotation.getCanvasShape().addTag(SELECTED_TAG);
-        System.out.println(annotation + " selected");
     }
 
     private void selectAnnotation(CShape annotationShape) {
@@ -65,7 +73,6 @@ public class SelectionTool extends Tool {
     private void deselectAnnotation(Annotation<? extends CShape> annotation) {
         selectedAnnotations.remove(annotation);
         annotation.getCanvasShape().removeTag(SELECTED_TAG);
-        System.out.println(annotation + " deselected");
     }
 
     private void deselectAnnotation(CShape annotationShape) {
@@ -91,7 +98,6 @@ public class SelectionTool extends Tool {
         }
 
         selectedAnnotations.clear();
-        System.out.println("all annotations have been deselected");
     }
 
     private void translateSelectedAnnotations(Point mousePosition) {
