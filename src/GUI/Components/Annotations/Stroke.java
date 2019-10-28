@@ -6,6 +6,12 @@ import fr.lri.swingstates.canvas.CPolyLine;
 
 import java.awt.*;
 
+/**
+ * An annotation with the shape of a pen stroke.
+ * The color and the thickness of the shape can be personalised.
+ *
+ * @see Annotation
+ */
 public class Stroke extends CPolyLine implements Annotation<CPolyLine> {
 
     private PhotoFrame photoFrame;

@@ -4,10 +4,15 @@ import GUI.Components.PhotoFrame;
 import fr.lri.swingstates.canvas.CStateMachine;
 
 /**
- * Interface of a tool.
+ * An abstract tool.
  *
- * It requires two methods, which are lifecycle callbacks.
- * They should be used to perform certain actions before or after the tools can be used.
+ * It provides two lifecycle callbacks (select and deselect), which can be overridden if necessary.
+ *
+ * All tools should extend this class.
+ * They can use the mechanisms provided by the CStateMachine class.
+ *
+ * @see CStateMachine
+ * @see ToolManager
  */
 public abstract class Tool extends CStateMachine {
     PhotoFrame photoFrame;

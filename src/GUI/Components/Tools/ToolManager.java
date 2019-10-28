@@ -5,6 +5,12 @@ import fr.lri.swingstates.canvas.Canvas;
 
 import java.util.EnumMap;
 
+/**
+ * The manager of the tools.
+ *
+ * It is responsible for creating tools and allows to set the new current tool.
+ * It can be enabled or disabled, so that no events are processed by the tools when the manager is disabled.
+ */
 public class ToolManager {
     private PhotoFrame photoFrame;
     private boolean enabled;

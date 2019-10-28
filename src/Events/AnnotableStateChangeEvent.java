@@ -1,7 +1,7 @@
 package Events;
 
 /**
- * A custom type of event for annotable state changes.
+ * A custom type of event for a change of the annotation state of a PhotoFrame instance.
  *
  * @see Event
  */

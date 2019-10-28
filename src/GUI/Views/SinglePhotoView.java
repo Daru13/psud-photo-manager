@@ -12,7 +12,7 @@ import java.awt.*;
 
 
 /**
- * View displaying a single photo.
+ * View displaying a single photo which can be annotated.
  *
  * @see View
  */

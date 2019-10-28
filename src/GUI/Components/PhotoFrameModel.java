@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * The model of a photo frame.
  *
- * It contains the photo and its annotations.
+ * It contains the photo, the state of the annotation mode, and the annotations.
  *
  * @see PhotoFrame
  */

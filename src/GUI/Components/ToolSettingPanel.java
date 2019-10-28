@@ -10,6 +10,7 @@ import java.util.Vector;
 
 /**
  * A toolbar panel to edit the settings of the tools.
+ * If annotations are selected, it also allows to edit their styles.
  */
 public class ToolSettingPanel extends ToolBarPanel {
 

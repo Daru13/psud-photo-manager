@@ -19,7 +19,11 @@ import java.util.stream.Collectors;
 /**
  * A photo frame to display a single photo.
  *
- * The photo can be flipped and annotated on its back using various tools.
+ * It offers an annotation mode, which can be toggled by double-clicking the photo.
+ * In the annotation mode, tools can be used to annotate the photo,
+ * and the annotations are displayed on top of it.
+ *
+ * @see ToolManager
  */
 public class PhotoFrame extends JComponent {
 

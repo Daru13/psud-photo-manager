@@ -12,8 +12,8 @@ import java.awt.image.BufferedImage;
 /**
  * The view of a photo frame.
  *
- * It contains a temporary canvas and handle the tools used to annotate the photo.
- * It also handle Swing events, which and dispatched to the current tool.
+ * It contains a Canvas which handles the annotation shapes
+ * and handles the double-click events required to toggle the annotation mode.
  *
  * @see PhotoFrame
  */

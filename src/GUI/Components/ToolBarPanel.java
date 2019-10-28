@@ -5,7 +5,9 @@ import java.awt.*;
 
 
 /**
- * An abstract panel for the toolbar.
+ * An abstract toolbar panel.
+ *
+ * It should be extended by any toolbar panel.
  */
 abstract class ToolBarPanel extends JPanel {
 

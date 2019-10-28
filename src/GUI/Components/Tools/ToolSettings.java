@@ -6,7 +6,7 @@ import java.awt.*;
 /**
  * Settings of the tools.
  *
- * These settings are used by the tools to adapt their drawing styles.
+ * These settings are used to set the styles of annotations.
  */
 public class ToolSettings {
 

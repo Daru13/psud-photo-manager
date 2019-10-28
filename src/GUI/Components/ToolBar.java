@@ -9,7 +9,8 @@ import java.awt.*;
 /**
  * The main toolbar of the GUI.
  *
- * It offers options to control and modify the displayed content, such as tools and filters.
+ * It offers options to control and modify the displayed content
+ * (such as tool settings and filters).
  */
 public class ToolBar extends JScrollPane {
 

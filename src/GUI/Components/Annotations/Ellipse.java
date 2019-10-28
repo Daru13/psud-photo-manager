@@ -6,6 +6,12 @@ import fr.lri.swingstates.canvas.CEllipse;
 
 import java.awt.*;
 
+/**
+ * An annotation with the shape of an ellipse.
+ * The color of the shape can be personalised.
+ *
+ * @see Annotation
+ */
 public class Ellipse extends CEllipse implements Annotation<CEllipse> {
     private PhotoFrame photoFrame;
 

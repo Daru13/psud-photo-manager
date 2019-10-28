@@ -6,6 +6,12 @@ import fr.lri.swingstates.canvas.CRectangle;
 
 import java.awt.*;
 
+/**
+ * An annotation with the shape of a rectangle.
+ * The color of the shape can be personalised.
+ *
+ * @see Annotation
+ */
 public class Rectangle extends CRectangle implements Annotation<CRectangle> {
 
     private PhotoFrame photoFrame;

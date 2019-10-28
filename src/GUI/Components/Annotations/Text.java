@@ -10,8 +10,17 @@ import java.util.LinkedList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+/**
+ * An annotation displaying a piece of text.
+ * The color, the size and the family of the font can be personalised.
+ *
+ * REMARK: this annotation suffers from certain issues.
+ * In particular, it can have a strange behaviour when its shape properties are edited,
+ * or when it is moved across the right edge of the photo.
+ *
+ * @see Annotation
+ */
 public class Text extends CRectangle implements Annotation<CRectangle> {
-
     private final static long DELAY_BETWEEN_CARET_BLINKS = 650; // ms
 
     private final PhotoFrame photoFrame;
